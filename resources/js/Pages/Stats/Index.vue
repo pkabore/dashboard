@@ -23,10 +23,10 @@
         <StatCard title="Devis" :value="metadata.quotesNumber" />
       </div>
       <div class="mt-4 w-full md:flex justify-between md:space-x-2">
-        <div class="chart-container bg-white relative border p-2 rounded-md mt-2 shadow-xl md:mt-0 w-full md:w-1/2 md:max-w-1/2">
+        <div class="chart-container bg-white relative border p-2 rounded-md mt-2 md:mt-0 w-full md:w-1/2 md:max-w-1/2">
           <canvas id="balance"></canvas>
         </div>
-        <div class="chart-container bg-white relative border p-2 rounded-md mt-4 shadow-xl md:mt-0 w-full md:w-1/2 md:max-w-1/2">
+        <div class="chart-container bg-white relative border p-2 rounded-md mt-4 md:mt-0 w-full md:w-1/2 md:max-w-1/2">
           <canvas id="clients"></canvas>
         </div>
       </div>

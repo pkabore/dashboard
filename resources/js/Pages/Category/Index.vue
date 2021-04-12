@@ -79,7 +79,7 @@
               <td class="p-2">
                 {{ category.id }}
               </td>
-              <td class="p-2 uppercase text-xs">
+              <td class="p-2 capitalize text-xs">
                 {{ category.name }}
               </td>
               <td class="p-2 text-blue-700">

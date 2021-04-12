@@ -128,7 +128,7 @@
               <td class="p-2">
                 {{ article.id }}
               </td>
-              <td class="p-2 uppercase text-xs">
+              <td class="p-2 capitalize text-xs">
                 {{ article.name }}
               </td>
               <td
