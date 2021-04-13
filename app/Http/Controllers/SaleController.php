@@ -17,22 +17,24 @@ class SaleController extends Controller
         $sales = Sale::where('created_at', '>=', today())
                     ->paginate(12)
                     ->through(function ($sale) {
-                        try {
-                            $sale->date = $sale->created_at->diffForHumans();
-                        } catch (\Throwable $th) {
-                            throw $th;
-                        }
+                        $sale->date = $sale->created_at->format('d M, Y');
                         return $sale;
-                    })->all();
+                    });
 
         return Inertia::render('Sale/Index', [
             'sales' => $sales
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Sale/Create');
+        $failureMessage = session('failureMessage');
+        $request->session()->put('failureMessage', '');
+        if (!$failureMessage)
+            $failureMessage = session('failureMessage');
+        return Inertia::render('Sale/Create', [
+            'failureMessage' => $failureMessage
+        ]);
     }
 
     public function store(Request $request)
@@ -46,6 +48,12 @@ class SaleController extends Controller
             'total' => 'required|numeric|min:0',
         ]);
 
+        $sale = Sale::where('receipt_id', $request->receipt_id)
+                            ->first();
+        if ($sale){
+            $request->session()->put('failureMessage', 'Vente déjà enregistrée');
+            return redirect(route('sales.create'));
+        }
         $s = new Sale();
 
         $s->receipt_id = $request->receipt_id;
@@ -79,14 +87,11 @@ class SaleController extends Controller
 
         $sales = Sale::filter($filters)
                 ->paginate(12)
+                ->withQueryString()
                 ->through(function ($sale) {
-                    try {
-                        $sale->date = $sale->created_at->diffForHumans();
-                    } catch (\Throwable $th) {
-                        throw $th;
-                    }
+                    $sale->date = $sale->created_at->format('d M, Y');
                     return $sale;
-                })->all();
+                });
 
         return $sales;
     }
@@ -96,7 +101,7 @@ class SaleController extends Controller
         $items = Order::where('sale_quote_bill_id', $sale->id)->get();
         $sale->items = $items;
         try {
-            $sale->date = $sale->created_at->diffForHumans();
+            $sale->date = $sale->created_at->format('d M, Y');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -106,5 +111,13 @@ class SaleController extends Controller
 
     public function export(){
         return Excel::download(new SaleExport, 'ventes.xlsx');
+    }
+
+
+    public function destroy(Sale $sale)
+    {
+        Order::where('sale_quote_bill_id', $sale->sale_quote_bill_id)->delete();
+        $sale->delete();
+        return redirect(route('sales.index'));
     }
 }

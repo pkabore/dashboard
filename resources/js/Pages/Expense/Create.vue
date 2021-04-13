@@ -84,6 +84,7 @@
                   w-full
                   py-1
                   mt-1
+                  z-10
                   overflow-y-scroll
                   bg-slate-50
                   rounded-md

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Exports\BillExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class BillController extends Controller
 {
@@ -17,7 +18,8 @@ class BillController extends Controller
         $bills = QuoteBill::where('is_bill', true)
                     ->paginate(12)
                     ->through(function ($bill) {
-                        $bill->date = $bill->created_at->format('d/m/Y');
+                        $bill->date = $bill->created_at->format('d M, Y');
+                        $bill->deadline = Carbon::parse($bill->deadline)->format('d M, Y');
                         return $bill;
                     });
         return Inertia::render('Bill/Index', [ 'bills' => $bills ]);
@@ -25,12 +27,12 @@ class BillController extends Controller
 
     public function create(Request $request)
     {
-        $message = session('message');
-        $request->session()->put('message', '');
-        if (!$message)
-            $message = session('message');
+        $failureMessage = session('failureMessage');
+        $request->session()->put('failureMessage', '');
+        if (!$failureMessage)
+            $failureMessage = session('failureMessage');
         return Inertia::render('Bill/Create', [
-            'message' => $message,
+            'failureMessage' => $failureMessage
         ]);
     }
 
@@ -50,6 +52,13 @@ class BillController extends Controller
             'deadline' => 'required|date',
             'description' => 'required|string|max:256'
         ]);
+
+        $bill = QuoteBill::where('receipt_id', $request->receipt_id)
+                            ->first();
+        if ($bill){
+            $request->session()->put('failureMessage', 'Facture déjà existante');
+            return redirect(route('bills.create'));
+        }
 
         $bill = new QuoteBill();
 
@@ -95,8 +104,9 @@ class BillController extends Controller
         $bills = QuoteBill::filter($filters)
                         ->where('is_bill', true)
                         ->paginate(12)
+                        ->withQueryString()
                         ->through(function ($bill) {
-                            $bill->date = $bill->created_at->format('d/m/Y');
+                            $bill->date = $bill->created_at->format('d M, Y');
                             return $bill;
                         });
 
@@ -107,7 +117,7 @@ class BillController extends Controller
     {
         $items = Order::where('sale_quote_bill_id', $bill->id)->get();
         $bill->items = $items;
-        $bill->date = $bill->created_at->format('d/m/Y');
+        $bill->date = $bill->created_at->format('d M, Y');
         return Inertia::render('Bill/Show', [ 'bill' => $bill]);
     }
 
@@ -121,11 +131,12 @@ class BillController extends Controller
         return redirect(route('bills.show', $bill->id));
     }
 
-    // public function destroy(QuoteBill $bill)
-    // {
-    //     $bill->delete();
-    //     return redirect(route('bills.index'));
-    // }
+    public function destroy(QuoteBill $bill)
+    {
+        Order::where('sale_quote_bill_id', $bill->sale_quote_bill_id)->delete();
+        $bill->delete();
+        return redirect(route('bills.index'));
+    }
 
     public function export(){
         return Excel::download(new BillExport, 'factures.xlsx');

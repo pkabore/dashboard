@@ -15,7 +15,7 @@ class CreateQuoteBillsTable extends Migration
     {
         Schema::create('quote_bills', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id');
+            $table->foreignId('client_id')->nullable();
             $table->string('client_name')->max(256)->nullable();
             $table->string('client_email')->max(256)->nullable();
             $table->string('client_phone')->max(256)->nullable();

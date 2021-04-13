@@ -19,6 +19,7 @@ class ClientFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->unique()->e164PhoneNumber(),
             'address' => $this->faker->address(),
+            'created_at' => now()->addMonths(random_int(1,30) % 12)
         ];
     }
 }

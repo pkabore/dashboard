@@ -1,7 +1,7 @@
 <template>
   <div class="px-2 mx-auto w-full">
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">Dépenses</h2>
-    <div class="max-w-2xl mx-auto rounded-md bg-white border pt-4 my-7">
+    <div class="max-w-3xl mx-auto rounded-md border pt-4 my-7">
       <div class="flex items-center justify-center space-x-2 px-2 mb-4">
         <div class="relative max-w-sm mx-auto">
           <span
@@ -30,7 +30,7 @@
         <CreateButton :href="route('expenses.create')" />
       </div>
       <div class="w-full mx-auto overflow-x-auto">
-        <table class="w-full table-auto whitespace-nowrap text-sm shadow-md">
+        <table class="w-full table-auto whitespace-nowrap text-sm">
           <thead>
             <tr>
               <th class="py-3">Id</th>
@@ -72,12 +72,12 @@
             <tr
               v-for="expense in reactiveExpenses"
               :key="expense.id"
-              class="border-t space-x-2 text-center hover:bg-neutral-200"
+              class="border-t space-x-2 hover:bg-neutral-200 text-center"
             >
               <td class="p-2">
                 {{ expense.id }}
               </td>
-              <td class="p-2 text-green-600">
+              <td class="p-2 text-gray-600">
                 {{ expense.date }}
               </td>
               <td class="p-2">
@@ -86,19 +86,20 @@
               <td class="p-2 text-blue-700">
                 {{ expense.category }}
               </td>
-              <td class="p-2 text-blue-800">
+              <td class="p-2">
                 {{ parseFloat(expense.fee).toLocaleString("fr-FR") }}
               </td>
               <td class="p-2 inline-flex justify-center">
                 <DeleteIcon
                   @click="prepareDeletion(expense.id)"
-                  class="h-5 w-5 text-gray-600"
+                  class="h-5 w-5 text-red-600"
                 />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <Pagination class="my-5" :links="links" @paginate="(payload) => form.uri = payload" />
     </div>
   </div>
   <Dialog
@@ -120,6 +121,7 @@ import Dialog from "@/Components/Dialog.vue";
 import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
 import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
 import ExportButton from "@/Components/ExportButton.vue";
+import Pagination from '@/Components/Pagination.vue';
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
@@ -136,6 +138,7 @@ export default {
     ChevronUpIcon,
     ChevronDownIcon,
     ExportButton,
+    Pagination
   },
 
   props: { expenses: Object },
@@ -145,11 +148,14 @@ export default {
 
     const form = ref({
       search: "",
+      uri: route("expenses.search")
     });
 
     const deleteForm = useForm({
       id: 0,
     });
+
+    const links = ref(props.expenses.links);
 
     const prepareDeletion = (id) => {
       deleteForm.id = id;
@@ -180,14 +186,15 @@ export default {
 
     watch(form.value, () => {
       axios
-        .post(route("expenses.search"), form.value)
+        .post(form.value.uri, form.value)
         .then((res) => {
           reactiveExpenses.value = res.data.data;
+          links.value = res.data.links;
         })
         .catch((err) => console.log(err));
     });
 
-    return { isOpen, prepareDeletion, form, setFilter, deleteExpense, reactiveExpenses };
+    return { isOpen, prepareDeletion, form, setFilter, deleteExpense, reactiveExpenses, links };
   },
 };
 </script>

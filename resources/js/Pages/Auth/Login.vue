@@ -3,7 +3,7 @@
   <div
     class="min-h-screen max-w-sm mx-auto flex items-center justify-center px-2"
   >
-    <div class="w-full bg-white rounded-md shadow-md py-4 px-2 sm:px-6">
+    <div class="w-full rounded-md border-2 hover:border-dashed border-gray-300 py-4 px-2 sm:px-6">
       <div style="max-width: 300px; margin: 0 auto">
         <h2 class="font-bold text-center text-gray-600 text-xl mt-2 mb-4">
           Admin &nbsp;&nbsp;-&nbsp;&nbsp; Connexion
@@ -82,8 +82,6 @@
                   px-4
                   text-sm
                   shadow shadow-blue-500/50
-                  flex
-                  items-center
                   rounded-md
                   hover:bg-blue-700
                   transition
@@ -94,7 +92,7 @@
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
               >
-                <span>Connexion</span>
+                Connexion
               </button>
             </div>
           </div>
@@ -107,7 +105,6 @@
 <script>
 import LockIcon from "@/Components/LockIcon.vue";
 import EmailIcon from "@/Components/EmailIcon.vue";
-import LoginIcon from "@/Components/LoginIcon.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
@@ -116,7 +113,6 @@ export default {
     Head,
     LockIcon,
     EmailIcon,
-    LoginIcon,
   },
 
   props: {

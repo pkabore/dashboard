@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         return Inertia::render('Category/Index', [
-            'categories' => Category::orderBy('name')->paginate(12)->all()
+            'categories' => Category::orderBy('name')->paginate(12)
         ]);
     }
 
@@ -86,7 +86,8 @@ class CategoryController extends Controller
         $filters = $request->only(['search', 'sortByName', 'sortByArticles']);
 
         $categories = Category::filter($filters)
-                        ->paginate(12);
+                        ->paginate(12)
+                        ->withQueryString();
 
         return $categories;
     }

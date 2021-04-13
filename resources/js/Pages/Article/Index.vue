@@ -1,7 +1,7 @@
 <template>
   <div class="px-2 mx-auto w-full">
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">Articles</h2>
-    <div class="max-w-2xl w-full mx-auto rounded-md bg-white border pt-4 my-7">
+    <div class="max-w-3xl w-full mx-auto rounded-md border pt-4 my-7">
       <div class="flex items-center justify-center space-x-2 px-2 mb-4">
         <div class="relative max-w-sm mx-auto">
           <span
@@ -30,7 +30,7 @@
         <CreateButton :href="route('articles.create')" />
       </div>
       <div class="w-full mx-auto overflow-x-auto">
-        <table class="w-full table-auto whitespace-nowrap text-sm shadow-md">
+        <table class="w-full table-auto whitespace-nowrap text-sm">
           <thead>
             <tr>
               <th class="py-3">Id</th>
@@ -121,11 +121,11 @@
           </thead>
           <tbody class="pt-4">
             <tr
-              v-for="article in reactiveArticles.data"
+              v-for="article in reactiveArticles"
               :key="article.id"
-              class="border-t space-x-2 text-center hover:bg-neutral-200"
+              class="border-t space-x-2 hover:bg-neutral-200 text-center"
             >
-              <td class="p-2 family-mono">
+              <td class="p-2">
                 {{ article.id }}
               </td>
               <td class="p-2 uppercase text-xs">
@@ -140,10 +140,10 @@
               >
                 {{ article.stock.toLocaleString("fr-FR") }}
               </td>
-              <td class="p-2 family-mono">
+              <td class="p-2">
                 {{ parseFloat(article.price).toLocaleString("fr-FR") }}
               </td>
-              <td class="p-2 family-mono">
+              <td class="p-2">
                 {{ parseFloat(article.tax).toLocaleString("fr-FR") + "%" }}
               </td>
               <td class="p-2">
@@ -151,28 +151,29 @@
               </td>
               <td class="p-2">
                 <Link :href="route('articles.edit', article.id)">
-                  <EditIcon class="h-5 w-5 text-blue-600 ml-1" />
+                  <ChevronRightIcon class="h-5 w-5 text-blue-600 ml-1" />
                 </Link>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <Pagination class="my-5" :links="links" @paginate="(payload) => form.uri = payload" />
     </div>
   </div>
 </template>
 
-
 <script>
 import Layout from "@/Pages/Layout.vue";
 import SearchIcon from "@/Components/SearchIcon.vue";
+import Pagination from "@/Components/Pagination.vue";
 import AddIcon from "@/Components/AddIcon.vue";
-import EditIcon from "@/Components/EditIcon.vue";
+import ChevronRightIcon from "@/Components/ChevronRightIcon.vue";
 import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
 import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
 import CreateButton from "@/Components/CreateButton.vue";
 import ExportButton from "@/Components/ExportButton.vue";
-import { Link, useForm } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
 
@@ -182,8 +183,9 @@ export default {
   components: {
     Link,
     SearchIcon,
+    Pagination,
     AddIcon,
-    EditIcon,
+    ChevronRightIcon,
     ChevronUpIcon,
     ChevronDownIcon,
     ExportButton,
@@ -194,12 +196,14 @@ export default {
 
   setup(props) {
     const form = ref({
-      search: "",
+      search: '',
+      uri: route('articles.search')
     });
 
     const orders = ref([]);
+    const links = ref(props.articles.links);
 
-    const reactiveArticles = ref(props.articles);
+    const reactiveArticles = ref(props.articles.data);
 
     const setFilter = (key, value) => {
       const keys = Object.keys(form.value);
@@ -211,16 +215,18 @@ export default {
       form.value[key] = value;
     };
 
+
     watch(form.value, () => {
       axios
-        .post(route("articles.search"), form.value)
+        .post(form.value.uri, form.value)
         .then((res) => {
-          reactiveArticles.value = res.data;
+          reactiveArticles.value = res.data.data;
+          links.value = res.data.links;
         })
         .catch((err) => console.log(err));
     });
 
-    return { form, setFilter, reactiveArticles };
+    return { form, setFilter, reactiveArticles, links };
   },
 };
 </script>

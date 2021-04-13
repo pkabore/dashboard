@@ -17,108 +17,111 @@ use Inertia\Inertia;
 class MetadataController extends Controller
 {
     
-    private static function get_bills_metadata($status){
+    private $labelsFormat = 'M Y';
+
+    private function get_bills_metadata($status, $format){
         return QuoteBill::where('is_bill', true)
-                        ->where('status', $status)
-                        ->select('total', 'taxes', 'created_at')
+                        //->where('status', $status)
+                        ->orderBy('created_at')
+                        ->select('total', 'created_at')
                         ->get()
-                        ->groupBy(function($b){ return $b->created_at->format('d'); })
-                        ->map(function($g){
-                            $totals = $g->reduce(function ($carry, $bill) {
+                        ->groupBy(fn($bill) => $bill->created_at->format($format))
+                        ->map(function($group, $date){
+                            $total = $group->reduce(function ($carry, $bill) {
                                 return $carry + $bill->total;
                             });
-                            $taxes = $g->reduce(function ($carry, $bill) {
-                                return $carry + $bill->taxes;
-                            });
-                            return [ 'totals' => $totals, 'taxes' => $taxes ];
+                            return $total;
                         });
     }
 
-    private static function get_clients_metadata(){
-        return Client::get()
-            ->groupBy(function($b){ return $b->created_at->format('d'); })
-            ->map(function($g){
-                $totals = $g->reduce(function ($carry, $client) {
-                    return $carry + 1;
+    private function get_clients_metadata($format){
+        return Client::orderBy('created_at')
+            ->get()
+            ->groupBy(fn($client) => $client->created_at->format($format))
+            ->map(fn($group) => count($group));
+            
+    }
+
+
+    private function get_quotes_metadata($format){
+        return QuoteBill::where('is_quote', true)
+                        ->orderBy('created_at')
+                        ->get()
+                        ->groupBy(fn($quote) => $quote->created_at->format($format))
+                        ->map(fn($group) => count($group));
+    }
+
+
+    private function get_expenses_metadata($format){
+        return Expense::orderBy('created_at')
+            ->get()
+            ->groupBy(fn($expense) => $expense->created_at->format($format))
+            ->map(function($group){
+                $total = $group->reduce(function ($carry, $expense) {
+                    return $carry + $expense->fee;
                 });
-                return [ 'totals' => $totals];
+                return $total;
             });
     }
 
 
-    private static function get_expenses_metadata(){
-        return Expense::get()
-            ->groupBy(function($b){ return $b->created_at->format('d'); })
-            ->map(function($g){
-                $totals = $g->reduce(function ($carry, $expense) {
-                    return $carry + $expense->fee;
+    private function get_sales_metadata($format){
+        return Sale::orderBy('created_at')
+            ->get()
+            ->groupBy(fn($sale) => $sale->created_at->format($format))
+            ->map(function($group){
+                $total = $group->reduce(function ($carry, $sale) {
+                    return $carry + $sale->total;
                 });
-                return [ 'totals' => $totals];
+                return $total;
             });
     }
 
     public function index()
-    {
-        //$sales = Sale::all()->groupBy(function($s) { return $s->created_at->format('d'); });
+    {        
+        $salesAmountStats = $this->get_sales_metadata($this->labelsFormat);
+        $billsAmountStats = $this->get_bills_metadata('Payé', $this->labelsFormat);
+        $expensesAmountStats = $this->get_expenses_metadata($this->labelsFormat);
+
+        $quotesNumberStats = $this->get_quotes_metadata($this->labelsFormat);
+        $clientsNumberStats = $this->get_clients_metadata($this->labelsFormat);
         
-        $paid_bills_data = $this::get_bills_metadata('Payé');
-        $paid_bills_labels = array_keys($paid_bills_data->toArray());
-        $paid_bills_taxes = $paid_bills_data->pluck('taxes');
-        $paid_bills_totals = $paid_bills_data->pluck('totals');
+        //$paid_bills_labels = array_keys($paidBillsData->toArray());
+        //$paidBillsTotals = $paidBillsData->pluck('totals');
 
-
-        $unpaid_bills_data = $this::get_bills_metadata('Non Payé');
-        $unpaid_bills_labels = array_keys($unpaid_bills_data->toArray());
-        $unpaid_bills_taxes = $unpaid_bills_data->pluck('taxes');
-        $unpaid_bills_totals = $unpaid_bills_data->pluck('totals');
-
-
-        $clients_data = $this::get_clients_metadata();
-        $clients_data_labels = array_keys($clients_data->toArray());
-        $clients_data_totals = $clients_data->pluck('totals');
-
-
-        $spendings = Expense::sum('fee');
-        $expenses_data = $this::get_expenses_metadata();
-        $expenses_data_totals = $expenses_data->pluck('totals');
-        
+        $expensesAmount = Expense::sum('fee');        
         $income = Sale::sum('total');   
-        $income += QuoteBill::whereMonth('created_at', now()->month)
-                                    ->where('is_bill', true)
-                                    ->where('status', 'Payé')
-                                    ->sum('total');
+        $income += QuoteBill::where('is_bill', true)
+                            //->where('status', 'Payé')
+                            ->sum('total');
 
 
-        $clients = Client::count();
-        $articles = Article::count();
-        $categories = Category::count();
-        $sales = Sale::count();
-        $bills = QuoteBill::where('is_bill', true)->count();
-        $quotes = QuoteBill::where('is_quote', true)->count();
-        $expenses = Expense::count();
+        $clientsNumber = Client::count();
+        $articlesNumber = Article::count();
+        $categoriesNumber = Category::count();
+        $billsNumber = QuoteBill::where('is_bill', true)->count();
+        $unpaidBillsNumber = QuoteBill::where('is_bill', true)->where('status', 'Non Payé')->count();
+        $quotesNumber = QuoteBill::where('is_quote', true)->count();
+        $expensesNumber = Expense::count();
 
         $metadata = [
-            //'sales' => $sales,
-            'paid_bills_labels' => $paid_bills_labels,
-            'paid_bills_taxes' => $paid_bills_taxes,
-            'paid_bills_totals' => $paid_bills_totals,
-            'unpaid_bills_labels' => $unpaid_bills_labels,
-            'unpaid_bills_taxes' => $unpaid_bills_taxes,
-            'unpaid_bills_totals' => $unpaid_bills_totals,
-            'clients_data_labels' => $clients_data_labels,
-            'clients_data_totals' => $clients_data_totals,
-            'expenses_data_totals' => $expenses_data_totals,
-            'clients' => $clients,
-            'bills' => $bills,
-            'articles' => $articles,
-            'categories' => $categories,
-            'sales' => $sales,
-            'quotes' => $quotes,
-            'expenses' => $expenses,
-            'spendings' => $spendings,
+            'expensesNumber' => $expensesNumber,
+            'expensesAmount' => $expensesAmount,
+            'expensesAmountStats' => $expensesAmountStats,
+            'salesAmountStats' => $salesAmountStats,
+            'billsNumber' => $billsNumber,
+            'unpaidBillsNumber' => $unpaidBillsNumber,
+            'billsAmountStats' => $billsAmountStats,
+            'quotesNumber' => $quotesNumber,
+            'quotesNumberStats' => $quotesNumberStats,
+            'clientsNumber' => $clientsNumber,
+            'clientsNumberStats' => $clientsNumberStats,
+            'billsNumber' => $billsNumber,
+            'articlesNumber' => $articlesNumber,
+            'categoriesNumber' => $categoriesNumber,
             'income' => $income,
         ];
-
+        //dd($metadata);
         return Inertia::render('Stats/Index', [ 'metadata' => $metadata ]);
     }
 }

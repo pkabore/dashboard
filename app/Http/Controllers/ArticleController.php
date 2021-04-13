@@ -14,8 +14,11 @@ use Carbon\Carbon;
 class ArticleController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->only(['search', 'sortByTax', 'sortByName', 'sortByPrice', 'sortByExpiresAt', 'sortByStock']);
+
+
         $articles = Article::paginate(12)
                     ->through(function($article){
                         if ($article->expires_at)
@@ -24,7 +27,6 @@ class ArticleController extends Controller
                             $article->expires_at = '-';
                         return $article;
                     });
-
         return Inertia::render('Article/Index', [
             'articles' => $articles
         ]);
@@ -133,9 +135,9 @@ class ArticleController extends Controller
     public function search(Request $request)
     {
         $filters = $request->only(['search', 'sortByTax', 'sortByName', 'sortByPrice', 'sortByExpiresAt', 'sortByStock']);
-
         $articles = Article::filter($filters)
                         ->paginate(12)
+                        ->withQueryString()
                         ->through(function($article){
                             if ($article->expires_at)
                                 $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
@@ -143,7 +145,6 @@ class ArticleController extends Controller
                                 $article->expires_at = '-';
                             return $article;
                         });
-
         return $articles;
     }
 

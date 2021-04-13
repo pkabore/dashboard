@@ -2,8 +2,12 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+a{
+    @apply focus:outline-none focus:ring focus:rounded focus:ring-sky-500;
+}
+
 .input {
-    @apply mt-1 block w-full rounded-md transition duration-200 ease-in-out text-gray-900 border border-slate-300 focus:border-slate-400 focus:outline-none focus:ring-0;
+    @apply z-0 mt-1 block w-full rounded-md transition duration-200 ease-in-out text-gray-900 border border-slate-300 focus:border-slate-400 focus:outline-none focus:ring-0;
 }
 
 .delete-btn{

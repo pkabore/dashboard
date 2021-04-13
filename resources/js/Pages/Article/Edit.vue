@@ -60,7 +60,6 @@
                   pl-3
                   pr-10
                   text-sm text-left
-                  bg-white
                   border border-slate-300
                   focus:outline-none focus:border-slate-400
                   rounded-md

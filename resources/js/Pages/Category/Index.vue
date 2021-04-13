@@ -1,7 +1,7 @@
 <template>
   <div class="px-2 mx-auto w-full">
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">Rayons</h2>
-    <div class="max-w-2xl mx-auto rounded-md bg-white border pt-4 my-7">
+    <div class="max-w-3xl mx-auto rounded-md bg-white border pt-4 my-7">
       <div class="flex items-center justify-center space-x-2 px-2 mb-4">
         <div class="relative max-w-sm mx-auto">
           <span
@@ -30,7 +30,7 @@
         <CreateButton :href="route('categories.create')" />
       </div>
       <div class="w-full mx-auto overflow-x-auto">
-        <table class="w-full table-auto whitespace-nowrap text-sm shadow-md">
+        <table class="w-full table-auto whitespace-nowrap text-sm">
           <thead>
             <tr>
               <th class="py-3">Id</th>
@@ -72,17 +72,17 @@
           </thead>
           <tbody class="pt-4">
             <tr
-              v-for="category in reactiveCategories"
-              :key="category.id"
-              class="border-t space-x-2 text-center hover:bg-neutral-200"
+              v-for="(category, key) in reactiveCategories"
+              :key="key"
+              class="border-t space-x-2 hover:bg-neutral-200 text-center"
             >
-              <td class="p-2 family-mono">
+              <td class="p-2">
                 {{ category.id }}
               </td>
               <td class="p-2 uppercase text-xs">
                 {{ category.name }}
               </td>
-              <td class="p-2 text-blue-700 family-mono">
+              <td class="p-2 text-blue-700">
                 {{ parseFloat(category.articles).toLocaleString("fr-FR") }}
               </td>
               <td class="p-2 inline-flex justify-center">
@@ -94,6 +94,7 @@
           </tbody>
         </table>
       </div>
+      <Pagination class="my-5" :links="links" @paginate="(payload) => form.uri = payload" />
     </div>
   </div>
 </template>
@@ -107,6 +108,7 @@ import ChevronRightIcon from "@/Components/ChevronRightIcon.vue";
 import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
 import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
 import ExportButton from "@/Components/ExportButton.vue";
+import Pagination from "@/Components/Pagination.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
@@ -120,6 +122,7 @@ export default {
     ChevronRightIcon,
     ChevronUpIcon,
     ChevronDownIcon,
+    Pagination,
     ExportButton
   },
 
@@ -128,9 +131,11 @@ export default {
   setup(props) {
     const form = ref({
       search: "",
+      uri: route('categories.search')
     });
 
-    const reactiveCategories = ref(props.categories);
+    const links = ref(props.categories.links);
+    const reactiveCategories = ref(props.categories.data);
 
     const setFilter = (key, value) => {
       const keys = Object.keys(form.value);
@@ -144,14 +149,15 @@ export default {
 
     watch(form.value, () => {
       axios
-        .post(route("categories.search"), form.value)
+        .post(form.value.uri, form.value)
         .then((res) => {
           reactiveCategories.value = res.data.data;
+          links.value = res.data.links;
         })
         .catch((err) => console.log(err));
     });
 
-    return { form, setFilter, reactiveCategories };
+    return { form, setFilter, reactiveCategories, links };
   },
 };
 </script>

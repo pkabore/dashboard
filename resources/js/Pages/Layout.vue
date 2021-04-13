@@ -3,7 +3,7 @@
   <div class="min-h-screen relative">
     <div
       class="
-        w-44
+        w-[180px]
         transform
         fixed
         inset-y-0
@@ -27,6 +27,7 @@
       }"
     >
       <Link
+        @click="sidebar=!sidebar"
         href="/"
         class="
           flex
@@ -41,13 +42,14 @@
           duration-200
         "
         :class="{
-          'bg-slate-900': $page.component.startsWith('Stats'),
+          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Stats'),
         }"
       >
         <ChartIcon class="h-5 w-5 mr-4 text-gray-200" />
         <span>Analytics</span>
       </Link>
       <Link
+        @click="sidebar=!sidebar"
         :href="route('sales.index')"
         class="
           flex
@@ -62,7 +64,7 @@
           duration-200
         "
         :class="{
-          'bg-slate-900': $page.component.startsWith('Sale'),
+          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Sale'),
         }"
       >
         <ShoppingIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -70,6 +72,7 @@
       </Link>
 
       <Link
+        @click="sidebar=!sidebar"
         :href="route('articles.index')"
         class="
           flex
@@ -84,7 +87,7 @@
           duration-200
         "
         :class="{
-          'bg-slate-900': $page.component.startsWith('Article'),
+          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Article'),
         }"
       >
         <ArticleIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -92,6 +95,7 @@
       </Link>
 
       <Link
+        @click="sidebar=!sidebar"
         :href="route('categories.index')"
         class="
           flex
@@ -106,7 +110,7 @@
           duration-200
         "
         :class="{
-          'bg-slate-900': $page.component.startsWith('Category'),
+          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Category'),
         }"
       >
         <FolderIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -114,6 +118,7 @@
       </Link>
 
       <Link
+        @click="sidebar=!sidebar"
         :href="route('bills.index')"
         class="
           flex
@@ -128,7 +133,7 @@
           duration-200
         "
         :class="{
-          'bg-slate-900': $page.component.startsWith('Bill'),
+          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Bill'),
         }"
       >
         <PrintIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -136,6 +141,7 @@
       </Link>
 
       <Link
+        @click="sidebar=!sidebar"
         :href="route('quotes.index')"
         class="
           flex
@@ -150,7 +156,7 @@
           duration-200
         "
         :class="{
-          'bg-slate-900': $page.component.startsWith('Quote'),
+          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Quote'),
         }"
       >
         <FormatedListIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -158,6 +164,7 @@
       </Link>
 
       <Link
+        @click="sidebar=!sidebar"
         :href="route('clients.index')"
         class="
           flex
@@ -172,13 +179,14 @@
           duration-200
         "
         :class="{
-          'bg-slate-900': $page.component.startsWith('Client'),
+          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Client'),
         }"
       >
         <GroupIcon class="h-5 w-5 mr-4 text-gray-200" />
         <span>Clients</span>
       </Link>
       <Link
+        @click="sidebar=!sidebar"
         :href="route('expenses.index')"
         class="
           flex
@@ -193,13 +201,14 @@
           duration-200
         "
         :class="{
-          'bg-slate-900': $page.component.startsWith('Expense'),
+          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Expense'),
         }"
       >
         <PaymentIcon class="h-5 w-5 mr-4 text-gray-200" />
         <span>Dépenses</span>
       </Link>
       <Link
+        @click="sidebar=!sidebar"
         :href="route('logout')"
         method="post"
         as="button"
@@ -221,11 +230,10 @@
       </Link>
     </div>
     <div
-      class="min-h-full mx-auto absolute inset-x-0 top-0 md:left-44"
-      style=""
+      class="min-h-full absolute top-0 right-0 md:left-[180px]"
     >
       <div
-        class="md:hidden p-3 text-slate-800 flex items-center justify-between"
+        class="md:hidden p-2 text-gray-800 flex items-center justify-between"
       >
         <span class="text-xl font-medium">Market Admin</span>
         <MenuIcon @click="sidebar = !sidebar" class="w-5 h-5 text-gray-600" />
@@ -249,7 +257,7 @@ import CheckListIcon from "@/Components/CheckListIcon.vue";
 import ShoppingIcon from "@/Components/ShoppingIcon.vue";
 import FolderIcon from "@/Components/FolderIcon.vue";
 import FormatedListIcon from "@/Components/FormatedListIcon.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 export default {
   components: {
@@ -271,6 +279,21 @@ export default {
 
   setup() {
     const sidebar = ref(true);
+    /*onMounted(() => {
+      window.addEventListener('keyup', (e) => {
+        e.preventDefault()
+        if (e.keyCode == 27)
+          sidebar.value = !sidebar;
+      });
+
+      window.addEventListener('click', (e) => {
+        e.preventDefault()
+        if (e.x > 176){
+        console.log(e)
+          sidebar.value = !sidebar;
+        }
+      });
+    });*/
     return { sidebar };
   },
 };

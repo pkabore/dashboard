@@ -4,9 +4,12 @@
       Générer une facture
     </h2>
     <div class="flex justify-center max-w-3xl mx-auto space-x-2">
-      <div class="w-7/12 mx-auto rounded-md bg-white border pt-4 my-7">
+      <div class="w-7/12 mx-auto rounded-md border pt-4 my-7">
         <div id="bill" class="w-full px-2 mx-auto">
-          <h2 v-if="message" class="text-center text-green-700 my-2">
+          <h2 v-if="failureMessage.length > 0" class="text-center text-red-700 my-2">
+            {{ failureMessage }}
+          </h2>
+          <h2 v-else class="text-center text-green-700 my-2">
             {{ message }}
           </h2>
           <ShopInfo />
@@ -155,13 +158,13 @@
         </div>
       </div>
       <div
-        class="w-5/12 py-4 px-4 my-7 mx-auto bg-white rounded-md border h-full"
+        class="w-5/12 py-4 px-4 my-7 mx-auto rounded-md border h-full"
       >
         <div class="flex justify-end">
           <div class="w-24">
             <button
               class="
-                bg-white
+                
                 w-full
                 py-2
                 px-4
@@ -185,7 +188,7 @@
             </button>
             <button
               class="
-                bg-white
+                
                 w-full
                 py-2
                 px-4
@@ -196,7 +199,7 @@
                 ease-in-out
                 duration-300
                 items-center
-                text-slate-600
+                text-gray-600
                 focus:outline-none
                 rounded-md
                 text-sm
@@ -224,7 +227,7 @@
                   pl-3
                   pr-10
                   text-sm text-left
-                  bg-white
+                  
                   border border-slate-300
                   focus:outline-none focus:border-slate-400
                   rounded-md
@@ -351,7 +354,7 @@
                   pl-3
                   pr-10
                   text-sm text-left
-                  bg-white
+                  
                   border border-slate-300
                   focus:outline-none focus:border-slate-400
                   rounded-md
@@ -568,7 +571,7 @@ export default {
     ListboxOption,
   },
 
-  props: { articles: Array, msg: String },
+  props: { failureMessage: String },
 
   setup(props) {
     const form = useForm({
@@ -664,6 +667,7 @@ export default {
         });
         if (!error.value.length) {
           bill.post(route("bills.store"), {
+            only: ['failureMessage'],
             onSuccess: () => {
               resolve(0);
             },

@@ -1,7 +1,7 @@
 <template>
   <div class="px-2 mx-auto w-full">
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">Factures</h2>
-    <div class="max-w-2xl mx-auto rounded-md bg-white border pt-4 my-7">
+    <div class="max-w-3xl mx-auto rounded-md border pt-4 my-7">
       <div class="flex items-center justify-center space-x-2 px-2 mb-4">
         <div class="relative max-w-sm mx-auto">
           <span
@@ -30,26 +30,26 @@
         <CreateButton :href="route('bills.create')" />
       </div>
       <div class="w-full mx-auto overflow-x-auto">
-        <table class="w-full table-auto whitespace-nowrap text-sm shadow-md">
+        <table class="w-full table-auto whitespace-nowrap text-sm">
           <thead>
             <tr>
               <th class="py-3">
                 <div class="flex items-center justify-center">
-                  <ChevronUpIcon
+                  <!-- <ChevronUpIcon
                     @click="setFilter('sortByReceiptId', 'asc')"
                     class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
                     :class="{
                       'text-blue-700': form.sortByReceiptId == 'asc',
                     }"
-                  />
-                  <span>Facture</span>
-                  <ChevronDownIcon
+                  /> -->
+                  <span>Id</span>
+                  <!-- <ChevronDownIcon
                     @click="setFilter('sortByReceiptId', 'desc')"
                     class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
                     :class="{
                       'text-blue-700': form.sortByReceiptId == 'desc',
                     }"
-                  />
+                  /> -->
                 </div>
               </th>
               <th class="py-3">
@@ -146,12 +146,12 @@
               class="border-t space-x-2 hover:bg-neutral-200 text-center"
             >
               <td class="p-2">
-                {{ bill.receipt_id }}
+                {{ bill.id }}
               </td>
               <td class="p-2">
                 {{ bill.client_name }}
               </td>
-              <td class="lowercase">
+              <td class="lowercase text-gray-600">
                 {{ bill.date }}
               </td>
               <td class="lowercase">
@@ -163,13 +163,13 @@
               <td class="p-2 font-medium">
                 <span
                   v-if="bill.status == 'Payé'"
-                  class="border border-green-600 text-green-700 px-2 py-1 rounded-md"
+                  class="border border-green-600 text-green-700 text-xs px-1 py-[2px] rounded-md"
                 >
                   {{ bill.status }}
                 </span>
                 <span
                   v-else
-                  class="border border-red-600 text-red-700 text-xs px-2 py-1 rounded-md"
+                  class="border border-red-600 text-red-700 text-xs px-1 py-[2px] rounded-md"
                 >
                   {{ bill.status }}
                 </span>
@@ -183,6 +183,7 @@
           </tbody>
         </table>
       </div>
+      <Pagination class="my-5" :links="links" @paginate="(payload) => form.uri = payload" />
     </div>
   </div>
 </template>
@@ -196,6 +197,7 @@ import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
 import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
 import CreateButton from "@/Components/CreateButton.vue";
 import ExportButton from "@/Components/ExportButton.vue";
+import Pagination from "@/Components/Pagination.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
@@ -210,6 +212,7 @@ export default {
     ChevronUpIcon,
     ChevronDownIcon,
     CreateButton,
+    Pagination,
     ExportButton
   },
 
@@ -218,9 +221,11 @@ export default {
   setup(props) {
     const form = ref({
       search: "",
+      uri: route('bills.search')
     });
 
     const reactiveBills = ref(props.bills.data);
+    const links = ref(props.bills.links);
 
     const setFilter = (key, value) => {
       const keys = Object.keys(form.value);
@@ -234,14 +239,15 @@ export default {
 
     watch(form.value, () => {
       axios
-        .post(route("bills.search"), form.value)
+        .post(form.value.uri, form.value)
         .then((res) => {
           reactiveBills.value = res.data.data;
+          links.value = res.data.links;
         })
         .catch((err) => console.log(err));
     });
 
-    return { form, setFilter, reactiveBills };
+    return { form, setFilter, reactiveBills, links };
   },
 };
 </script>

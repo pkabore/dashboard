@@ -15,7 +15,8 @@ return [
     |
     */
 
-    'driver' => 'bcrypt',
+    //'driver' => 'bcrypt',
+    'driver' => 'argon2id',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,8 +46,8 @@ return [
 
     'argon' => [
         'memory' => 1024,
-        'threads' => 2,
-        'time' => 2,
+        'threads' => 4,
+        'time' => 4,
     ],
 
 ];

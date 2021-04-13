@@ -97,7 +97,8 @@ class ClientController extends Controller
     {
         $filters = $request->only(['search', 'sortByLname', 'sortByFname', 'sortByEmail', 'sortByPhone', 'sortByAddress']);
         $clients = Client::filter($filters)
-                        ->paginate(12);
+                        ->paginate(12)
+                        ->withQueryString();
 
         return $clients;
     }

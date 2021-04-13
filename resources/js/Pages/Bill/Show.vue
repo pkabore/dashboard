@@ -3,7 +3,7 @@
     <h2 class="text-2xl font-bold my-4 text-gray-600 text-center">
       Facture N°{{ bill.receipt_id }}
     </h2>
-    <div id="bill" class="w-full px-2 mx-auto rounded-md bg-white border">
+    <div id="bill" class="w-full px-2 mx-auto rounded-md border">
       <ShopInfo />
       <div class="mt-4 flex justify-between text-gray-900">
         <p>
@@ -150,7 +150,7 @@
               focus:outline-none
               hover:bg-red-700
             "
-            @click="deleteBill"
+            @click="isOpen=!isOpen"
           >
             Supprimer
           </button> -->
@@ -197,8 +197,8 @@ export default {
   },
   components: { ShopInfo, Dialog },
   setup(props) {
-    const getDateTime = () => {
-      const d = new Date(props.bill.created_at);
+    const getDateTime = (date) => {
+      const d = new Date(date);
       const year = d.getFullYear();
       let months = d.getMonth() + 1;
       let days = d.getDate();

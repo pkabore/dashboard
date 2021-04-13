@@ -18,7 +18,7 @@ class QuoteController extends Controller
                     ->where('is_quote', true)
                     ->paginate(12)
                     ->through(function ($quote) {
-                        $quote->date = $quote->created_at->format('d/m/Y');
+                        $quote->date = $quote->created_at->format('d M, Y');
                         return $quote;
                     });
 
@@ -29,12 +29,12 @@ class QuoteController extends Controller
 
     public function create(Request $request)
     {
-        $message = session('message');
-        $request->session()->put('message', '');
-        if (!$message)
-            $message = session('message');
+        $failureMessage = session('failureMessage');
+        $request->session()->put('failureMessage', '');
+        if (!$failureMessage)
+            $failureMessage = session('failureMessage');
         return Inertia::render('Quote/Create', [
-            'message' => $message,
+            'failureMessage' => $failureMessage,
         ]);
     }
 
@@ -53,13 +53,20 @@ class QuoteController extends Controller
                     'shipment' => 'nullable|numeric|min:0',
                     'description' => 'required|string|max:256'
                 ]);
-
+                $quote = QuoteBill::where('receipt_id', $request->receipt_id)
+                                    ->first();
+                if ($quote){
+                    $request->session()->put('failureMessage', 'Devis déjà existant');
+                    return redirect(route('quotes.create'));
+                }
                 $quote = new QuoteBill();
 
-                $quote->client_id = $request->client['id'];
-                $quote->client_name = $request->client['name'];
-                $quote->client_phone = $request->client['phone'];
-                $quote->client_email = $request->client['email'];
+                if ($request->client){
+                    $quote->client_id = $request->client['id'];
+                    $quote->client_name = $request->client['name'];
+                    $quote->client_phone = $request->client['phone'];
+                    $quote->client_email = $request->client['email'];
+                }
                 $quote->receipt_id = $request->receipt_id;
                 $quote->deadline = $request->deadline;
                 $quote->description = $request->description;
@@ -95,8 +102,9 @@ class QuoteController extends Controller
         $quotes = QuoteBill::filter($filters)
                         ->where('is_quote', true)
                         ->paginate(12)
+                        ->withQueryString()
                         ->through(function ($quote) {
-                            $quote->date = $quote->created_at->format('d/m/Y');
+                            $quote->date = $quote->created_at->format('d M, Y');
                             return $quote;
                         });
 
@@ -107,12 +115,13 @@ class QuoteController extends Controller
     {
         $items = Order::where('sale_quote_bill_id', $quote->id)->get();
         $quote->items = $items;
-        $quote->date = $quote->created_at->format('d/m/Y');
+        $quote->date = $quote->created_at->format('d M, Y');
         return Inertia::render('Quote/Show', [ 'quote' => $quote]);
     }
 
     public function destroy(QuoteBill $quote)
     {
+        Order::where('sale_quote_bill_id', $quote->sale_quote_bill_id)->delete();
         $quote->delete();
         return redirect(route('quotes.index'));
     }

@@ -15,12 +15,9 @@ class ExpenseController extends Controller
     {
         $expenses = Expense::paginate(12)
                     ->through(function($expense) {
-                        try {
-                                $expense->date = $expense->created_at->diffForHumans();
-                            } catch (\Throwable $th) {
-                                throw $th;
-                            }
-                        $expense->category = Category::find($expense->category_id)->name;
+                        $expense->date = $expense->created_at->format('d M, Y');
+                        $category = Category::find($expense->category_id);
+                        $expense->category = $category->name;
                         return $expense;
                     });
         return Inertia::render('Expense/Index', [ 'expenses' => $expenses ]);
@@ -60,12 +57,9 @@ class ExpenseController extends Controller
         $filters = $request->only(['search', 'sortByFee', 'sortByDate']);
         $expenses = Expense::filter($filters)
                         ->paginate(12)
+                        ->withQueryString()
                         ->through(function($expense) {
-                            try {
-                                $expense->date = $expense->created_at->diffForHumans();
-                            } catch (\Throwable $th) {
-                                throw $th;
-                            }
+                            $expense->date = $expense->created_at->format('d M, Y');
                             $expense->category = Category::find($expense->category_id)->name;
                             return $expense;
                         });

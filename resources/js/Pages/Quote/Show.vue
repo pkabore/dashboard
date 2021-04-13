@@ -3,7 +3,7 @@
     <h2 class="text-2xl font-bold my-4 text-gray-600 text-center">
       Devis N°{{ quote.receipt_id }}
     </h2>
-    <div id="quote" class="w-full px-2 mx-auto rounded-md bg-white border">
+    <div id="quote" class="w-full px-2 mx-auto rounded-md border">
       <shop-info />
       <div class="mt-4 flex justify-between text-gray-900">
         <p>

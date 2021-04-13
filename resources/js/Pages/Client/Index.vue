@@ -1,7 +1,7 @@
 <template>
   <div class="px-2 mx-auto w-full">
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">Clients</h2>
-    <div class="max-w-2xl mx-auto rounded-md bg-white border pt-4 my-7">
+    <div class="max-w-3xl mx-auto rounded-md border pt-4 my-7">
       <div class="flex items-center justify-center space-x-2 px-2 mb-4">
         <div class="relative max-w-sm mx-auto">
           <span
@@ -99,9 +99,9 @@
           </thead>
           <tbody class="pt-4">
             <tr
-              v-for="client in reactiveClients.data"
+              v-for="client in reactiveClients"
               :key="client.id"
-              class="border-t space-x-2 text-center hover:bg-neutral-200"
+              class="border-t space-x-2 text-left hover:bg-neutral-200 text-center"
             >
               <td class="p-2">
                 {{ client.id }}
@@ -109,29 +109,25 @@
               <td class="p-2">
                 {{ client.lname }}
               </td>
-              <td
-                :class="{
-                  'text-red-700': client.stock <= 100,
-                  'text-blue-700': client.stock > 100,
-                }"
-              >
+              <td class="p-2">
                 {{ client.fname }}
               </td>
-              <td class="p-2">
+              <td class="p-2 text-blue-800">
                 {{ client.phone }}
               </td>
-              <td class="p-2">
+              <td class="p-2 text-gray-700">
                 {{ client.email }}
               </td>
               <td class="p-2 inline-flex justify-center">
                 <Link :href="route('clients.edit', client.id)">
-                  <EditIcon class="h-5 w-5 text-blue-700" />
+                  <ChevronRightIcon class="h-5 w-5 text-blue-700" />
                 </Link>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <Pagination class="my-5" :links="links" @paginate="(payload) => form.uri = payload" />
     </div>
   </div>
 </template>
@@ -141,11 +137,12 @@
 import Layout from "@/Pages/Layout.vue";
 import SearchIcon from "@/Components/SearchIcon.vue";
 import CreateButton from "@/Components/CreateButton.vue";
-import EditIcon from "@/Components/EditIcon.vue";
+import ChevronRightIcon from "@/Components/ChevronRightIcon.vue";
 import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
 import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
 import ExportButton from "@/Components/ExportButton.vue";
 import { Link } from "@inertiajs/inertia-vue3";
+import Pagination from '@/Components/Pagination.vue';
 import { watch, ref } from "vue";
 import axios from "axios";
 
@@ -156,10 +153,11 @@ export default {
     Link,
     SearchIcon,
     CreateButton,
-    EditIcon,
+    ChevronRightIcon,
     ChevronUpIcon,
     ChevronDownIcon,
     ExportButton,
+    Pagination,
   },
 
   props: { clients: Object },
@@ -167,9 +165,11 @@ export default {
   setup(props) {
     const form = ref({
       search: "",
+      uri: route('clients.search')
     });
 
-    const reactiveClients = ref(props.clients);
+    const reactiveClients = ref(props.clients.data);
+    const links = ref(props.clients.links);
 
     const setFilter = (key, value) => {
       const keys = Object.keys(form.value);
@@ -183,14 +183,15 @@ export default {
 
     watch(form.value, () => {
       axios
-        .post(route("clients.search"), form.value)
+        .post(form.value.uri, form.value)
         .then((res) => {
-          reactiveClients.value = res.data;
+          reactiveClients.value = res.data.data;
+          links.value = res.data.links;
         })
         .catch((err) => console.log(err));
     });
 
-    return { form, setFilter, reactiveClients };
+    return { form, setFilter, reactiveClients, links };
   },
 };
 </script>

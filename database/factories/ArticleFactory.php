@@ -15,13 +15,8 @@ class ArticleFactory extends Factory
     public function definition()
     {
 
-        $category_id = random_int(1, 100);
+        $category_id = random_int(1, 12);
         $c = Category::find($category_id);
-        
-        while(!$c){
-            $category_id = random_int(1, 100);
-            $c = Category::find($category_id);    
-        }
         
         $c->articles = $c->articles + 1;
         $c->save();
@@ -29,10 +24,10 @@ class ArticleFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'category_id' => $category_id,
-            'price' => random_int(500, 100000),
+            'price' => random_int(2000, 200000),
             'tax' => random_int(1, 10),
             "stock" => random_int(0, 1000),
-            'expires_at' => now()->addHours(random_int(1000, 5000))
+            'expires_at' => now()->addDays(random_int(1000, 5000))
         ];
     }
 }
