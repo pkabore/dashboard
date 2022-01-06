@@ -15,6 +15,13 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->string('fname')->max(128);
+            $table->string('lname')->max(128);
+            $table->string('phone')->unique()->max(32);
+            $table->string('email')->nullable()->max(128);
+            $table->string('address')->nullable()->max(256);
+            $table->string('company')->nullable()->max(256);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -10,8 +10,13 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
-/* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
+/* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nprogress */ "./node_modules/nprogress/nprogress.js");
+/* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(nprogress__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
 var _window$document$getE;
+
+
 
 
 
@@ -40,8 +45,25 @@ var appName = ((_window$document$getE = window.document.getElementsByTagName('ti
     }).mount(el);
   }
 });
-_inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init({
-  color: '#4B5563'
+var timeout = null;
+_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__.Inertia.on('progress', function (event) {
+  if (nprogress__WEBPACK_IMPORTED_MODULE_2___default().isStarted() && event.detail.progress.percentage) {
+    nprogress__WEBPACK_IMPORTED_MODULE_2___default().set(event.detail.progress.percentage / 100 * 0.9);
+  }
+});
+_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__.Inertia.on('finish', function (event) {
+  clearTimeout(timeout);
+
+  if (!nprogress__WEBPACK_IMPORTED_MODULE_2___default().isStarted()) {
+    return;
+  } else if (event.detail.visit.completed) {
+    nprogress__WEBPACK_IMPORTED_MODULE_2___default().done();
+  } else if (event.detail.visit.interrupted) {
+    nprogress__WEBPACK_IMPORTED_MODULE_2___default().set(0);
+  } else if (event.detail.visit.cancelled) {
+    nprogress__WEBPACK_IMPORTED_MODULE_2___default().done();
+    nprogress__WEBPACK_IMPORTED_MODULE_2___default().remove();
+  }
 });
 
 /***/ }),
@@ -66,15 +88,55 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
-	"./Auth/ConfirmPassword.vue": [
-		"./resources/js/Pages/Auth/ConfirmPassword.vue",
+	"./ConfirmPassword.vue": [
+		"./resources/js/Pages/ConfirmPassword.vue",
 		"/js/vendor",
-		"resources_js_Pages_Auth_ConfirmPassword_vue"
+		"resources_js_Pages_ConfirmPassword_vue"
 	],
 	"./Dashboard.vue": [
 		"./resources/js/Pages/Dashboard.vue",
 		"/js/vendor",
 		"resources_js_Pages_Dashboard_vue"
+	],
+	"./Dashboard/Article/Create.vue": [
+		"./resources/js/Pages/Dashboard/Article/Create.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Article_Create_vue"
+	],
+	"./Dashboard/Article/Edit.vue": [
+		"./resources/js/Pages/Dashboard/Article/Edit.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Article_Edit_vue"
+	],
+	"./Dashboard/Article/Index.vue": [
+		"./resources/js/Pages/Dashboard/Article/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Article_Index_vue"
+	],
+	"./Dashboard/Article/Show.vue": [
+		"./resources/js/Pages/Dashboard/Article/Show.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Article_Show_vue"
+	],
+	"./Dashboard/Client/Edit.vue": [
+		"./resources/js/Pages/Dashboard/Client/Edit.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Client_Edit_vue"
+	],
+	"./Dashboard/Client/Index.vue": [
+		"./resources/js/Pages/Dashboard/Client/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Client_Index_vue"
+	],
+	"./Dashboard/Sale/Sale.vue": [
+		"./resources/js/Pages/Dashboard/Sale/Sale.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Sale_Sale_vue"
+	],
+	"./Error.vue": [
+		"./resources/js/Pages/Error.vue",
+		"/js/vendor",
+		"resources_js_Pages_Error_vue"
 	],
 	"./Home.vue": [
 		"./resources/js/Pages/Home.vue",

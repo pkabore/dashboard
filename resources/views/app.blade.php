@@ -12,14 +12,41 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/nprogress.min.css') }}">
 
         <!-- Scripts -->
         @routes
         <script src="{{ mix('js/manifest.js') }}" defer></script>
         <script src="{{ mix('js/vendor.js') }}" defer></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
+
+        <style>
+            /* width */
+            ::-webkit-scrollbar {
+              width: 13px;
+              height: 13px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+              border-radius: 100vh;
+              background: #edf2f7;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+              background: #cbd5e0;
+              border-radius: 100vh;
+              border: 3px solid #edf2f7;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+              background: #a0aec0;
+            }
+        </style>
     </head>
-    <body class="font-sans antialiased bg-gray-300">
+    <body class="font-sans antialiased bg-slate-200">
         @inertia
     </body>
 </html>

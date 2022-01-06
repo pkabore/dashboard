@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class InvoiceController extends Controller
 {
@@ -14,7 +16,14 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $invoices = DB::table('invoices')
+                        ->join('orders', 'orders.sale_invoice_id', 'invoices.id')
+                        ->select('invoices.*', 'client.*', 'orders.*')
+                        ->paginate(50);
+
+        return Inertia::render('Dashboard/Invoice/Index', [
+            'invoices' => $invoices
+        ]);
     }
 
     /**

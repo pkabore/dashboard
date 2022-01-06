@@ -107,7 +107,7 @@
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_Auth_ConfirmPassword_vue":1,"resources_js_Pages_Dashboard_vue":1,"resources_js_Pages_Home_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_ConfirmPassword_vue":1,"resources_js_Pages_Dashboard_vue":1,"resources_js_Pages_Dashboard_Article_Create_vue":1,"resources_js_Pages_Dashboard_Article_Edit_vue":1,"resources_js_Pages_Dashboard_Article_Index_vue":1,"resources_js_Pages_Dashboard_Article_Show_vue":1,"resources_js_Pages_Dashboard_Client_Edit_vue":1,"resources_js_Pages_Dashboard_Client_Index_vue":1,"resources_js_Pages_Dashboard_Sale_Sale_vue":1,"resources_js_Pages_Error_vue":1,"resources_js_Pages_Home_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

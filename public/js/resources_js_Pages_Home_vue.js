@@ -190,7 +190,7 @@ var _hoisted_1 = {
   "class": "min-h-screen max-w-sm mx-auto flex items-center justify-center px-2"
 };
 var _hoisted_2 = {
-  "class": "w-full bg-white rounded-xl shadow-md py-2 px-2 sm:px-6"
+  "class": "w-full bg-white rounded-xl shadow-sm py-4 px-2 sm:px-6"
 };
 var _hoisted_3 = {
   style: {
@@ -200,8 +200,8 @@ var _hoisted_3 = {
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
-  "class": "font-bold text-center text-gray-600 text-2xl mb-4"
-}, " Admin   -   Login ", -1
+  "class": "font-bold text-center text-gray-600 text-xl mt-2 mb-4"
+}, " Admin   -   Connexion ", -1
 /* HOISTED */
 );
 
@@ -217,7 +217,7 @@ var _hoisted_7 = {
   "class": "text-red-500 text-xs mt-1"
 };
 var _hoisted_8 = {
-  "class": "relative mx-auto mt-1"
+  "class": "relative mx-auto mt-[8px]"
 };
 var _hoisted_9 = {
   key: 0,
@@ -228,10 +228,11 @@ var _hoisted_10 = {
 };
 var _hoisted_11 = ["disabled"];
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Log in", -1
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Connexion", -1
 /* HOISTED */
 );
 
+var _hoisted_13 = [_hoisted_12];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
 
@@ -240,7 +241,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_LockIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LockIcon");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Head, {
-    title: "Log in"
+    title: "Accueil"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.submit && $setup.submit.apply($setup, arguments);
@@ -253,7 +254,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "email",
     type: "email",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["input rounded inset-0 pl-8", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["input rounded bg-slate-300 inset-0 pl-8", {
       'border-red-500': $setup.form.errors.email
     }]),
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
@@ -270,13 +271,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "password",
     type: "password",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["input rounded inset-0 pl-8", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["input rounded bg-slate-300 inset-0 pl-8", {
       'border-red-500': $setup.form.errors.password
     }]),
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $setup.form.password = $event;
     }),
-    placeholder: "Password",
+    placeholder: "Mot de passe",
     autocomplete: "current-password"
   }, null, 2
   /* CLASS */
@@ -284,11 +285,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn hover:bg-gray-100 text-sky-700 border-b-4 shadow-md border border-gray-300", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 flex items-center rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none", {
       'opacity-25': $setup.form.processing
     }]),
     disabled: $setup.form.processing
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("           <LoginIcon class=\"mr-2 text-sky-100\" />\n "), _hoisted_12], 10
+  }, _hoisted_13, 10
   /* CLASS, PROPS */
   , _hoisted_11)])])], 32
   /* HYDRATE_EVENTS */
