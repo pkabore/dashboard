@@ -20,7 +20,11 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = DB::table('articles')
-                        ->paginate(15);
+                        ->paginate(15)
+                        ->through(function($article){
+                            $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
+                            return $article;
+                        });
 
         return Inertia::render('Dashboard/Article/Index', [
             'articles' => $articles
@@ -35,10 +39,12 @@ class ArticleController extends Controller
     public function create(Request $request)
     {
         $messages = session('messages');
-        $request->session()->put('messages.articles.success', null);
+        $request->session()->put('messages.articles.success', '');
+        if(!$messages)
+            $messages = session('messages');
 
         return Inertia::render('Dashboard/Article/Create', [
-            'categories' => Category::select('id', 'name')->limit(100)->get(),
+            'categories' => Category::select('id', 'name')->get(),
             'messages' => $messages
         ]);
     }
@@ -51,7 +57,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request->name = strtoupper($request->name);
         $request->validate([
             'category_id.id' => 'required|integer|min:1',
             'name' => 'required|unique:articles|string|max:256',
@@ -96,13 +102,18 @@ class ArticleController extends Controller
      */
     public function edit(Request $request, Article $article)
     {
-        //$messages = session('messages');
-        //$request->session()->put('messages.articles.success', null);
+        $messages = session('messages');
+        $request->session()->put('messages.articles.editSuccess', '');
+        $request->session()->put('messages.articles.editFailure', '');
+        if(!$messages)
+            $messages = session('messages');
+
+        $article->expires_at = Carbon::parse($article->expires_at)->format('Y-m-d');
 
         return Inertia::render('Dashboard/Article/Edit', [
-            'categories' => Category::select('id', 'name')->limit(100)->get(),
+            'categories' => Category::select('id', 'name')->get(),
             'article' => $article,
-          //  'messages' => $messages
+            'messages' => $messages
         ]);
     }
 
@@ -125,8 +136,10 @@ class ArticleController extends Controller
             'expires_at' => 'required|date',
         ]);
 
-        if ($article->name === $request->name){
-            //$request->session()->put('form.errors.name', 'The name has already been taken');
+        $request->name = strtoupper($request->name);
+        $collisionArticle = Article::where('name', $request->name)->first();
+        if ($collisionArticle && $collisionArticle->id !== $article->id){
+            $request->session()->put('messages.articles.editFailure', 'The name has already been taken');
             return redirect(route('articles.edit', $article->id));
         }
 
@@ -135,23 +148,23 @@ class ArticleController extends Controller
         $article->description = $request->description;
         $article->price = $request->price;
         $article->tax = $request->tax;
-        rticle->stock = $request->stock;
+        $article->stock = $request->stock;
         $article->expires_at = $request->expires_at;
 
         $article->save();
-        //$request->session()->put('messages.articles.success', 'Article édité avec succès');
+        $request->session()->put('messages.articles.editSuccess', 'Article édité avec succès');
         return redirect(route('articles.edit', $article->id));
     }
 
     /**
      * Remove the specified resource from storage.
-     *//
-     *// @param  \App\Models\Article  $article
+     *
+     * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article)
     {
-        //$article->delete();
+        $article->delete();
         return $article;
     }
 }

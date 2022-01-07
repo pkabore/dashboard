@@ -86,24 +86,14 @@
 			Dashboard
 		},
 
-		props: {
-			articles: Object
-		},
+		props: { articles: Object },
 
 		setup(props) {
-			const form = useForm({
-				search: ''
-			})
-
+			const form = useForm({ search: '' });
 			const visit = (id) => {
-				console.log(id)
 				Inertia.get(route('articles.edit', id));
 			}
-
-			return {
-				form,
-				visit
-			}
+			return { form, visit }
 		}
 	}
 </script>

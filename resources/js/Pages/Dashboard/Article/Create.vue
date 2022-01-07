@@ -3,7 +3,7 @@
 		<div class="w-full">
 			<h2 class="my-4 border-b text-center text-gray-600 font-bold text-2xl">Ajouter article</h2>
 		    <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
-		      <div v-if="messages.articles.success" class="mb-1 font-medium text-sm text-green-600 flex items-center justify-end">
+		      <div v-if="messages.articles && messages.articles.success" class="mb-1 font-medium text-sm text-green-600 flex items-center justify-end">
 		        <span>{{ messages.articles.success }}</span>
 		      	<CheckIcon class="h-5 w-5 ml-1" />
 		      </div>
@@ -24,14 +24,15 @@
 
 		      <div class="mx-auto mt-[5px]">
 		      	<label for="description" class="text-sm font-bold text-gray-800">Description:</label>
-		        <input
+		        <textarea
 		          id="description"
 		          type="text"
 		          class="input rounded shadow-md text-sm"
 		          :class="{ 'border-red-500': form.errors.description }"
 		          v-model="form.description"
 		          placeholder="Description de l'article"
-		        />
+		        >
+		        </textarea>
 		        <div class="text-red-500 text-xs mt-1" v-if="form.errors.description">
 		          {{ form.errors.description }}
 		        </div>
@@ -145,16 +146,14 @@
 	                        </div>
 	                    </div>
 				    <div class="flex items-center justify-end mx-auto mt-4">
-				        <div>
 				        <button
 				          type="submit"
-				          class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 flex items-center rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none"
+				          class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none"
 				          :class="{ 'opacity-25': form.processing }"
 				          :disabled="form.processing"
 				        >
-							<span>Ajouter</span>
+							Ajouter
 				        </button>
-				        </div>
 				    </div>
 		    </form>
 		</div>

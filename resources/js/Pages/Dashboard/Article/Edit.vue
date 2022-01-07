@@ -3,9 +3,13 @@
 		<div class="w-full">
 			<h2 class="my-4 border-b text-center text-gray-600 font-bold text-2xl">Éditer article</h2>
 		    <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
-		      <div v-if="messages.articles.success" class="mb-1 font-medium text-sm text-green-600 flex items-center justify-end">
-		        <span>{{ messages.articles.success }}</span>
+		      <div v-if="messages.articles && messages.articles.editSuccess" class="mb-1 font-medium text-sm text-green-600 flex items-center justify-center">
+		        <span>{{ messages.articles.editSuccess }}</span>
 		      	<CheckIcon class="h-5 w-5 ml-1" />
+		      </div>
+		      <div v-if="messages.articles && messages.articles.editFailure" class="mb-1 font-medium text-sm text-red-600 flex items-center justify-center">
+		      	<ErrorIcon class="h-5 w-5 mr-1" />
+		        <span>{{ messages.articles.editFailure }}</span>
 		      </div>
 		      <div class="mx-auto">
 		      	<label for="name" class="text-sm font-bold text-gray-800">Nom:</label>
@@ -24,14 +28,15 @@
 
 		      <div class="mx-auto mt-[5px]">
 		      	<label for="description" class="text-sm font-bold text-gray-800">Description:</label>
-		        <input
+		        <textarea
 		          id="description"
 		          type="text"
 		          class="input rounded shadow-md text-sm"
 		          :class="{ 'border-red-500': form.errors.description }"
 		          v-model="form.description"
 		          placeholder="Description de l'article"
-		        />
+		        >
+		        </textarea>
 		        <div class="text-red-500 text-xs mt-1" v-if="form.errors.description">
 		          {{ form.errors.description }}
 		        </div>
@@ -85,8 +90,8 @@
 			      </div>
 			    </Listbox>
 			    <div class="text-red-500 text-xs mt-1" v-if="form.errors['category_id.id']">
-		          {{ form.errors['category_id.id'] }}
-		        </div>
+		        {{ form.errors['category_id.id'] }}
+		      </div>
 			</div>
 			<div class="mx-auto mt-[5px]">
 				<label for="price" class="text-sm font-bold text-gray-800">Prix unitaire:</label>
@@ -116,20 +121,6 @@
 		                {{ form.errors.tax }}
 		              </div>
 		            </div>
-	            	<div class="mx-auto mt-[5px]">
-	            		<label for="expires_at" class="text-sm font-bold text-gray-800">Date d'expiration:</label>
-	                    <input
-	                      id="expires_at"
-	                      type="date"
-	                      class="input rounded shadow-md text-sm"
-	                      :class="{ 'border-red-500': form.errors.expires_at }"
-	                      v-model="form.expires_at"
-	                      placeholder="Date d'expiration"
-	                    />
-	                    <div class="text-red-500 text-xs mt-1" v-if="form.errors.expires_at">
-	                      {{ form.errors.expires_at }}
-	                    </div>
-	                </div>
 	                	<div class="mx-auto mt-[5px]">
 	                		<label for="expires_at" class="text-sm font-bold text-gray-800">Stock:</label>
 	                        <input
@@ -144,17 +135,29 @@
 	                          {{ form.errors.stock }}
 	                        </div>
 	                    </div>
+	            	<div class="mx-auto mt-[5px]">
+	            		<label for="expires_at" class="text-sm font-bold text-gray-800">Date d'expiration:</label>
+	                    <input
+	                      id="expires_at"
+	                      type="date"
+	                      class="input rounded shadow-md text-sm"
+	                      :class="{ 'border-red-500': form.errors.expires_at }"
+	                      v-model="form.expires_at"
+	                      placeholder="Date d'expiration"
+	                    />
+	                    <div class="text-red-500 text-xs mt-1" v-if="form.errors.expires_at">
+	                      {{ form.errors.expires_at }}
+	                    </div>
+	                </div>
 				    <div class="flex items-center justify-end mx-auto mt-4">
-				        <div>
 				        <button
 				          type="submit"
-				          class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 flex items-center rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none"
+				          class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none"
 				          :class="{ 'opacity-25': form.processing }"
 				          :disabled="form.processing"
 				        >
-							<span>Modifier</span>
+							Modifier
 				        </button>
-				        </div>
 				    </div>
 		    </form>
 		</div>
@@ -163,10 +166,10 @@
 
 
 <script>
-import LoginIcon from "@/Components/LoginIcon.vue";
+import ErrorIcon from "@/Components/ErrorIcon.vue";
 import Dashboard from "@/Pages/Dashboard.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 import { ref, watch } from 'vue'
 import {
   Listbox,
@@ -184,7 +187,7 @@ export default {
 	components: {
 	    Head,
 	    Link,
-	    LoginIcon,
+	    ErrorIcon,
 	    Listbox,
 	    ListboxButton,
 	    ListboxOptions,
@@ -194,15 +197,19 @@ export default {
 	},
 
 	props: {
-		status: String,
 		categories: Array,
 		messages: Object,
 		article: Object
 	},
 
 	setup(props) {
+		const getCategory = (id) => {
+			return props.categories.find(cat => cat.id == id) || {id:0, name:"Non valide"};
+		};
+
 		const form = useForm({
-			category_id: {id:props.article.category_id, name: "Nom de la catégorie"},
+			_method: "PUT",
+			category_id: getCategory(props.article.category_id),
 			name: props.article.name,
 			description: props.article.description,
 			price: props.article.price,
@@ -212,10 +219,15 @@ export default {
 		});
 
 		const submit = () => {
-			form.put(route("articles.update", props.article.id), {
+			form.post(route("articles.update", props.article.id), {
 				onSuccess: () => form.reset(),
 			});
 		};
+		/*const submit = () => {
+			Inertia.post(route("articles.update", props.article.id), form, {
+				onSuccess: () => form.reset(),
+			});
+		};*/
 
 		return {
 			form,

@@ -10,4 +10,9 @@ class Category extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
 }

@@ -109,7 +109,6 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     var visit = function visit(id) {
-      console.log(id);
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.get(route('articles.edit', id));
     };
 

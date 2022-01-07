@@ -17,4 +17,9 @@ class Article extends Model
     {
         return $date->format('Y-m-d');
     }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
 }
