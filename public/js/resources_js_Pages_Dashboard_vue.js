@@ -476,7 +476,8 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_8 = {
-  "class": "min-h-full mx-auto absolute inset-x-0 top-0 md:left-40"
+  "class": "min-h-full mx-auto absolute inset-x-0 top-0 md:left-40",
+  style: {}
 };
 var _hoisted_9 = {
   "class": "md:hidden p-3 text-slate-800 flex items-center justify-between"

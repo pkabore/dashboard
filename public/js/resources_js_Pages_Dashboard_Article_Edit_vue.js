@@ -128,17 +128,10 @@ __webpack_require__.r(__webpack_exports__);
 
     var submit = function submit() {
       form.post(route("articles.update", props.article.id), {
-        onSuccess: function onSuccess() {
-          return form.reset();
-        }
+        only: ['article', 'messages'],
+        onSuccess: function onSuccess() {}
       });
     };
-    /*const submit = () => {
-    	Inertia.post(route("articles.update", props.article.id), form, {
-    		onSuccess: () => form.reset(),
-    	});
-    };*/
-
 
     return {
       form: form,
@@ -593,7 +586,8 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_8 = {
-  "class": "min-h-full mx-auto absolute inset-x-0 top-0 md:left-40"
+  "class": "min-h-full mx-auto absolute inset-x-0 top-0 md:left-40",
+  style: {}
 };
 var _hoisted_9 = {
   "class": "md:hidden p-3 text-slate-800 flex items-center justify-between"

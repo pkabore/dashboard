@@ -37,4 +37,6 @@ Route::resource('invoices', InvoiceController::class)->middleware(['auth', 'veri
 Route::resource('sales', SaleController::class)->middleware(['auth', 'verified']);
 Route::resource('orders', OrderController::class)->middleware(['auth', 'verified']);
 
+Route::post('/articles/search', [ArticleController::class, 'search'])->middleware(['auth', 'verified'])->name('articles.search');
+
 require __DIR__.'/auth.php';

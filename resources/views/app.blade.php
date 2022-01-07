@@ -44,6 +44,12 @@
             ::-webkit-scrollbar-thumb:hover {
               background: #a0aec0;
             }
+
+            @media(min-width: 768px){
+                body{
+                    max-width: calc(100vw - 13px);
+                }
+            }
         </style>
     </head>
     <body class="font-sans antialiased bg-slate-200">

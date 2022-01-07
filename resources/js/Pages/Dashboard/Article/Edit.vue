@@ -220,14 +220,10 @@ export default {
 
 		const submit = () => {
 			form.post(route("articles.update", props.article.id), {
-				onSuccess: () => form.reset(),
+				only: ['article', 'messages'],
+				onSuccess: () => {},
 			});
 		};
-		/*const submit = () => {
-			Inertia.post(route("articles.update", props.article.id), form, {
-				onSuccess: () => form.reset(),
-			});
-		};*/
 
 		return {
 			form,

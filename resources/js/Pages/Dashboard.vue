@@ -31,7 +31,7 @@
                     <span>Logout</span>
                 </Link>
         </div>
-        <div class="min-h-full mx-auto absolute inset-x-0 top-0 md:left-40">
+        <div class="min-h-full mx-auto absolute inset-x-0 top-0 md:left-40" style="">
             <div class="md:hidden p-3 text-slate-800 flex items-center justify-between">
                 <span class="text-xl font-medium">Market Admin</span>
                 <MenuIcon @click="sidebar=!sidebar" class="w-5 h-5 cursor-pointer text-gray-600" />

@@ -163,6 +163,7 @@
 
 <script>
 import LoginIcon from "@/Components/LoginIcon.vue";
+import Datepicker from "@/Components/Datepicker.vue";
 import Dashboard from "@/Pages/Dashboard.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -184,6 +185,7 @@ export default {
 	    Head,
 	    Link,
 	    LoginIcon,
+	    Datepicker,
 	    Listbox,
 	    ListboxButton,
 	    ListboxOptions,

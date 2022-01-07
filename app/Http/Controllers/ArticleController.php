@@ -162,6 +162,25 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
+    public function search(Request $request)
+    {
+        $filters = $request->only(['search', /*'sortByTax',*/ 'sortByName', 'sortByPrice', 'sortByExpiresAt', 'sortByStock']);
+        $articles = Article::filter($filters)
+                        ->paginate(15)
+                        ->through(function($article){
+                            $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
+                            return $article;
+                        });
+
+        return $articles;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Article  $article
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Article $article)
     {
         $article->delete();
