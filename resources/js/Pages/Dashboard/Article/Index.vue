@@ -24,43 +24,43 @@
 				<table class="w-full table-auto whitespace-nowrap text-sm shadow-sm" >
 					<thead>
 						<tr>
-							<th>Id</th>
-							<th>
+							<th class="py-3">Id</th>
+							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="form.sortByName = 'asc'" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByName == 'asc'}" />
+								<ChevronUpIcon @click="setFilter('sortByName','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByName == 'asc'}" />
 								<span>Nom</span>
-								<ChevronDownIcon @click="form.sortByName = 'desc'" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByName == 'desc'}" />
+								<ChevronDownIcon @click="setFilter('sortByName','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByName == 'desc'}" />
 							</div>
 							</th>
-							<th>
+							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="form.sortByStock = 'asc'" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByStock == 'asc'}" />
+								<ChevronUpIcon @click="setFilter('sortByStock','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByStock == 'asc'}" />
 								<span>Stock</span>
-								<ChevronDownIcon @click="form.sortByStock = 'desc'" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByStock == 'desc'}" />
+								<ChevronDownIcon @click="setFilter('sortByStock','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByStock == 'desc'}" />
 							</div>
 							</th>
-							<th>
+							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="form.sortByPrice = 'asc'" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByPrice == 'asc'}" />
+								<ChevronUpIcon @click="setFilter('sortByPrice','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByPrice == 'asc'}" />
 								<span>Prix</span>
-								<ChevronDownIcon @click="form.sortByPrice = 'desc'" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByPrice == 'desc'}"/>
+								<ChevronDownIcon @click="setFilter('sortByPrice','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByPrice == 'desc'}"/>
 							</div>
 							</th>
-							<th>
+							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<!-- <ChevronUpIcon @click="form.sortByTax = 'asc'" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTax == 'asc'}" /> -->
+								<ChevronUpIcon @click="setFilter('sortByTax','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTax == 'asc'}" />
 								<span>Taxe</span>
-								<!-- <ChevronDownIcon @click="form.sortByTax = 'desc'" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTax == 'desc'}" /> -->
+								<ChevronDownIcon @click="setFilter('sortByTax','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTax == 'desc'}" />
 							</div>
 							</th>
-							<th>
+							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="form.sortByExpiresAt = 'asc'" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'asc'}" />
+								<ChevronUpIcon @click="setFilter('sortByExpiresAt','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'asc'}" />
 								<span>Exp. Date</span>
-								<ChevronDownIcon @click="form.sortByExpiresAt = 'desc'" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'desc'}" />
+								<ChevronDownIcon @click="setFilter('sortByExpiresAt','asc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'desc'}" />
 							</div>
 							</th>
-							<th>Actions</th>
+							<th class="py-3">Actions</th>
 						</tr>
 					</thead>
 					<tbody class="pt-4">
@@ -107,7 +107,7 @@
 	import ChevronUpIcon from '@/Components/ChevronUpIcon.vue';
 	import { Link, Head, useForm } from '@inertiajs/inertia-vue3';
 	import { Inertia } from '@inertiajs/inertia';
-	import { watch, ref } from 'vue';
+	import { watch, ref, reactive } from 'vue';
 	import axios from 'axios';
 
 	export default{
@@ -127,7 +127,7 @@
 		props: { articles: Object },
 
 		setup(props) {
-			const form = useForm({
+			const form = reactive({
 				search: '',
 				sortByName: '',
 				sortByPrice: '',
@@ -135,7 +135,15 @@
 				sortByStock: '',
 				sortByExpiresAt: ''
 			});
+
 			const reactiveArticles = ref(props.articles);
+			
+			const setFilter = (key, value) => {
+				const keys = Object.keys(form.value);
+				form.value[key] = value;
+				console.log(form.value)
+			}
+
 			const visit = (id) => {
 				Inertia.get(route('articles.edit', id));
 			}
@@ -148,7 +156,7 @@
 					.catch(err => console.log(err));
 			});
 
-			return { form, visit, reactiveArticles }
+			return { form, setFilter, visit, reactiveArticles }
 		}
 	}
 </script>

@@ -31,20 +31,20 @@ class Article extends Model
                       ->where('description', 'LIKE', '%'.$search.'%');
             });
         })
+        ->when($filters['sortByName'] ?? null, function($query, $sortByName){
+            return $query->sortBy('name', $sortByName);
+        })
         ->when($filters['sortByStock'] ?? null, function($query, $sortByStock){
-            return $query->orderBy('stock', $sortByStock);
+            return $query->sortBy('stock', $sortByStock);
         })
         ->when($filters['sortByPrice'] ?? null, function($query, $sortByPrice){
-            return $query->orderBy('price', $sortByPrice);
+            return $query->sortBy('price', $sortByPrice);
         })
-        /*->when($filters['sortByTax'] ?? null, function($query, $sortByTax){
-            return $query->orderBy('tax', $sortByTax);
-        })*/
-        ->when($filters['sortByName'] ?? null, function($query, $sortByName){
-            return $query->orderBy('name', $sortByName);
+        ->when($filters['sortByTax'] ?? null, function($query, $sortByTax){
+            return $query->sortBy('tax', $sortByTax);
         })
         ->when($filters['sortByExpiresAt'] ?? null, function($query, $sortByExpiresAt){
-            return $query->orderBy('expires_at', $sortByExpiresAt);
+            return $query->sortBy('expires_at', $sortByExpiresAt);
         });
     }
 }

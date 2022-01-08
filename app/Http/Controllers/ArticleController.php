@@ -164,7 +164,7 @@ class ArticleController extends Controller
      */
     public function search(Request $request)
     {
-        $filters = $request->only(['search', /*'sortByTax',*/ 'sortByName', 'sortByPrice', 'sortByExpiresAt', 'sortByStock']);
+        $filters = $request->only(['search', 'sortByTax', 'sortByName', 'sortByPrice', 'sortByExpiresAt', 'sortByStock']);
         $articles = Article::filter($filters)
                         ->paginate(15)
                         ->through(function($article){
