@@ -14,7 +14,6 @@
 					    placeholder="Rechercher un article"
 					  />
 					</div>
-					<!-- <Filters /> -->
 					<Link :href="route('articles.create')" class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 flex items-center rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none">
 						<AddIcon class="h-6 w-6 mr-1 text-blue-200" />
 						<span>Ajouter</span>
@@ -57,18 +56,18 @@
 								<div class="flex items-center justify-center">
 								<ChevronUpIcon @click="setFilter('sortByExpiresAt','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'asc'}" />
 								<span>Exp. Date</span>
-								<ChevronDownIcon @click="setFilter('sortByExpiresAt','asc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'desc'}" />
+								<ChevronDownIcon @click="setFilter('sortByExpiresAt','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'desc'}" />
 							</div>
 							</th>
 							<th class="py-3">Actions</th>
 						</tr>
 					</thead>
 					<tbody class="pt-4">
-						<tr v-for="article in reactiveArticles.data" :key="article.id" class="border-t space-x-2 text-center hover:bg-neutral-200 cursor-pointer" @click="visit(article.id)">
+						<tr v-for="article in reactiveArticles.data" :key="article.id" class="border-t space-x-2 text-center hover:bg-neutral-200">
 							<td class="p-2">
 								{{article.id}}
 							</td>
-							<td class="p-2">
+							<td class="p-2 text-xs">
 								{{article.name}}
 							</td>
 							<td :class="{'text-red-600' : article.stock <= 100, 'text-sky-600' : article.stock > 100}">
@@ -84,7 +83,8 @@
 								{{article.expires_at}}
 							</td>
 							<td class="p-2 inline-flex justify-center">
-								<ChevronRightIcon class="h-6 w-6 text-sky-600" />
+								<ShoppingAddIcon class="h-5 w-5 text-amber-600 cursor-pointer" @click="addToCart(article.id)" />
+								<ChevronRightIcon class="h-5 w-5 text-sky-600 cursor-pointer ml-1" @click="visit(article.id)" />
 							</td>
 						</tr>
 					</tbody>
@@ -105,6 +105,7 @@
 	import ChevronRightIcon from '@/Components/ChevronRightIcon.vue';
 	import ChevronDownIcon from '@/Components/ChevronDownIcon.vue';
 	import ChevronUpIcon from '@/Components/ChevronUpIcon.vue';
+	import ShoppingAddIcon from '@/Components/ShoppingAddIcon.vue';
 	import { Link, Head, useForm } from '@inertiajs/inertia-vue3';
 	import { Inertia } from '@inertiajs/inertia';
 	import { watch, ref, reactive } from 'vue';
@@ -121,6 +122,7 @@
 			ChevronRightIcon,
 			ChevronUpIcon,
 			ChevronDownIcon,
+			ShoppingAddIcon,
 			Dashboard
 		},
 
@@ -139,10 +141,19 @@
 			const reactiveArticles = ref(props.articles);
 			
 			const setFilter = (key, value) => {
-				const keys = Object.keys(form.value);
-				form.value[key] = value;
-				console.log(form.value)
+				const keys = Object.keys(form);
+				if (keys.length > 1){
+					keys.forEach(key => {
+						if (key.startsWith('sortBy'))
+							delete form[key]
+					})
+				}
+				form[key] = value;
 			}
+
+			const addToCart = (id) => {
+
+			};
 
 			const visit = (id) => {
 				Inertia.get(route('articles.edit', id));
@@ -156,7 +167,7 @@
 					.catch(err => console.log(err));
 			});
 
-			return { form, setFilter, visit, reactiveArticles }
+			return { form, setFilter, visit, addToCart, reactiveArticles }
 		}
 	}
 </script>

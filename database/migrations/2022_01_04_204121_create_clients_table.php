@@ -20,7 +20,6 @@ class CreateClientsTable extends Migration
             $table->string('phone')->unique()->max(32);
             $table->string('email')->nullable()->max(128);
             $table->string('address')->nullable()->max(256);
-            $table->string('company')->nullable()->max(256);
             $table->softDeletes();
             $table->timestamps();
         });

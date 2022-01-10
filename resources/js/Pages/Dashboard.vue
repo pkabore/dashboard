@@ -3,7 +3,7 @@
     <div class="min-h-screen relative">
         <div class="w-40 transform fixed inset-y-0 left-0 transition ease-in-out duration-3000 transition-all shadow-2xl shadow-green-500/50 rounded-br-lg md:rounded-none z-10 md:visible bg-slate-600 text-white text-sm p-[4px] space-y-2 md:transform-none" :class="{'invisible -translate-x-full' : sidebar, 'translate-x-0' : !sidebar}">
                 <Link :href="route('sales.create')" class="flex items-center w-full px-1 py-2 rounded-md hover:bg-slate-800 transition ease-out duration-200">
-                    <CashIcon class="h-5 w-5 mr-2 text-gray-200" />
+                    <ShoppingIcon class="h-5 w-5 mr-2 text-gray-200" />
                     <span>Vendre</span>
                 </Link>
             
@@ -53,7 +53,7 @@ import DeleteIcon from '@/Components/DeleteIcon.vue';
 import PrintIcon from '@/Components/PrintIcon.vue';
 import ChartIcon from '@/Components/ChartIcon.vue';
 import MenuIcon from '@/Components/MenuIcon.vue';
-import CashIcon from '@/Components/CashIcon.vue';
+import ShoppingIcon from '@/Components/ShoppingIcon.vue';
 
 import { ref } from 'vue';
 
@@ -71,7 +71,7 @@ export default {
         EditIcon,
         DeleteIcon,
         ChartIcon,
-        CashIcon
+        ShoppingIcon
     },
 
     setup(props){

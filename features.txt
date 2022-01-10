@@ -1,0 +1,7 @@
+Gestion d'articles
+Gestion de stocks
+Gestion de l'inventaire
+Gestion des clients
+Devis et factures
+Gestion dépenses
+Bilan comptable

@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
                 ->name('register');
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest');
+                ->middleware('guest');*/
 
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+Route::get('/', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')
-                ->name('login');*/
+                ->name('login');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest')

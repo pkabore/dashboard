@@ -1,10 +1,11 @@
 <template>
 	<div class="flex justify-center max-w-3xl mx-auto px-2">
 		<div class="w-full">
-			<h2 class="my-7 border-b text-center text-gray-600 font-bold text-2xl">Ajouter un nouveau article</h2>
+			<h2 class="my-4 border-b text-center text-gray-600 font-bold text-2xl">Ajouter article</h2>
 		    <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
-		      <div v-if="status" class="mt-16 mb-4 font-medium text-sm text-sky-600">
-		        {{ status }}
+		      <div v-if="messages.articles && messages.articles.success" class="mb-1 font-medium text-sm text-green-600 flex items-center justify-end">
+		        <span>{{ messages.articles.success }}</span>
+		      	<CheckIcon class="h-5 w-5 ml-1" />
 		      </div>
 		      <div class="mx-auto">
 		      	<label for="name" class="text-sm font-bold text-gray-800">Nom:</label>
@@ -23,24 +24,25 @@
 
 		      <div class="mx-auto mt-[5px]">
 		      	<label for="description" class="text-sm font-bold text-gray-800">Description:</label>
-		        <input
+		        <textarea
 		          id="description"
 		          type="text"
 		          class="input rounded shadow-md text-sm"
 		          :class="{ 'border-red-500': form.errors.description }"
 		          v-model="form.description"
 		          placeholder="Description de l'article"
-		        />
+		        >
+		        </textarea>
 		        <div class="text-red-500 text-xs mt-1" v-if="form.errors.description">
 		          {{ form.errors.description }}
 		        </div>
 		      </div>
 		      <div class="relative mt-[5px]">
-		      	<label for="category" class="text-sm font-bold text-gray-800">Catégory:</label>
+		      	<label for="category" class="text-sm font-bold text-gray-800">Catégorie:</label>
 			    <Listbox id="category" v-model="form.category_id">
 			      <div class="mt-1">
 			        <ListboxButton
-			          class="relative w-full py-1 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm"
+			          class="relative w-full py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none"
 			        >
 			          <span class="block truncate">{{ form.category_id.name || "Sélectionner" }}</span>
 			          <span
@@ -49,15 +51,8 @@
 			            <SelectorIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
 			          </span>
 			        </ListboxButton>
-
-			        <transition
-			          leave-active-class="transition duration-100 ease-in"
-			          leave-from-class="opacity-100"
-			          leave-to-class="opacity-0"
-			        >
 			          <ListboxOptions
-			            class="absolute w-full py-1 mt-1 w-auto overflow-y-scroll text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-			          	as="div"
+			            class="absolute w-full py-1 mt-1 overflow-y-scroll bg-white rounded-md shadow-lg max-h-60 focus:outline-none"
 			          >
 			            <ListboxOption
 			              v-slot="{ active, selected }"
@@ -66,10 +61,10 @@
 			              :value="category"
 			              as="template"
 			            >
-			              <div
+			              <li
 			                :class="[
-			                  active ? 'text-green-900 bg-green-100' : 'text-gray-900',
-			                  'list-none cursor-default select-none relative py-2 pl-10 pr-4',
+			                  active ? 'text-amber-600 bg-amber-200' : 'text-gray-900',
+			                  'list-none cursor-default text-sm select-none relative py-2 pl-10 pr-4',
 			                ]"
 			              >
 			                <span
@@ -81,16 +76,18 @@
 			                >
 			                <span
 			                  v-if="selected"
-			                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600"
+			                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
 			                >
 			                  <CheckIcon class="w-5 h-5" aria-hidden="true" />
 			                </span>
-			              </div>
+			              </li>
 			            </ListboxOption>
 			          </ListboxOptions>
-			        </transition>
 			      </div>
 			    </Listbox>
+			    <div class="text-red-500 text-xs mt-1" v-if="form.errors['category_id.id']">
+		          {{ form.errors['category_id.id'] }}
+		        </div>
 			</div>
 			<div class="mx-auto mt-[5px]">
 				<label for="price" class="text-sm font-bold text-gray-800">Prix unitaire:</label>
@@ -133,20 +130,31 @@
 	                    <div class="text-red-500 text-xs mt-1" v-if="form.errors.expires_at">
 	                      {{ form.errors.expires_at }}
 	                    </div>
-	                  </div>
-		      <div class="flex items-center justify-end mx-auto mt-4">
-		        <div>
-		        <button
-		          type="submit"
-		          class="btn bg-white shadow-md"
-		          :class="{ 'opacity-25': form.processing }"
-		          :disabled="form.processing"
-		        >
-		<!--           <LoginIcon class="mr-2 text-sky-100" />
-		 -->          <span>Ajouter</span>
-		        </button>
-		        </div>
-		      </div>
+	                </div>
+	                	<div class="mx-auto mt-[5px]">
+	                		<label for="expires_at" class="text-sm font-bold text-gray-800">Stock:</label>
+	                        <input
+	                          id="stock"
+	                          type="text"
+	                          class="input rounded shadow-md text-sm"
+	                          :class="{ 'border-red-500': form.errors.stock }"
+	                          v-model="form.stock"
+	                          placeholder="Stock initial"
+	                        />
+	                        <div class="text-red-500 text-xs mt-1" v-if="form.errors.stock">
+	                          {{ form.errors.stock }}
+	                        </div>
+	                    </div>
+				    <div class="flex items-center justify-end mx-auto mt-4">
+				        <button
+				          type="submit"
+				          class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none"
+				          :class="{ 'opacity-25': form.processing }"
+				          :disabled="form.processing"
+				        >
+							Ajouter
+				        </button>
+				    </div>
 		    </form>
 		</div>
 	</div>
@@ -155,10 +163,11 @@
 
 <script>
 import LoginIcon from "@/Components/LoginIcon.vue";
+import Datepicker from "@/Components/Datepicker.vue";
 import Dashboard from "@/Pages/Dashboard.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import {
   Listbox,
   ListboxLabel,
@@ -176,6 +185,7 @@ export default {
 	    Head,
 	    Link,
 	    LoginIcon,
+	    Datepicker,
 	    Listbox,
 	    ListboxButton,
 	    ListboxOptions,
@@ -186,7 +196,8 @@ export default {
 
 	props: {
 		status: String,
-		categories: Array
+		categories: Array,
+		messages: Object
 	},
 
 	setup(props) {
@@ -202,13 +213,13 @@ export default {
 
 		const submit = () => {
 			form.post(route("articles.store"), {
-				onFinish: () => form.reset(),
+				onSuccess: () => form.reset(),
 			});
 		};
 
 		return {
 			form,
-			submit,
+			submit
 		};
 	},
 };

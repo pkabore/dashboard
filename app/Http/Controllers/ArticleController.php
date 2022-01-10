@@ -19,8 +19,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = DB::table('articles')
-                        ->paginate(15)
+        $articles = Article::paginate(15)
                         ->through(function($article){
                             $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
                             return $article;
@@ -60,7 +59,7 @@ class ArticleController extends Controller
         $request->name = strtoupper($request->name);
         $request->validate([
             'category_id.id' => 'required|integer|min:1',
-            'name' => 'required|unique:articles|string|max:256',
+            'name' => 'required|string|max:256',
             'description' => 'required|string|max:512',
             'price' => 'required|numeric|min:0',
             'tax' => 'required|numeric|min:0',
@@ -137,11 +136,6 @@ class ArticleController extends Controller
         ]);
 
         $request->name = strtoupper($request->name);
-        $collisionArticle = Article::where('name', $request->name)->first();
-        if ($collisionArticle && $collisionArticle->id !== $article->id){
-            $request->session()->put('messages.articles.editFailure', 'The name has already been taken');
-            return redirect(route('articles.edit', $article->id));
-        }
 
         $article->category_id = $request->category_id['id'];
         $article->name = $request->name;
@@ -157,7 +151,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Search the specified resource from storage.
      *
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
@@ -165,6 +159,7 @@ class ArticleController extends Controller
     public function search(Request $request)
     {
         $filters = $request->only(['search', 'sortByTax', 'sortByName', 'sortByPrice', 'sortByExpiresAt', 'sortByStock']);
+
         $articles = Article::filter($filters)
                         ->paginate(15)
                         ->through(function($article){
@@ -184,6 +179,6 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-        return $article;
+        return redirect(route('articles.index'));
     }
 }

@@ -14,7 +14,15 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::paginate(15)
+                        ->through(function($order){
+                            $order->expires_at = Carbon::parse($order->expires_at)->diffForHumans();
+                            return $order;
+                        });
+
+        return Inertia::render('Dashboard/Order/Index', [
+            'orders' => $orders
+        ]);
     }
 
     /**

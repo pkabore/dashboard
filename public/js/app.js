@@ -113,10 +113,30 @@ var map = {
 		"/js/vendor",
 		"resources_js_Pages_Dashboard_Article_Index_vue"
 	],
-	"./Dashboard/Article/Show.vue": [
-		"./resources/js/Pages/Dashboard/Article/Show.vue",
+	"./Dashboard/Category/Create.vue": [
+		"./resources/js/Pages/Dashboard/Category/Create.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Article_Show_vue"
+		"resources_js_Pages_Dashboard_Category_Create_vue"
+	],
+	"./Dashboard/Category/Edit.vue": [
+		"./resources/js/Pages/Dashboard/Category/Edit.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Category_Edit_vue"
+	],
+	"./Dashboard/Category/Index.vue": [
+		"./resources/js/Pages/Dashboard/Category/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Category_Index_vue"
+	],
+	"./Dashboard/Category/Show.vue": [
+		"./resources/js/Pages/Dashboard/Category/Show.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Category_Show_vue"
+	],
+	"./Dashboard/Client/Create.vue": [
+		"./resources/js/Pages/Dashboard/Client/Create.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Client_Create_vue"
 	],
 	"./Dashboard/Client/Edit.vue": [
 		"./resources/js/Pages/Dashboard/Client/Edit.vue",
@@ -128,10 +148,60 @@ var map = {
 		"/js/vendor",
 		"resources_js_Pages_Dashboard_Client_Index_vue"
 	],
-	"./Dashboard/Sale/Sale.vue": [
-		"./resources/js/Pages/Dashboard/Sale/Sale.vue",
+	"./Dashboard/Invoice/Create.vue": [
+		"./resources/js/Pages/Dashboard/Invoice/Create.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Sale_Sale_vue"
+		"resources_js_Pages_Dashboard_Invoice_Create_vue"
+	],
+	"./Dashboard/Invoice/Edit.vue": [
+		"./resources/js/Pages/Dashboard/Invoice/Edit.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Invoice_Edit_vue"
+	],
+	"./Dashboard/Invoice/Index.vue": [
+		"./resources/js/Pages/Dashboard/Invoice/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Invoice_Index_vue"
+	],
+	"./Dashboard/Invoice/Show.vue": [
+		"./resources/js/Pages/Dashboard/Invoice/Show.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Invoice_Show_vue"
+	],
+	"./Dashboard/Order/Create.vue": [
+		"./resources/js/Pages/Dashboard/Order/Create.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Order_Create_vue"
+	],
+	"./Dashboard/Order/Edit.vue": [
+		"./resources/js/Pages/Dashboard/Order/Edit.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Order_Edit_vue"
+	],
+	"./Dashboard/Order/Index.vue": [
+		"./resources/js/Pages/Dashboard/Order/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Order_Index_vue"
+	],
+	"./Dashboard/Order/Show.vue": [
+		"./resources/js/Pages/Dashboard/Order/Show.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Order_Show_vue"
+	],
+	"./Dashboard/Sale/Create.vue": [
+		"./resources/js/Pages/Dashboard/Sale/Create.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Sale_Create_vue"
+	],
+	"./Dashboard/Sale/Index.vue": [
+		"./resources/js/Pages/Dashboard/Sale/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Sale_Index_vue"
+	],
+	"./Dashboard/Sale/Show.vue": [
+		"./resources/js/Pages/Dashboard/Sale/Show.vue",
+		"/js/vendor",
+		"resources_js_Pages_Dashboard_Sale_Show_vue"
 	],
 	"./Error.vue": [
 		"./resources/js/Pages/Error.vue",

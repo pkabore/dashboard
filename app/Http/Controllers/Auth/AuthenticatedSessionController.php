@@ -19,7 +19,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Auth/Home', ['status' => session('status')]);
+        return Inertia::render('Home', ['status' => session('status')]);
     }
 
     /**
