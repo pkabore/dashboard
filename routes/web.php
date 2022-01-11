@@ -6,7 +6,7 @@ use Inertia\Inertia;
 use App\Models;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StatsController;
@@ -34,6 +34,7 @@ Route::get('/dashboard', function () {
 Route::resource('articles', ArticleController::class)->middleware(['auth', 'verified']);
 Route::resource('clients', ClientController::class)->middleware(['auth', 'verified']);
 Route::resource('sales', SaleController::class)->middleware(['auth', 'verified']);
+Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
 
 Route::post('/articles/search', [ArticleController::class, 'search'])->middleware(['auth', 'verified'])->name('articles.search');
 Route::post('/clients/search', [ClientController::class, 'search'])->middleware(['auth', 'verified'])->name('clients.search');

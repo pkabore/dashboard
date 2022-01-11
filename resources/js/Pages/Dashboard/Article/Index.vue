@@ -226,7 +226,7 @@
                     {{ article.stock.toLocaleString('fr-FR') }}
                   </td>
                   <td class="p-2">{{ parseFloat(article.price).toLocaleString('fr-FR') }}</td>
-                  <td class="p-2">{{ parseFloat(article.tax).toLocaleString('fr-FR') }}</td>
+                  <td class="p-2">{{ parseFloat(article.tax).toLocaleString('fr-FR') + "%" }}</td>
                   <td class="p-2">
                     {{ article.expires_at }}
                   </td>

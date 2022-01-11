@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Dashboard/Category/Index', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Dashboard/Category/Create'); 
     }
 
     /**
@@ -35,7 +38,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:3'
+        ]);
+
+        $c = new Category();
+        $c->name = $request->name;
+        $c->save();
+
+        $request->session()->put('messages.categories.success', 'Rayon ajouté avec succès');
+        redirect(route('categories.create'));
     }
 
     /**
@@ -57,7 +69,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return Inertia::render('Dashboard/Category/Edit', ['category' => $category]); 
     }
 
     /**
@@ -69,7 +81,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:categories|min:3'
+        ]);
+
+        $category = new Category();
+        $category->name = $request->name;
+        $category->save();
+
+        $request->session()->put('messages.categories.success', 'Rayon ajouté avec succès');
+        redirect(route('categories.create'));
     }
 
     /**
@@ -80,6 +101,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect(route('categories.index'));
     }
 }

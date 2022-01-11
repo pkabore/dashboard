@@ -133,8 +133,8 @@
                     {{ article.name }}
                   </td>
                   <td class="p-2">{{ parseFloat(article.price).toLocaleString('fr-FR') }}</td>
-                  <td>{{ parseFloat(article.tax).toLocaleString('fr-FR') }}</td>
-                  <td>
+                  <td>{{ parseFloat(article.tax).toLocaleString('fr-FR') + "%"}}</td>
+                  <td class="inline-flex justify-center">
                     <ShoppingIcon
                       class="h-5 w-5 text-indigo-600 cursor-pointer"     
                     />
@@ -144,8 +144,8 @@
             </table>
           </div>
         </div>
-        <div id="receipt" style="width: 272.125px!important" class="pt-4 my-7 px-[4px] ml-3 bg-white rounded-xl h-full text-xs">
-          <p class="text-center text-gray-900 capitalize">
+        <div id="receipt" style="width: 272.125px!important" class="pt-4 my-7 px-[4px] ml-3 bg-white rounded-xl h-full text-xs mx-auto">
+          <p class="text-center text-gray-900 uppercase">
             SuperMarket Boutique - Bogodogo
           <br>
             17 Avenue Kwamé N'Krumah 2
@@ -176,11 +176,11 @@
 	          	<tbody>
 	          		<tr v-for="(order, i) in orders.items" :key="i" class="break-words text-center" @keyup.enter="removeFromCart(order)">	
 		            	<td class="px-[4px] py-1">
-		            		<input type="number" step="1" min="1" v-model="order.qty" class="block mx-auto p-0 w-10 h-7 border-none focus:border-2 focus:border-green-300 rounded-md focus:outline-none focus:ring-0">
+		            		<input type="number" step="1" min="1" v-model="order.qty" class="block mx-auto p-0 w-10 h-7 border-none focus:border-2 focus:border-green-300 rounded-md focus:outline-none focus:ring-0 text-xs">
 		            	</td>
 		            	<td class="px-[4px] py-1">{{ order.name }}</td>
 		            	<td class="px-[4px] py-1">{{ order.price.toLocaleString('fr-FR') }}</td>
-		            	<td class="px-[4px] py-1">{{ (order.qty * order.tax).toLocaleString('fr-FR') + "%" }}</td>
+		            	<td class="px-[4px] py-1">{{ order.tax.toLocaleString('fr-FR') + "%" }}</td>
 		            	<td class="px-[4px] py-1 font-bold">
 		                	{{ (order.qty * order.price).toLocaleString('fr-FR') }}
 		            	</td>
@@ -189,20 +189,19 @@
 	         	</table>
           </div>
         	<div v-if="orders.items.length" class="mt-4 py-2 w-full border-t-2 border-dashed text-lg border-gray-300">
-        		<p class="px-2 flex justify-between text-xs">
-        			<span>Total:</span>	
-        			<span>{{orders.partialTotal.toLocaleString('fr-FR')}} FCFA</span>
-        		</p>
-        		<p class="px-2 flex justify-between text-xs mt-1">
-        			<span>Taxes:</span>
-        			<span>{{orders.taxes.toLocaleString('fr-FR')}} FCFA</span>
-        		</p>
-        		<p class="px-2 pb-1 flex justify-between text-xs mt-1 font-bold">
-        			<span>Total TTC:</span>
-        			<span>{{orders.total.toLocaleString('fr-FR')}} FCFA</span>
-        		</p>
-
-        		<p class="border-t-2 border-dashed mt-2 px-0 py-4 text-center text-sm">Au revoir et à bientôt!</p>
+        		<div class="px-2 flex justify-between text-xs">
+        			<p>Total:</p>	
+        			<p>{{orders.partialTotal.toLocaleString('fr-FR')}} FCFA</p>
+        		</div>
+        		<div class="px-2 flex justify-between text-xs mt-1">
+        			<p>Taxes:</p>
+        			<p>{{orders.taxes.toLocaleString('fr-FR')}} FCFA</p>
+        		</div>
+        		<div class="px-2 pb-1 flex justify-between text-xs mt-1 font-bold">
+        			<p>Total TTC:</p>
+        			<p>{{orders.total.toLocaleString('fr-FR')}} FCFA</p>
+        		</div>
+        		<p class="border-t-2 border-dashed mt-2 px-0 py-4 text-center text-sm">Au revoir et à bientôt...</p>
         	</div>
         </div>
       </div>
@@ -385,6 +384,6 @@ export default {
 	}
 
 	.family-mono{
-		font-family: 'Ubuntu Mono' !important;
+		font-family: 'JetBrains Mono' !important;
 	}
 </style>
