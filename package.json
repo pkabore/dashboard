@@ -29,6 +29,9 @@
     "dependencies": {
         "@headlessui/vue": "^1.4.2",
         "@heroicons/vue": "^1.0.5",
-        "@revolist/vue3-datagrid": "^3.0.97"
+        "@revolist/vue3-datagrid": "^3.0.97",
+        "html2canvas": "^1.4.0",
+        "html2pdf.js": "^0.10.1",
+        "jspdf": "^2.5.0"
     }
 }

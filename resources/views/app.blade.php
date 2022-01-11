@@ -52,7 +52,7 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased bg-slate-200">
+    <body class="font-sans antialiased bg-slate-200 selection:bg-green-300">
         @inertia
     </body>
 </html>

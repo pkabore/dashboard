@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -25,7 +26,10 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Dashboard/Sale/Create');
+        return Inertia::render('Dashboard/Sale/Create', [
+            'articles' => Article::take(15)->get(),
+
+        ]);
     }
 
     /**

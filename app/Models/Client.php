@@ -31,19 +31,19 @@ class Client extends Model
             });
         })
         ->when($filters['sortByFname'] ?? null, function($query, $sortByFname){
-            return $query->orderBy('name', $sortByFname);
+            return $query->orderBy('fname', $sortByFname);
         })
         ->when($filters['sortByLname'] ?? null, function($query, $sortByLname){
-            return $query->orderBy('stock', $sortByLname);
+            return $query->orderBy('lname', $sortByLname);
         })
         ->when($filters['sortByEmail'] ?? null, function($query, $sortByEmail){
-            return $query->orderBy('price', $sortByEmail);
+            return $query->orderBy('email', $sortByEmail);
         })
         ->when($filters['sortByPhone'] ?? null, function($query, $sortByPhone){
-            return $query->orderBy('tax', $sortByPhone);
+            return $query->orderBy('phone', $sortByPhone);
         })
         ->when($filters['sortByAddress'] ?? null, function($query, $sortByAddress){
-            return $query->orderBy('expires_at', $sortByAddress);
+            return $query->orderBy('address', $sortByAddress);
         });
     }
 }

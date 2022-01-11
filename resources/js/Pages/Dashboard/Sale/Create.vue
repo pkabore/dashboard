@@ -1,224 +1,390 @@
 <template>
-	<div class="flex justify-center max-w-3xl mx-auto px-2">
-		<div class="w-full">
-			<h2 class="my-4 border-b text-center text-gray-600 font-bold text-2xl">Vente</h2>
-		    <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
-		      <div v-if="messages.sales && messages.sales.success" class="mb-1 font-medium text-sm text-green-600 flex items-center justify-end">
-		        <span>{{ messages.sales.success }}</span>
-		      	<CheckIcon class="h-5 w-5 ml-1" />
-		      </div>
-		      <div class="mx-auto">
-		      	<label for="name" class="text-sm font-bold text-gray-800">Nom:</label>
-		        <input
-		          id="name"
-		          type="text"
-		          class="input rounded shadow-md text-sm"
-		          :class="{ 'border-red-500': form.errors.name }"
-		          v-model="form.name"
-		          placeholder="Nom de l'article"
-		        />
-		        <div  class="text-red-500 text-xs mt-1" v-if="form.errors.name">
-		          {{ form.errors.name }}
-		        </div>
-		      </div>
+  <Dashboard>
+    <div class="px-2 mx-auto w-full">
+      <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">
+        Vente
+      </h2>
+      <div class="flex justify-center">
+        <div class="w-8/12 mx-auto rounded-xl bg-white border pt-4 my-7">
+          <div class="flex items-center justify-center space-x-2 px-2 mb-4">
+            <div class="relative max-w-sm mx-auto">
+              <SearchIcon
+                class="absolute right-2 top-4 w-4 h-4 text-gray-600"
+              />
+              <input
+                id="search"
+                type="text"
+                class="input bg-slate-200 rounded inset-0 pr-8"
+                v-model="form.search"
+                placeholder="Rechercher un article"
+              />
+            </div>
+          </div>
+          <div class="w-full mx-auto overflow-x-auto">
+            <table
+              class="w-full table-auto text-sm shadow-sm"
+            >
+              <thead>
+                <tr>
+                  <th class="py-3">Id</th>
+                  <th class="py-3">
+                    <div class="flex items-center justify-center">
+                      <ChevronUpIcon
+                        @click="setFilter('sortByName', 'asc')"
+                        class="
+                          h-4
+                          w-4
+                          mr-1
+                          text-gray-500
+                          hover:text-amber-700
+                          cursor-pointer
+                        "
+                        :class="{ 'text-amber-700': form.sortByName == 'asc' }"
+                      />
+                      <span>Dés.</span>
+                      <ChevronDownIcon
+                        @click="setFilter('sortByName', 'desc')"
+                        class="
+                          h-4
+                          w-4
+                          ml-1
+                          text-gray-500
+                          hover:text-amber-700
+                          cursor-pointer
+                        "
+                        :class="{ 'text-amber-700': form.sortByName == 'desc' }"
+                      />
+                    </div>
+                  </th>
+                  <th class="py-3">
+                    <div class="flex items-center justify-center">
+                      <ChevronUpIcon
+                        @click="setFilter('sortByPrice', 'asc')"
+                        class="
+                          h-4
+                          w-4
+                          mr-1
+                          text-gray-500
+                          hover:text-amber-700
+                          cursor-pointer
+                        "
+                        :class="{ 'text-amber-700': form.sortByPrice == 'asc' }"
+                      />
+                      <span>Prix</span>
+                      <ChevronDownIcon
+                        @click="setFilter('sortByPrice', 'desc')"
+                        class="
+                          h-4
+                          w-4
+                          ml-1
+                          text-gray-500
+                          hover:text-amber-700
+                          cursor-pointer
+                        "
+                        :class="{
+                          'text-amber-700': form.sortByPrice == 'desc',
+                        }"
+                      />
+                    </div>
+                  </th>
+                  <th class="py-3">
+                    <div class="flex items-center justify-center">
+                      <ChevronUpIcon
+                        @click="setFilter('sortByTax', 'asc')"
+                        class="
+                          h-4
+                          w-4
+                          mr-1
+                          text-gray-500
+                          hover:text-amber-700
+                          cursor-pointer
+                        "
+                        :class="{ 'text-amber-700': form.sortByTax == 'asc' }"
+                      />
+                      <span>Taxe</span>
+                      <ChevronDownIcon
+                        @click="setFilter('sortByTax', 'desc')"
+                        class="
+                          h-4
+                          w-4
+                          ml-1
+                          text-gray-500
+                          hover:text-amber-700
+                          cursor-pointer
+                        "
+                        :class="{ 'text-amber-700': form.sortByTax == 'desc' }"
+                      />
+                    </div>
+                  </th>
+                  <th class="py-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="pt-4">
+                <tr
+                  v-for="article in reactiveArticles"
+                  :key="article.id"
+                  class="border-t space-x-2 text-center hover:bg-neutral-200"
+                	@click="addToCart(article)"
+                >
+                  <td class="p-2">
+                    {{ article.id }}
+                  </td>
+                  <td class="p-2">
+                    {{ article.name }}
+                  </td>
+                  <td class="p-2">{{ parseFloat(article.price).toLocaleString('fr-FR') }}</td>
+                  <td>{{ parseFloat(article.tax).toLocaleString('fr-FR') }}</td>
+                  <td>
+                    <ShoppingIcon
+                      class="h-5 w-5 text-indigo-600 cursor-pointer"     
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="receipt" style="width: 272.125px!important" class="pt-4 my-7 px-[4px] ml-3 bg-white rounded-xl h-full text-xs">
+          <p class="text-center text-gray-900 capitalize">
+            SuperMarket Boutique - Bogodogo
+          <br>
+            17 Avenue Kwamé N'Krumah 2
+          <br>
+            01 BP 0321
+            <br>
+            +226 70 00 00 00
+            <br>
+            +226 74 00 00 00
+          </p>
+          <div class="mt-4 flex justify-between text-gray-900 capitalize">
+          	<p>
+          		{{ orders.date.date + " " + orders.date.time }}
+          	</p>
+          	<p>Reçu {{orders.receiptId}}</p>
+          </div>
+          <div class="w-full mx-auto overflow-x-hidden mt-4 p-0">
+	          <table class="table-auto w-full p-0">
+	          	<thead>
+	          		<tr class="text-xs">
+	          			<th class="py-3">Qté</th>
+	          			<th class="py-3">Dés.</th>
+	          			<th class="py-3">Prix</th>
+	          			<th class="py-3">Taxe</th>
+	          			<th class="py-3">Total</th>
+	          		</tr>
+	          	</thead>
+	          	<tbody>
+	          		<tr v-for="(order, i) in orders.items" :key="i" class="break-words text-center" @keyup.enter="removeFromCart(order)">	
+		            	<td class="px-[4px] py-1">
+		            		<input type="number" step="1" min="1" v-model="order.qty" class="block mx-auto p-0 w-10 h-7 border-none focus:border-2 focus:border-green-300 rounded-md focus:outline-none focus:ring-0">
+		            	</td>
+		            	<td class="px-[4px] py-1">{{ order.name }}</td>
+		            	<td class="px-[4px] py-1">{{ order.price.toLocaleString('fr-FR') }}</td>
+		            	<td class="px-[4px] py-1">{{ (order.qty * order.tax).toLocaleString('fr-FR') + "%" }}</td>
+		            	<td class="px-[4px] py-1 font-bold">
+		                	{{ (order.qty * order.price).toLocaleString('fr-FR') }}
+		            	</td>
+	          		</tr>
+	          	</tbody>
+	         	</table>
+          </div>
+        	<div v-if="orders.items.length" class="mt-4 py-2 w-full border-t-2 border-dashed text-lg border-gray-300">
+        		<p class="px-2 flex justify-between text-xs">
+        			<span>Total:</span>	
+        			<span>{{orders.partialTotal.toLocaleString('fr-FR')}} FCFA</span>
+        		</p>
+        		<p class="px-2 flex justify-between text-xs mt-1">
+        			<span>Taxes:</span>
+        			<span>{{orders.taxes.toLocaleString('fr-FR')}} FCFA</span>
+        		</p>
+        		<p class="px-2 pb-1 flex justify-between text-xs mt-1 font-bold">
+        			<span>Total TTC:</span>
+        			<span>{{orders.total.toLocaleString('fr-FR')}} FCFA</span>
+        		</p>
 
-		      <div class="mx-auto mt-[5px]">
-		      	<label for="description" class="text-sm font-bold text-gray-800">Description:</label>
-		        <textarea
-		          id="description"
-		          type="text"
-		          class="input rounded shadow-md text-sm"
-		          :class="{ 'border-red-500': form.errors.description }"
-		          v-model="form.description"
-		          placeholder="Description de l'article"
-		        >
-		        </textarea>
-		        <div class="text-red-500 text-xs mt-1" v-if="form.errors.description">
-		          {{ form.errors.description }}
-		        </div>
-		      </div>
-		      <div class="relative mt-[5px]">
-		      	<label for="category" class="text-sm font-bold text-gray-800">Catégorie:</label>
-			    <Listbox id="category" v-model="form.category_id">
-			      <div class="mt-1">
-			        <ListboxButton
-			          class="relative w-full py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none"
-			        >
-			          <span class="block truncate">{{ form.category_id.name || "Sélectionner" }}</span>
-			          <span
-			            class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
-			          >
-			            <SelectorIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
-			          </span>
-			        </ListboxButton>
-			          <ListboxOptions
-			            class="absolute w-full py-1 mt-1 overflow-y-scroll bg-white rounded-md shadow-lg max-h-60 focus:outline-none"
-			          >
-			            <ListboxOption
-			              v-slot="{ active, selected }"
-			              v-for="category in categories"
-			              :key="category.name"
-			              :value="category"
-			              as="template"
-			            >
-			              <li
-			                :class="[
-			                  active ? 'text-amber-600 bg-amber-200' : 'text-gray-900',
-			                  'list-none cursor-default text-sm select-none relative py-2 pl-10 pr-4',
-			                ]"
-			              >
-			                <span
-			                  :class="[
-			                    selected ? 'font-medium' : 'font-normal',
-			                    'block truncate',
-			                  ]"
-			                  >{{ category.name }}</span
-			                >
-			                <span
-			                  v-if="selected"
-			                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
-			                >
-			                  <CheckIcon class="w-5 h-5" aria-hidden="true" />
-			                </span>
-			              </li>
-			            </ListboxOption>
-			          </ListboxOptions>
-			      </div>
-			    </Listbox>
-			    <div class="text-red-500 text-xs mt-1" v-if="form.errors['category_id.id']">
-		          {{ form.errors['category_id.id'] }}
-		        </div>
-			</div>
-			<div class="mx-auto mt-[5px]">
-				<label for="price" class="text-sm font-bold text-gray-800">Prix unitaire:</label>
-		        <input
-		          id="price"
-		          type="text"
-		          class="input rounded shadow-md text-sm"
-		          :class="{ 'border-red-500': form.errors.price }"
-		          v-model="form.price"
-		          placeholder="Prix unitaire"
-		        />
-		        <div class="text-red-500 text-xs mt-1" v-if="form.errors.price">
-		          {{ form.errors.price }}
-		        </div>
-		      </div>
-		      	<div class="mx-auto mt-[5px]">
-		      		<label for="tax" class="text-sm font-bold text-gray-800">Taxe:</label>
-		              <input
-		                id="tax"
-		                type="text"
-		                class="input rounded shadow-md text-sm"
-		                :class="{ 'border-red-500': form.errors.tax }"
-		                v-model="form.tax"
-		                placeholder="Taxe"
-		              />
-		              <div class="text-red-500 text-xs mt-1" v-if="form.errors.tax">
-		                {{ form.errors.tax }}
-		              </div>
-		            </div>
-	            	<div class="mx-auto mt-[5px]">
-	            		<label for="expires_at" class="text-sm font-bold text-gray-800">Date d'expiration:</label>
-	                    <input
-	                      id="expires_at"
-	                      type="date"
-	                      class="input rounded shadow-md text-sm"
-	                      :class="{ 'border-red-500': form.errors.expires_at }"
-	                      v-model="form.expires_at"
-	                      placeholder="Date d'expiration"
-	                    />
-	                    <div class="text-red-500 text-xs mt-1" v-if="form.errors.expires_at">
-	                      {{ form.errors.expires_at }}
-	                    </div>
-	                </div>
-	                	<div class="mx-auto mt-[5px]">
-	                		<label for="expires_at" class="text-sm font-bold text-gray-800">Stock:</label>
-	                        <input
-	                          id="stock"
-	                          type="text"
-	                          class="input rounded shadow-md text-sm"
-	                          :class="{ 'border-red-500': form.errors.stock }"
-	                          v-model="form.stock"
-	                          placeholder="Stock initial"
-	                        />
-	                        <div class="text-red-500 text-xs mt-1" v-if="form.errors.stock">
-	                          {{ form.errors.stock }}
-	                        </div>
-	                    </div>
-				    <div class="flex items-center justify-end mx-auto mt-4">
-				        <button
-				          type="submit"
-				          class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none"
-				          :class="{ 'opacity-25': form.processing }"
-				          :disabled="form.processing"
-				        >
-							Ajouter
-				        </button>
-				    </div>
-		    </form>
-		</div>
-	</div>
+        		<p class="border-t-2 border-dashed mt-2 px-0 py-4 text-center text-sm">Au revoir et à bientôt!</p>
+        	</div>
+        </div>
+      </div>
+      <div class="fixed right-2 flex flex-col bottom-2">
+      	<button class="bg-white text-green-600" @click="printReceipt">Valider</button>
+      	<button class="bg-white text-blue-600">Reset</button>
+      </div>
+    </div>
+  </Dashboard>
 </template>
 
 
 <script>
-import LoginIcon from "@/Components/LoginIcon.vue";
-import Dashboard from "@/Pages/Dashboard.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { useForm } from "@inertiajs/inertia-vue3";
-import { ref, watch } from 'vue'
-import {
-  Listbox,
-  ListboxLabel,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-} from '@headlessui/vue'
-import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
-
+import Dashboard from "../../Dashboard.vue";
+import SearchIcon from "@/Components/SearchIcon.vue";
+import AddIcon from "@/Components/AddIcon.vue";
+import EditIcon from "@/Components/EditIcon.vue";
+import DeleteIcon from "@/Components/DeleteIcon.vue";
+import ChevronRightIcon from "@/Components/ChevronRightIcon.vue";
+import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
+import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
+import ShoppingIcon from "@/Components/ShoppingIcon.vue";
+import { Link, Head, useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
+import { watch, ref, reactive } from "vue";
+import axios from "axios";
+import html2canvas from 'html2canvas';
+import {jsPDF} from 'jspdf';
 
 export default {
-	layout: Dashboard,
+  components: {
+    Link,
+    Head,
+    SearchIcon,
+    AddIcon,
+    EditIcon,
+    DeleteIcon,
+    ChevronRightIcon,
+    ChevronUpIcon,
+    ChevronDownIcon,
+    ShoppingIcon,
+    Dashboard,
+  },
 
-	components: {
-	    Head,
-	    Link,
-	    LoginIcon,
-	    Listbox,
-	    ListboxButton,
-	    ListboxOptions,
-	    ListboxOption,
-	    CheckIcon,
-    	SelectorIcon,
-	},
+  props: { articles: Array },
 
-	props: {
-		status: String,
-		categories: Array,
-		messages: Object
-	},
+  setup(props) {
+    const form = reactive({
+      search: "",
+      sortByName: "",
+      sortByPrice: "",
+      sortByTax: "",
+    });
 
-	setup(props) {
-		const form = useForm({
-			category_id: "",
-			name: "",
-			description: "",
-			price: '',
-			tax: '',
-			expires_at: '',
-			stock: ''
-		});
+    const getReceiptId = () => {
+    	const d = new Date();
+    	return `${d.getFullYear()}${d.getMonth()+1}${d.getDate()}${d.getHours()}${d.getMinutes()}${d.getSeconds()}`;
+    }
 
-		const submit = () => {
-			form.post(route("sales.store"), {
-				onSuccess: () => form.reset(),
-			});
-		};
+    const getDateTime = () => {
+    	const d = new Date();
+    	const year = d.getFullYear();
+    	let months = d.getMonth() + 1;
+    	let days = d.getDate();
+    	let hours = d.getHours();
+    	let mins = d.getMinutes();
 
-		return {
-			form,
-			submit
-		};
-	},
+    	if (months < 10)
+    		months = "0" + months;
+    	if (days < 10)
+    		days = "0" + days;
+    	if (hours < 10)
+    		hours = "0" + hours;
+    	if (mins < 10)
+    		mins = "0" + mins;
+
+    	return {
+    		date: `${days}/${months}/${year}`,
+    		time: `${hours}H:${mins}`
+    	}
+    }
+
+    const orders = reactive({
+    	receiptId: getReceiptId(),
+    	date: getDateTime(),
+    	items: [],
+    	taxes: 0,
+    	partialTotal: 0,
+    	total: 0
+    });
+
+    const orderError = ref('');
+
+    const reactiveArticles = ref(props.articles);
+
+    const setFilter = (key, value) => {
+      const keys = Object.keys(form);
+      if (keys.length > 1) {
+        keys.forEach((key) => {
+          if (key.startsWith("sortBy")) delete form[key];
+        });
+      }
+      form[key] = value;
+    };
+
+    const addToCart = (article) => {
+    	article.qty = 1;
+    	orders.items.push(article);
+    };
+
+    const removeFromCart = (removal) => {
+    	orders.items = orders.items.filter(order => order.id != removal.id);
+    };
+
+    watch(form, () => {
+      axios
+        .post(route("articles.search"), form)
+        .then((res) => {
+          reactiveArticles.value = res.data.data;
+        })
+        .catch((err) => console.log(err));
+    });
+
+    watch(orders, () => {
+    	let priceAccumultor = 0;
+    	orders.partialTotal = orders.items.reduce(function(priceAccumultor, item) {
+    		if (item.qty < 1){
+    			orderError.value = "Mauvaise entrée, veuillez recommencer!";
+    			return 0;
+    		}
+    		return priceAccumultor + item.price * item.qty;
+    	}, priceAccumultor);
+    	priceAccumultor = 0;
+    	orders.taxes = orders.items.reduce(((priceAccumultor, item) => priceAccumultor + (item.price * item.qty * item.tax) / 100), priceAccumultor);
+    	orders.total = orders.partialTotal + orders.taxes;
+    })
+
+
+    const saveReceipt = () => {
+
+    };
+
+
+    const printReceipt = async () => {
+    	
+    	await saveReceipt();
+
+    	const receipt = document.getElementById('receipt');
+    	const doc = new jsPDF({ unit: 'px', format: [receipt.clientWidth, receipt.clientHeight], orientation: 'p', hotfixes: ['px_scaling'] });
+    	
+    	doc.setFontSize(18);
+    	doc.setFont('courier');
+
+    	html2canvas(receipt, {
+        width: doc.internal.pageSize.getWidth(),
+        height: doc.internal.pageSize.getHeight()
+      }).then((canvas) => {
+        const img = canvas.toDataURL("image/png");
+        doc.addImage(img, "PNG", 0, 0, canvas.width, canvas.height);
+        doc.save("receipt.pdf");
+      })
+    }
+
+    return {
+    	form,
+    	setFilter,
+    	addToCart,
+    	removeFromCart,
+    	reactiveArticles,
+    	orders,
+    	printReceipt
+    };
+  },
 };
 </script>
+
+<style scoped>
+	#receipt{
+		font-family: 'JetBrains Mono' !important;
+	}
+
+	.family-mono{
+		font-family: 'Ubuntu Mono' !important;
+	}
+</style>

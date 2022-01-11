@@ -117,7 +117,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-gray-600"
-}, "Veuillez confirmer votre mot de passe.", -1
+}, " Veuillez confirmer votre mot de passe. ", -1
 /* HOISTED */
 );
 

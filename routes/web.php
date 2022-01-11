@@ -33,9 +33,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('articles', ArticleController::class)->middleware(['auth', 'verified']);
 Route::resource('clients', ClientController::class)->middleware(['auth', 'verified']);
-Route::resource('invoices', InvoiceController::class)->middleware(['auth', 'verified']);
 Route::resource('sales', SaleController::class)->middleware(['auth', 'verified']);
-Route::resource('orders', OrderController::class)->middleware(['auth', 'verified']);
 
 Route::post('/articles/search', [ArticleController::class, 'search'])->middleware(['auth', 'verified'])->name('articles.search');
 Route::post('/clients/search', [ClientController::class, 'search'])->middleware(['auth', 'verified'])->name('clients.search');
