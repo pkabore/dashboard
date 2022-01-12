@@ -6,7 +6,7 @@
       </h2>
       <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
         <div
-          v-if="messages.articles && messages.articles.success"
+          v-if="message"
           class="
             mb-1
             font-medium
@@ -16,7 +16,7 @@
             justify-end
           "
         >
-          <span>{{ messages.articles.success }}</span>
+          <span>{{ message }}</span>
           <CheckIcon class="h-5 w-5 ml-1" />
         </div>
         <div class="mx-auto">
@@ -35,20 +35,19 @@
         </div>
 
         <div class="mx-auto mt-[5px]">
-          <label for="description" class="text-sm font-bold text-gray-800"
-            >Description:</label
+          <label for="expires_at" class="text-sm font-bold text-gray-800"
+            >Stock:</label
           >
-          <textarea
-            id="description"
+          <input
+            id="stock"
             type="text"
             class="input rounded shadow-md text-sm"
-            :class="{ 'border-red-500': form.errors.description }"
-            v-model="form.description"
-            placeholder="Description de l'article"
-          >
-          </textarea>
-          <div class="text-red-500 text-xs mt-1" v-if="form.errors.description">
-            {{ form.errors.description }}
+            :class="{ 'border-red-500': form.errors.stock }"
+            v-model="form.stock"
+            placeholder="Stock initial"
+          />
+          <div class="text-red-500 text-xs mt-1" v-if="form.errors.stock">
+            {{ form.errors.stock }}
           </div>
         </div>
         <div class="relative mt-[5px]">
@@ -169,6 +168,23 @@
           </div>
         </div>
         <div class="mx-auto mt-[5px]">
+          <label for="description" class="text-sm font-bold text-gray-800"
+            >Description:</label
+          >
+          <textarea
+            id="description"
+            type="text"
+            class="input rounded shadow-md text-sm"
+            :class="{ 'border-red-500': form.errors.description }"
+            v-model="form.description"
+            placeholder="Description de l'article"
+          >
+          </textarea>
+          <div class="text-red-500 text-xs mt-1" v-if="form.errors.description">
+            {{ form.errors.description }}
+          </div>
+        </div>
+        <div class="mx-auto mt-[5px]">
           <label for="tax" class="text-sm font-bold text-gray-800">Taxe:</label>
           <input
             id="tax"
@@ -196,22 +212,6 @@
           />
           <div class="text-red-500 text-xs mt-1" v-if="form.errors.expires_at">
             {{ form.errors.expires_at }}
-          </div>
-        </div>
-        <div class="mx-auto mt-[5px]">
-          <label for="expires_at" class="text-sm font-bold text-gray-800"
-            >Stock:</label
-          >
-          <input
-            id="stock"
-            type="text"
-            class="input rounded shadow-md text-sm"
-            :class="{ 'border-red-500': form.errors.stock }"
-            v-model="form.stock"
-            placeholder="Stock initial"
-          />
-          <div class="text-red-500 text-xs mt-1" v-if="form.errors.stock">
-            {{ form.errors.stock }}
           </div>
         </div>
         <div class="flex items-center justify-end mx-auto mt-4">
@@ -244,12 +244,8 @@
 
 
 <script>
-import LoginIcon from "@/Components/LoginIcon.vue";
-import Datepicker from "@/Components/Datepicker.vue";
 import Dashboard from "@/Pages/Dashboard.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { ref, watch } from "vue";
 import {
   Listbox,
   ListboxLabel,
@@ -263,10 +259,6 @@ export default {
   layout: Dashboard,
 
   components: {
-    Head,
-    Link,
-    LoginIcon,
-    Datepicker,
     Listbox,
     ListboxButton,
     ListboxOptions,
@@ -276,9 +268,8 @@ export default {
   },
 
   props: {
-    status: String,
     categories: Array,
-    messages: Object,
+    message: String,
   },
 
   setup(props) {

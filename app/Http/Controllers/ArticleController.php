@@ -21,7 +21,10 @@ class ArticleController extends Controller
     {
         $articles = Article::paginate(15)
                         ->through(function($article){
-                            $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
+                            if ($article->expires_at)
+                                $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
+                            else
+                                $article->expires_at = '-';
                             return $article;
                         });
 
@@ -37,14 +40,9 @@ class ArticleController extends Controller
      */
     public function create(Request $request)
     {
-        $messages = session('messages');
-        $request->session()->put('messages.articles.success', '');
-        if(!$messages)
-            $messages = session('messages');
-
         return Inertia::render('Dashboard/Article/Create', [
             'categories' => Category::select('id', 'name')->get(),
-            'messages' => $messages
+            'message' => ''
         ]);
     }
 
@@ -56,30 +54,38 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->name = strtoupper($request->name);
         $request->validate([
             'category_id.id' => 'required|integer|min:1',
             'name' => 'required|string|max:256',
-            'description' => 'required|string|max:512',
+            'description' => 'nullable|string|max:512',
             'price' => 'required|numeric|min:0',
-            'tax' => 'required|numeric|min:0',
+            'tax' => 'nullable|numeric|min:0',
             'stock' => 'required|numeric|min:0',
-            'expires_at' => 'required|date',
+            'expires_at' => 'nullable|date',
         ]);
 
         $a = new Article();
 
         $a->category_id = $request->category_id['id'];
+
+        $c = Category::find($a->category_id);
+        $c->articles = $c->articles + 1;
+
         $a->name = $request->name;
         $a->description = $request->description;
         $a->price = $request->price;
         $a->tax = $request->tax;
         $a->stock = $request->stock;
+        
+        if (!$request->tax)
+            $a->tax = 0;
         $a->expires_at = $request->expires_at;
+        if (!$request->expires_at)
+            $a->expires_at = 0;
 
         $a->save();
-        $request->session()->put('messages.articles.success', 'Article ajouté avec succès');
-        return redirect(route('articles.create'));
+        $c->save();
+        return Inertia::render('Dashboard/Article/Create', ['message' => 'Article ajouté avec succès']);
     }
 
     /**
@@ -101,18 +107,13 @@ class ArticleController extends Controller
      */
     public function edit(Request $request, Article $article)
     {
-        $messages = session('messages');
-        $request->session()->put('messages.articles.editSuccess', '');
-        $request->session()->put('messages.articles.editFailure', '');
-        if(!$messages)
-            $messages = session('messages');
 
         $article->expires_at = Carbon::parse($article->expires_at)->format('Y-m-d');
 
         return Inertia::render('Dashboard/Article/Edit', [
-            'categories' => Category::select('id', 'name')->get(),
+            'categories' => Category::select('id', 'name')->orderBy('name')->get(),
             'article' => $article,
-            'messages' => $messages
+            'message' => ''
         ]);
     }
 
@@ -128,26 +129,43 @@ class ArticleController extends Controller
         $request->validate([
             'category_id.id' => 'required|integer|min:1',
             'name' => 'required|string|max:256',
-            'description' => 'required|string|max:512',
+            'description' => 'nullable|string|max:512',
             'price' => 'required|numeric|min:0',
-            'tax' => 'required|numeric|min:0',
+            'tax' => 'nullable|numeric|min:0',
             'stock' => 'required|numeric|min:0',
-            'expires_at' => 'required|date',
+            'expires_at' => 'nullable|date',
         ]);
 
-        $request->name = strtoupper($request->name);
-
+        $old_category = Category::find($article->category_id);
         $article->category_id = $request->category_id['id'];
+        $new_category = Category::find($article->category_id);
+
+        if ($old_category->id != $new_category->id){
+            $new_category->articles = $new_category->articles + 1;
+            $old_category->articles = $old_category->articles - 1;
+            $new_category->save();
+            $old_category->save();
+        }
+
         $article->name = $request->name;
         $article->description = $request->description;
         $article->price = $request->price;
-        $article->tax = $request->tax;
         $article->stock = $request->stock;
+
+        $article->tax = $request->tax;
+        if (!$request->tax)
+            $article->tax = 0;
         $article->expires_at = $request->expires_at;
+        if (!$request->expires_at)
+            $article->expires_at = 0;
 
         $article->save();
-        $request->session()->put('messages.articles.editSuccess', 'Article édité avec succès');
-        return redirect(route('articles.edit', $article->id));
+        
+        return Inertia::render('Dashboard/Article/Edit', [
+            'categories' => Category::select('id', 'name')->orderBy('name')->get(),
+            'article' => $article,
+            'message' => 'Article édité avec succès'
+        ]);
     }
 
     /**
@@ -163,7 +181,10 @@ class ArticleController extends Controller
         $articles = Article::filter($filters)
                         ->paginate(15)
                         ->through(function($article){
-                            $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
+                            if ($article->expires_at)
+                                $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
+                            else
+                                $article->expires_at = '-';
                             return $article;
                         });
 
@@ -179,6 +200,9 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
+        $c = Category::find($article->category_id);
+        $c->articles = $c->articles - 1;
+        $c->save();
         return redirect(route('articles.index'));
     }
 }

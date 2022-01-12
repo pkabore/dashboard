@@ -5,9 +5,5 @@ module.exports = {
         alias: {
             '@': path.resolve('resources/js'),
         },
-    },
-    externals: {
-    // only define the dependencies you are NOT using as externals!
-    html2canvas: "html2canvas",
-  }
+    }
 };

@@ -175,7 +175,7 @@
                 "
                 @click="visit(client.id)"
               >
-                <td class="p-2">
+                <td class="p-2 family-mono">
                   {{ client.id }}
                 </td>
                 <td class="p-2">
@@ -189,7 +189,7 @@
                 >
                   {{ client.fname }}
                 </td>
-                <td class="p-2">
+                <td class="p-2 family-mono">
                   {{ client.phone }}
                 </td>
                 <td class="p-2">

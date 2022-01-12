@@ -11,11 +11,11 @@
 					    type="text"
 					    class="input bg-slate-200 rounded inset-0 pr-8"
 					    v-model="form.search"
-					    placeholder="Rechercher un article"
+					    placeholder="Rechercher une vente"
 					  />
 					</div>
 					<!-- <Filters /> -->
-					<Link :href="route('articles.create')" class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 flex items-center rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none">
+					<Link :href="route('sales.create')" class="bg-blue-600 text-white py-1 px-2 text-sm shadow-md shadow-blue-500/50 flex items-center rounded-md hover:bg-blue-700 transition ease-in-out duration-300 focus:outline-none">
 						<AddIcon class="h-6 w-6 mr-1 text-blue-200" />
 						<span>Vendre</span>
 					</Link>			
@@ -27,61 +27,51 @@
 							<th class="py-3">Id</th>
 							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="setFilter('sortByName','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByName == 'asc'}" />
-								<span>Nom</span>
-								<ChevronDownIcon @click="setFilter('sortByName','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByName == 'desc'}" />
+								<ChevronUpIcon @click="setFilter('sortByReceiptId','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByReceiptId == 'asc'}" />
+								<span>Reçu</span>
+								<ChevronDownIcon @click="setFilter('sortByReceiptId','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByReceiptId == 'desc'}" />
 							</div>
 							</th>
 							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="setFilter('sortByStock','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByStock == 'asc'}" />
-								<span>Stock</span>
-								<ChevronDownIcon @click="setFilter('sortByStock','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByStock == 'desc'}" />
+								<ChevronUpIcon @click="setFilter('sortByDate','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByDate == 'asc'}" />
+								<span>Date</span>
+								<ChevronDownIcon @click="setFilter('sortByDate','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByDate == 'desc'}" />
 							</div>
 							</th>
 							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="setFilter('sortByPrice','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByPrice == 'asc'}" />
-								<span>Prix</span>
-								<ChevronDownIcon @click="setFilter('sortByPrice','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByPrice == 'desc'}"/>
+								<ChevronUpIcon @click="setFilter('sortByTaxes','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTaxes == 'asc'}" />
+								<span>Taxes</span>
+								<ChevronDownIcon @click="setFilter('sortByTaxes','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTaxes == 'desc'}"/>
 							</div>
 							</th>
 							<th class="py-3">
 								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="setFilter('sortByTax','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTax == 'asc'}" />
-								<span>Taxe</span>
-								<ChevronDownIcon @click="setFilter('sortByTax','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTax == 'desc'}" />
-							</div>
-							</th>
-							<th class="py-3">
-								<div class="flex items-center justify-center">
-								<ChevronUpIcon @click="setFilter('sortByExpiresAt','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'asc'}" />
-								<span>Exp. Date</span>
-								<ChevronDownIcon @click="setFilter('sortByExpiresAt','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByExpiresAt == 'desc'}" />
+								<ChevronUpIcon @click="setFilter('sortByTotal','asc')" class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTotal == 'asc'}" />
+								<span>Total</span>
+								<ChevronDownIcon @click="setFilter('sortByTotal','desc')" class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700 cursor-pointer" :class="{'text-amber-700': form.sortByTotal == 'desc'}" />
 							</div>
 							</th>
 							<th class="py-3">Actions</th>
 						</tr>
 					</thead>
 					<tbody class="pt-4">
-						<tr v-for="article in reactiveArticles.data" :key="did" class="border-t space-x-2 text-center hover:bg-neutral-200 cursor-pointer" @click="visit(did)">
+						<tr v-for="sale in reactiveSales" :key="sale.id" class="border-t space-x-2 hover:bg-neutral-200 cursor-pointer family-mono" @click="visit(sale.id)">
 							<td class="p-2">
-								{{did}}
+								{{sale.id}}
 							</td>
 							<td class="p-2">
-								{{dname}}
+								{{sale.receipt_id}}
 							</td>
-							<td :class="{'text-red-600' : dstock <= 100, 'text-sky-600' : dstock > 100}">
-								{{dstock}}
+							<td class="lowercase font-sans">
+								{{sale.date}}
 							</td>
-							<td class="p-2">
-								{{dprice}} FCFA
+							<td class="p-2 font-bold">
+								{{sale.taxes.toLocaleString('fr-FR')}} FCFA
 							</td>
-							<td class="p-2">
-								{{dtax}} FCFA
-							</td>
-							<td class="p-2">
-								{{dexpires_at}}
+							<td class="p-2 font-bold">
+								{{sale.total.toLocaleString('fr-FR')}} FCFA
 							</td>
 							<td class="p-2 inline-flex justify-center">
 								<ChevronRightIcon class="h-6 w-6 text-sky-600" />
@@ -124,19 +114,18 @@
 			Dashboard
 		},
 
-		props: { sales: Object },
+		props: { sales: Array },
 
 		setup(props) {
 			const form = reactive({
 				search: '',
-				sortByName: '',
-				sortByPrice: '',
-				sortByTax: '',
-				sortByStock: '',
-				sortByExpiresAt: ''
+				sortByReceiptId: '',
+				sortByDate: '',
+				sortByTotal: '',
+				sortByTaxes: ''
 			});
 
-			const reactiveArticles = ref(props.articles);
+			const reactiveSales = ref(props.sales);
 			
 			const setFilter = (key, value) => {
 				const keys = Object.keys(form);
@@ -150,18 +139,18 @@
 			}
 
 			const visit = (id) => {
-				Inertia.get(route('articles.edit', id));
+				Inertia.get(route('sales.show', id));
 			}
 
 			watch(form, () => {
-				axios.post(route('articles.search'), form)
+				axios.post(route('sales.search'), form)
 					.then(res => {
-						reactiveArticles.value = res.data;
+						reactiveSales.value = res.data;
 					})
 					.catch(err => console.log(err));
 			});
 
-			return { form, setFilter, visit, reactiveArticles }
+			return { form, setFilter, visit, reactiveSales }
 		}
 	}
 </script>

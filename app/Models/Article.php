@@ -13,11 +13,6 @@ class Article extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = strtoupper($value);
-    }
-
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? null, function($query, $search){
             $query->where(function ($query) use ($search) {

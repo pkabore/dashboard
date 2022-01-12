@@ -11,20 +11,11 @@ class Client extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public function setFnameAttribute($value)
-    {
-        $this->attributes['fname'] = strtoupper($value);
-    }
-
-    public function setLnameAttribute($value)
-    {
-        $this->attributes['lname'] = strtoupper($value);
-    }
-
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? null, function($query, $search){
             $query->where(function ($query) use ($search) {
                 return $query->where('lname', 'LIKE', '%'.$search.'%')
+                      ->orWhere('fname', 'LIKE', '%'.$search.'%')
                       ->orWhere('email', 'LIKE', '%'.$search.'%')
                       ->orWhere('phone', 'LIKE', '%'.$search.'%')
                       ->orWhere('address', 'LIKE', '%'.$search.'%');

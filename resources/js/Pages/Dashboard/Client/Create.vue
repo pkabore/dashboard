@@ -6,7 +6,7 @@
       </h2>
       <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
         <div
-          v-if="messages.clients && messages.clients.success"
+          v-if="message"
           class="
             mb-1
             font-medium
@@ -16,7 +16,7 @@
             justify-end
           "
         >
-          <span>{{ messages.clients.success }}</span>
+          <span>{{ message }}</span>
           <CheckIcon class="h-5 w-5 ml-1" />
         </div>
         <div class="mx-auto">
@@ -142,7 +142,7 @@ export default {
   },
 
   props: {
-    messages: Object,
+    message: String,
   },
 
   setup(props) {

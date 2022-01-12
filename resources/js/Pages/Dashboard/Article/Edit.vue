@@ -14,7 +14,7 @@
         class="mx-auto relative max-w-sm"
       >
         <div
-          v-if="messages.articles && messages.articles.editSuccess"
+          v-if="message"
           class="
             mb-1
             font-medium
@@ -24,14 +24,8 @@
             justify-center
           "
         >
-          <span>{{ messages.articles.editSuccess }}</span>
+          <span>{{ message }}</span>
           <CheckIcon class="h-5 w-5 ml-1" />
-        </div>
-        <div
-          v-if="messages.articles && messages.articles.editFailure"
-          class="mb-1 font-medium text-sm text-red-600 text-center"
-        >
-          <span>{{ messages.articles.editFailure }}</span>
         </div>
         <div class="mx-auto">
           <label for="name" class="text-sm font-bold text-gray-800">Nom:</label>
@@ -67,7 +61,7 @@
         </div>
         <div class="relative mt-[5px]">
           <label for="category" class="text-sm font-bold text-gray-800"
-            >Catégorie:</label
+            >Rayon:</label
           >
           <Listbox id="category" v-model="form.category_id">
             <div class="mt-1">
@@ -375,12 +369,10 @@
 
 
 <script>
-import ErrorIcon from "@/Components/ErrorIcon.vue";
 import Dashboard from "@/Pages/Dashboard.vue";
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
-import { ref, watch } from "vue";
-import axios from "axios";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { ref } from "vue";
+
 import {
   Listbox,
   ListboxLabel,
@@ -399,9 +391,6 @@ export default {
   layout: Dashboard,
 
   components: {
-    Head,
-    Link,
-    ErrorIcon,
     Listbox,
     ListboxButton,
     ListboxOptions,
@@ -417,7 +406,7 @@ export default {
 
   props: {
     categories: Array,
-    messages: Object,
+    message: String,
     article: Object,
   },
 
@@ -434,7 +423,6 @@ export default {
     };
 
     const form = useForm({
-      _method: "PUT",
       category_id: getCategory(props.article.category_id),
       name: props.article.name,
       description: props.article.description,
@@ -445,8 +433,7 @@ export default {
     });
 
     const submit = () => {
-      form.post(route("articles.update", props.article.id), {
-        only: ["article", "messages"],
+      form.put(route("articles.update", props.article.id), {
         onSuccess: () => {},
       });
     };

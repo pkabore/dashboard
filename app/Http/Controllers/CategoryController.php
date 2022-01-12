@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         return Inertia::render('Dashboard/Category/Index', [
-            'categories' => Category::all()
+            'categories' => Category::orderBy('name')->get()
         ]);
     }
 
@@ -25,9 +25,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Dashboard/Category/Create'); 
+
+        return Inertia::render('Dashboard/Category/Create', [
+            'message' => ""
+        ]); 
     }
 
     /**
@@ -39,15 +42,16 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|min:3'
+            'name' => 'required|string|min:2|unique:categories'
         ]);
 
         $c = new Category();
         $c->name = $request->name;
         $c->save();
 
-        $request->session()->put('messages.categories.success', 'Rayon ajouté avec succès');
-        redirect(route('categories.create'));
+        return Inertia::render('Dashboard/Category/Create', [
+            'message' => "Rayon crée avec succès"
+        ]); 
     }
 
     /**
@@ -67,9 +71,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Request $request, Category $category)
     {
-        return Inertia::render('Dashboard/Category/Edit', ['category' => $category]); 
+        return Inertia::render('Dashboard/Category/Edit', [
+            'category' => $category,
+            'message' => ''
+        ]); 
     }
 
     /**
@@ -82,15 +89,33 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required|string|unique:categories|min:3'
+            'name' => 'required|min:2|unique:categories'
         ]);
 
-        $category = new Category();
         $category->name = $request->name;
         $category->save();
 
-        $request->session()->put('messages.categories.success', 'Rayon ajouté avec succès');
-        redirect(route('categories.create'));
+        return Inertia::render('Dashboard/Category/Edit', [
+            'category' => $category,
+            'message' => "Rayon mis à jour avec succès"
+        ]); 
+    }
+
+
+    /**
+     * Search the specified resource from storage.
+     *
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $filters = $request->only(['search', 'sortByName', 'sortByArticles']);
+
+        $categories = Category::filter($filters)
+                        ->paginate(15);
+
+        return $categories;
     }
 
     /**

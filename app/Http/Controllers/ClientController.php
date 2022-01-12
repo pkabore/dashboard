@@ -29,14 +29,7 @@ class ClientController extends Controller
      */
     public function create(Request $request)
     {
-        $messages = session('messages');
-        $request->session()->put('messages.clients.success', '');
-        if(!$messages)
-            $messages = session('messages');
-
-        return Inertia::render('Dashboard/Client/Create', [
-            'messages' => $messages
-        ]);
+        return Inertia::render('Dashboard/Client/Create', [ 'message' => '']);
     }
 
     /**
@@ -47,13 +40,11 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $request->lname = strtoupper($request->lname);
-        $request->fname = strtoupper($request->fname);
         $request->validate([
             'fname' => 'required|string|min:3',
             'lname' => 'required|string|min:3',
-            'email' => 'required|string|email|max:256',
-            'phone' => 'required|string|max:20',
+            'email' => 'required|string|email|unique:clients|max:256',
+            'phone' => 'required|string|unique:clients|max:20',
             'address' => 'required|string|max:256',
         ]);
 
@@ -66,8 +57,9 @@ class ClientController extends Controller
         $c->address = $request->address;
 
         $c->save();
-        $request->session()->put('messages.clients.success', 'Client ajouté avec succès');
-        return redirect(route('clients.create'));
+        return Inertia::render('Dashboard/Client/Create', [
+            'message' => 'Client ajouté avec succès',
+        ]);
     }
 
     /**
@@ -89,13 +81,8 @@ class ClientController extends Controller
      */
     public function edit(Request $request, Client $client)
     {
-        $messages = session('messages');
-        $request->session()->put('messages.clients.editSuccess', '');
-        if(!$messages)
-            $messages = session('messages');
-
         return Inertia::render('Dashboard/Client/Edit', [
-            'messages' => $messages,
+            'message' => '',
             'client' => $client
         ]);
     }
@@ -109,13 +96,11 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        $request->lname = strtoupper($request->lname);
-        $request->fname = strtoupper($request->fname);
         $request->validate([
             'fname' => 'required|string|min:3',
             'lname' => 'required|string|min:3',
-            'email' => 'required|string|email|max:256',
-            'phone' => 'required|string|max:20',
+            'email' => 'required|string|email|unique:clients|max:256',
+            'phone' => 'required|string|unique:clients|max:20',
             'address' => 'required|string|max:256',
         ]);
 
@@ -126,8 +111,10 @@ class ClientController extends Controller
         $client->address = $request->address;
 
         $client->save();
-        $request->session()->put('messages.clients.editSuccess', 'Client édité avec succès');
-        return redirect(route('clients.edit', $client->id));
+        return Inertia::render('Dashboard/Client/Edit', [
+            'client' => $client,
+            'message' => 'Client édité avec succès'
+        ]);
     }
 
 

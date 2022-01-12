@@ -211,13 +211,14 @@
                   class="border-t space-x-2 text-center hover:bg-neutral-200"
                   @click="visit(article.id)"
                 >
-                  <td class="p-2">
+                  <td class="p-2 family-mono">
                     {{ article.id }}
                   </td>
-                  <td class="p-2 text-xs">
+                  <td class="p-2 uppercase text-xs">
                     {{ article.name }}
                   </td>
                   <td
+                    class="family-mono"
                     :class="{
                       'text-red-600': article.stock <= 100,
                       'text-sky-600': article.stock > 100,
@@ -225,8 +226,8 @@
                   >
                     {{ article.stock.toLocaleString('fr-FR') }}
                   </td>
-                  <td class="p-2">{{ parseFloat(article.price).toLocaleString('fr-FR') }}</td>
-                  <td class="p-2">{{ parseFloat(article.tax).toLocaleString('fr-FR') + "%" }}</td>
+                  <td class="p-2 family-mono">{{ parseFloat(article.price).toLocaleString('fr-FR') }}</td>
+                  <td class="p-2 family-mono">{{ parseFloat(article.tax).toLocaleString('fr-FR') + "%" }}</td>
                   <td class="p-2">
                     {{ article.expires_at }}
                   </td>
@@ -263,7 +264,6 @@ import axios from "axios";
 export default {
   components: {
     Link,
-    Head,
     SearchIcon,
     AddIcon,
     EditIcon,

@@ -14,7 +14,7 @@
         class="mx-auto relative max-w-sm"
       >
         <div
-          v-if="messages.clients && messages.clients.editSuccess"
+          v-if="message"
           class="
             mb-1
             font-medium
@@ -24,7 +24,7 @@
             justify-end
           "
         >
-          <span>{{ messages.clients.editSuccess }}</span>
+          <span>{{ message }}</span>
           <CheckIcon class="h-5 w-5 ml-1" />
         </div>
         <div class="mx-auto">
@@ -256,46 +256,28 @@
 <script>
 import ErrorIcon from "@/Components/ErrorIcon.vue";
 import Dashboard from "@/Pages/Dashboard.vue";
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
+import { useForm } from "@inertiajs/inertia-vue3";
 import { ref, watch } from "vue";
 import axios from "axios";
 import {
-  Listbox,
-  ListboxLabel,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-  TransitionRoot,
-  TransitionChild,
   Dialog,
   DialogOverlay,
   DialogTitle,
 } from "@headlessui/vue";
-import { CheckIcon, SelectorIcon } from "@heroicons/vue/solid";
+import { CheckIcon } from "@heroicons/vue/solid";
 
 export default {
   layout: Dashboard,
 
   components: {
-    Head,
-    Link,
-    ErrorIcon,
-    Listbox,
-    ListboxButton,
-    ListboxOptions,
-    ListboxOption,
     CheckIcon,
-    SelectorIcon,
-    TransitionRoot,
-    TransitionChild,
     Dialog,
     DialogOverlay,
     DialogTitle,
   },
 
   props: {
-    messages: Object,
+    message: Object,
     client: Object,
   },
 
@@ -312,7 +294,6 @@ export default {
     };
 
     const form = useForm({
-      _method: "PUT",
       fname: props.client.fname,
       lname: props.client.lname,
       email: props.client.email,
@@ -325,8 +306,7 @@ export default {
     });
 
     const submit = () => {
-      form.post(route("clients.update", props.client.id), {
-        only: ["client", "messages"],
+      form.put(route("clients.update", props.client.id), {
         onSuccess: () => {},
       });
     };

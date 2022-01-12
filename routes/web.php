@@ -38,5 +38,11 @@ Route::resource('categories', CategoryController::class)->middleware(['auth', 'v
 
 Route::post('/articles/search', [ArticleController::class, 'search'])->middleware(['auth', 'verified'])->name('articles.search');
 Route::post('/clients/search', [ClientController::class, 'search'])->middleware(['auth', 'verified'])->name('clients.search');
+Route::post('/categories/search', [CategoryController::class, 'search'])->middleware(['auth', 'verified'])->name('categories.search');
+Route::post('/sales/search', [SaleController::class, 'search'])->middleware(['auth', 'verified'])->name('sales.search');
+
+Route::get('/stats', function(Request $request) {
+    return Inertia::render('Dashboard/Stats/Index');
+})->middleware(['auth', 'verified'])->name('stats');
 
 require __DIR__.'/auth.php';

@@ -1,5 +1,5 @@
 <template>
-  <Head title="Administration" />
+  <Head title="Admin" />
   <div class="min-h-screen relative">
     <div
       class="
@@ -46,6 +46,24 @@
         <ShoppingIcon class="h-5 w-5 mr-2 text-gray-200" />
         <span>Vendre</span>
       </Link>
+      <Link
+        :href="route('sales.index')"
+        class="
+          flex
+          items-center
+          w-full
+          px-1
+          py-2
+          rounded-md
+          hover:bg-slate-800
+          transition
+          ease-out
+          duration-200
+        "
+      >
+        <CheckListIcon class="h-5 w-5 mr-2 text-gray-200" />
+        <span>Ventes</span>
+      </Link>
 
       <Link
         :href="route('articles.index')"
@@ -64,6 +82,25 @@
       >
         <ArticleIcon class="h-5 w-5 mr-2 text-gray-200" />
         <span>Articles</span>
+      </Link>
+
+      <Link
+        :href="route('categories.index')"
+        class="
+          flex
+          items-center
+          w-full
+          px-1
+          py-2
+          rounded-md
+          hover:bg-slate-800
+          transition
+          ease-out
+          duration-200
+        "
+      >
+        <FolderIcon class="h-5 w-5 mr-2 text-gray-200" />
+        <span>Rayons</span>
       </Link>
 
       <Link
@@ -162,7 +199,7 @@
 </template>
 
 <script>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Link, Head } from "@inertiajs/inertia-vue3";
 import LogoutIcon from "@/Components/LogoutIcon.vue";
 import GroupIcon from "@/Components/GroupIcon.vue";
 import InvoiceIcon from "@/Components/InvoiceIcon.vue";
@@ -173,25 +210,29 @@ import DeleteIcon from "@/Components/DeleteIcon.vue";
 import PrintIcon from "@/Components/PrintIcon.vue";
 import ChartIcon from "@/Components/ChartIcon.vue";
 import MenuIcon from "@/Components/MenuIcon.vue";
+import CheckListIcon from "@/Components/CheckListIcon.vue";
 import ShoppingIcon from "@/Components/ShoppingIcon.vue";
+import FolderIcon from "@/Components/FolderIcon.vue";
 
 import { ref } from "vue";
 
 export default {
   components: {
-    Head,
     Link,
+    Head,
     LogoutIcon,
     GroupIcon,
     ArticleIcon,
     InvoiceIcon,
     MenuIcon,
+    CheckListIcon,
     PrintIcon,
     AddIcon,
     EditIcon,
     DeleteIcon,
     ChartIcon,
     ShoppingIcon,
+    FolderIcon
   },
 
   setup(props) {
@@ -200,3 +241,9 @@ export default {
   },
 };
 </script>
+
+<style>
+  .family-mono{
+    font-family: 'Ubuntu Mono';
+  }
+</style>
