@@ -8,36 +8,24 @@ use Inertia\Inertia;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $clients = Client::paginate(15);
+        $clients = Client::paginate(12);
 
-        return Inertia::render('Dashboard/Client/Index', [
+        return Inertia::render('Client/Index', [
             'clients' => $clients
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
-        return Inertia::render('Dashboard/Client/Create', [ 'message' => '']);
+        $message = session('message');
+        $request->session()->put('message', '');
+        if (!$message)
+            $message = session('message');
+        return Inertia::render('Client/Create', [ 'message' => $message]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -57,52 +45,39 @@ class ClientController extends Controller
         $c->address = $request->address;
 
         $c->save();
-        return Inertia::render('Dashboard/Client/Create', [
-            'message' => 'Client ajouté avec succès',
-        ]);
+        $request->session()->put('message', 'Client ajouté avec succès');
+        return redirect(route('clients.create'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Client $client)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request, Client $client)
     {
-        return Inertia::render('Dashboard/Client/Edit', [
-            'message' => '',
+        $message = session('message');
+        $request->session()->put('message', '');
+        if (!$message)
+            $message = session('message');
+
+        return Inertia::render('Client/Edit', [
+            'message' => $message,
             'client' => $client
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Client $client)
     {
-        $request->validate([
+        $rules = [
             'fname' => 'required|string|min:3',
             'lname' => 'required|string|min:3',
-            'email' => 'required|string|email|unique:clients|max:256',
-            'phone' => 'required|string|unique:clients|max:20',
+            'email' => 'required|string|email|max:256',
+            'phone' => 'required|string|max:20',
             'address' => 'required|string|max:256',
-        ]);
+        ];
+
+        if ($request->email != $client->email)
+            $rules['email'] = 'required|string|email|unique:clients|max:256';
+        if ($request->phone != $client->phone)
+            $rules['phone'] = 'required|string|phone|unique:clients|max:256';
+
+        $request->validate($rules);
 
         $client->fname = $request->fname;
         $client->lname = $request->lname;
@@ -111,35 +86,20 @@ class ClientController extends Controller
         $client->address = $request->address;
 
         $client->save();
-        return Inertia::render('Dashboard/Client/Edit', [
-            'client' => $client,
-            'message' => 'Client édité avec succès'
-        ]);
+
+        $request->session()->put('message', 'Client édité avec succès');
+        return redirect(route('clients.edit', $client->id));
     }
 
-
-    /**
-     * Search the specified resource from storage.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function search(Request $request)
     {
         $filters = $request->only(['search', 'sortByLname', 'sortByFname', 'sortByEmail', 'sortByPhone', 'sortByAddress']);
         $clients = Client::filter($filters)
-                        ->paginate(15);
+                        ->paginate(12);
 
         return $clients;
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Client $client)
     {
         $client->delete();

@@ -11,42 +11,31 @@ use Inertia\Inertia;
 
 class SaleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $sales = Sale::paginate(15)
+        $sales = Sale::where('created_at', '>=', today())
+                    ->paginate(12)
                     ->through(function ($sale) {
-                        $sale->date = Carbon::parse($sale->date)->diffForHumans();
+                        try {
+                            $sale->created_at = Carbon::parse($sale->created_at)->diffForHumans();
+                        } catch (\Throwable $th) {
+                            throw $th;
+                        }
                         return $sale;
                     })->all();
 
-        return Inertia::render('Dashboard/Sale/Index', [
+        return Inertia::render('Sale/Index', [
             'sales' => $sales
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return Inertia::render('Dashboard/Sale/Create', [
-            'articles' => Article::select(['id', 'name', 'price', 'tax', 'stock'])->limit(15)->get(),
+        return Inertia::render('Sale/Create', [
+            'articles' => Article::select(['id', 'name', 'price', 'tax', 'stock'])->limit(50)->get()
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -61,7 +50,7 @@ class SaleController extends Controller
         $s = new Sale();
 
         $s->receipt_id = $request->receipt_id;
-        $s->date = now();
+        $s->date = $request->date;
         $s->taxes = $request->taxes;
         $s->partial = $request->partial;
         $s->total = $request->total;
@@ -70,8 +59,11 @@ class SaleController extends Controller
 
         foreach ($request->items as $order) {
             $o = new Order();
-            $o->sale_invoice_id = $s->id;
+            $o->sale_quote_bill_id = $s->id;
             $o->article_id = $order['id'];
+            $a = Article::find($order['id']);
+            $a->stock -= $order['qty'];
+            $a->save();
             $o->qty = $order['qty'];
             $o->article = $order['name'];
             $o->price = $order['price'];
@@ -79,47 +71,36 @@ class SaleController extends Controller
             $o->save();
         }
 
-        /*return Inertia::render('Dashboard/Sale/Create', [
-            'message' => 'Vente enregistrée avec succès'
-        ]);*/
-
-        /*return ['message' => 'Vente enregistrée avec succès'];
-*/
+        return redirect(route('sales.create'));
     }
 
-
-    /**
-     * Search the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function search(Request $request)
     {
         $filters = $request->only(['search', 'sortByReceiptId', 'sortByTaxes', 'sortByTotal', 'sortByDate']);
 
         $sales = Sale::filter($filters)
-                        ->paginate(15)
-                        ->through(function ($sale) {
-                            $sale->date = Carbon::parse($sale->date)->diffForHumans();
-                            return $sale;
-                        })->all();
+                ->paginate(12)
+                ->through(function ($sale) {
+                    try {
+                        $sale->created_at = Carbon::parse($sale->created_at)->diffForHumans();
+                    } catch (\Throwable $th) {
+                        throw $th;
+                    }
+                    return $sale;
+                })->all();
 
         return $sales;
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
     public function show(Sale $sale)
     {
-        $items = Order::where('sale_invoice_id', $sale->id)->get();
+        $items = Order::where('sale_quote_bill_id', $sale->id)->get();
         $sale->items = $items;
-        $sale->date = Carbon::parse($sale->date)->diffForHumans();
-        return Inertia::render('Dashboard/Sale/Show', [ 'sale' => $sale]);
+        try {
+            $sale->created_at = Carbon::parse($sale->created_at)->diffForHumans();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        return Inertia::render('Sale/Show', [ 'sale' => $sale]);
     }
 }

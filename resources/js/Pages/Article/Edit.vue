@@ -1,0 +1,484 @@
+<template>
+  <div class="flex justify-center max-w-3xl mx-auto px-2">
+    <div
+      class="w-screen h-screen fixed inset-0 bg-black opacity-50 z-20"
+      v-show="isOpen"
+    ></div>
+    <div class="w-full mb-3">
+      <h2 class="my-3 border-b text-center text-gray-600 font-bold text-2xl">
+        Éditer article
+      </h2>
+      <form
+        @submit.prevent="submit"
+        method="post"
+        class="mx-auto relative max-w-sm"
+      >
+        <div
+          v-if="message"
+          class="
+            mb-1
+            font-medium
+            text-sm text-green-700
+            flex
+            items-center
+            justify-center
+          "
+        >
+          <span>{{ message }}</span>
+          <CheckIcon class="h-5 w-5 ml-1" />
+        </div>
+        <div class="mx-auto">
+          <label for="name" class="text-sm font-bold text-gray-800">Nom:</label>
+          <input
+            id="name"
+            type="text"
+            class="input rounded p-2 text-base"
+            :class="{ 'border-amber-500': form.errors.name }"
+            v-model="form.name"
+            placeholder="Nom de l'article"
+          />
+          <div class="text-red-700 text-xs mt-1" v-if="form.errors.name">
+            {{ form.errors.name }}
+          </div>
+        </div>
+        <div class="mt-[5px] relative">
+          <label
+            for="category"
+            class="text-sm family-mono uppercase font-bold text-gray-800"
+            >Rayon:</label
+          >
+          <Listbox id="category" v-model="form.category_id">
+            <div class="mt-1">
+              <ListboxButton
+                class="
+                  relative
+                  w-full
+                  py-[11px]
+                  pl-3
+                  pr-10
+                  text-sm text-left
+                  bg-white
+                  border border-slate-300
+                  focus:outline-none focus:border-slate-400
+                  rounded-md
+                  cursor-default
+                "
+              >
+                <span class="block truncate">
+                  {{ form.category_id.name || "Sélectionner" }}
+                </span>
+                <span
+                  class="
+                    absolute
+                    inset-y-0
+                    right-0
+                    flex
+                    items-center
+                    pr-2
+                    pointer-events-none
+                  "
+                >
+                  <SelectorIcon
+                    class="w-5 h-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </span>
+              </ListboxButton>
+              <ListboxOptions
+                class="
+                  w-full
+                  py-1
+                  mt-1
+                  overflow-y-scroll
+                  bg-slate-50
+                  rounded-md
+                  shadow-md shadow-slate-500/50
+                  max-h-60 max-w-full
+                  focus:outline-none
+                "
+              >
+                <ListboxOption disabled>
+                  <div class="relative w-10/12 mb-1 mx-auto">
+                    <input
+                      @input="searchCategory"
+                      type="text"
+                      maxlength="32"
+                      @keydown="escapeSpace"
+                      class="input text-sm py-[7px] pl-3 text-sm pr-10"
+                      v-model="search.search"
+                      placeholder="Rechercher rayon"
+                    />
+                    <span
+                      class="
+                        absolute
+                        inset-y-0
+                        right-0
+                        flex
+                        items-center
+                        pr-2
+                        pointer-events-none
+                      "
+                    >
+                      <SearchIcon
+                        class="w-5 h-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </div>
+                </ListboxOption>
+                <ListboxOption
+                  v-slot="{ active, selected }"
+                  v-for="(category, i) in categories"
+                  :key="i"
+                  :value="category"
+                  as="template"
+                >
+                  <li
+                    :class="[
+                      active ? 'text-amber-700 bg-amber-200' : 'text-gray-900',
+                      'list-none cursor-default text-sm select-none relative py-2 pl-10 pr-4',
+                    ]"
+                  >
+                    <span
+                      :class="[
+                        selected ? 'font-medium' : 'font-normal',
+                        'block truncate',
+                      ]"
+                      >{{ category.name }}</span
+                    >
+                    <span
+                      v-if="selected"
+                      class="
+                        absolute
+                        inset-y-0
+                        left-0
+                        flex
+                        items-center
+                        pl-3
+                        text-amber-700
+                      "
+                    >
+                      <CheckIcon class="w-5 h-5" aria-hidden="true" />
+                    </span>
+                  </li>
+                </ListboxOption>
+              </ListboxOptions>
+            </div>
+          </Listbox>
+          <div
+            class="text-red-700 text-xs mt-1"
+            v-if="form.errors['category_id.id']"
+          >
+            {{ form.errors["category_id.id"] }}
+          </div>
+        </div>
+        <div class="mx-auto mt-[5px]">
+          <label for="price" class="text-sm font-bold text-gray-800"
+            >Prix unitaire:</label
+          >
+          <input
+            id="price"
+            type="text"
+            class="input rounded p-2 text-base"
+            :class="{ 'border-amber-500': form.errors.price }"
+            v-model="form.price"
+            placeholder="Prix unitaire"
+          />
+          <div class="text-red-700 text-xs mt-1" v-if="form.errors.price">
+            {{ form.errors.price }}
+          </div>
+        </div>
+        <div class="mx-auto mt-[5px]">
+          <label for="tax" class="text-sm font-bold text-gray-800">Taxe:</label>
+          <input
+            id="tax"
+            type="text"
+            class="input rounded p-2 text-base"
+            :class="{ 'border-amber-500': form.errors.tax }"
+            v-model="form.tax"
+            placeholder="Taxe"
+          />
+          <div class="text-red-700 text-xs mt-1" v-if="form.errors.tax">
+            {{ form.errors.tax }}
+          </div>
+        </div>
+        <div class="mx-auto mt-[5px]">
+          <label for="expires_at" class="text-sm font-bold text-gray-800"
+            >Stock:</label
+          >
+          <input
+            id="stock"
+            type="text"
+            class="input rounded p-2 text-base"
+            :class="{ 'border-amber-500': form.errors.stock }"
+            v-model="form.stock"
+            placeholder="Stock initial"
+          />
+          <div class="text-red-700 text-xs mt-1" v-if="form.errors.stock">
+            {{ form.errors.stock }}
+          </div>
+        </div>
+        <div class="mx-auto mt-[5px]">
+          <label for="expires_at" class="text-sm font-bold text-gray-800"
+            >Date d'expiration:</label
+          >
+          <input
+            id="expires_at"
+            type="date"
+            class="input rounded p-2 text-base"
+            :class="{ 'border-amber-500': form.errors.expires_at }"
+            v-model="form.expires_at"
+            placeholder="Date d'expiration"
+          />
+          <div class="text-red-700 text-xs mt-1" v-if="form.errors.expires_at">
+            {{ form.errors.expires_at }}
+          </div>
+        </div>
+        <div class="flex items-center justify-end mx-auto mt-4">
+          <div class="flex items-center justify-center">
+            <button
+              type="button"
+              @click="openModal"
+              class="
+                bg-amber-600
+                text-white
+                py-2
+                px-4
+                mr-4
+                text-sm
+                shadow-md
+                rounded-md
+                hover:bg-amber-700
+                transition
+                ease-in-out
+                duration-300
+                focus:outline-none
+              "
+            >
+              Supprimer
+            </button>
+          </div>
+          <button
+            type="submit"
+            class="
+              bg-blue-600
+              text-white
+              py-2
+              px-4
+              text-sm
+              shadow-md shadow-blue-500/50
+              rounded-md
+              hover:bg-blue-700
+              transition
+              ease-in-out
+              duration-300
+              focus:outline-none
+            "
+            :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing"
+          >
+            Modifier
+          </button>
+        </div>
+        <Dialog
+          as="div"
+          @close="closeModal"
+          class="max-w-sm mx-auto relative z-30"
+          :open="isOpen"
+        >
+          <div class="mx-auto overflow-y-auto">
+            <div class="px-4 text-center">
+              <span
+                class="inline-block h-screen align-middle"
+                aria-hidden="true"
+              >
+                &#8203;
+              </span>
+              <div
+                class="
+                  inline-block
+                  w-full
+                  mx-auto
+                  max-w-md
+                  p-6
+                  my-8
+                  overflow-hidden
+                  text-left
+                  align-middle
+                  transition-all
+                  transform
+                  bg-white
+                  shadow-md
+                  rounded-2xl
+                "
+              >
+                <DialogTitle as="h3" class="text-lg leading-6 text-gray-900">
+                  Confirmer la suppression ?
+                </DialogTitle>
+                <div class="mt-2">
+                  <p class="text-sm text-red-700">
+                    Attention , cette opération est irréversible!
+                  </p>
+                </div>
+
+                <div class="mt-4 flex items-center">
+                  <button
+                    type="button"
+                    class="
+                      bg-amber-600
+                      mr-2
+                      text-white
+                      py-2
+                      px-4
+                      mr-4
+                      text-sm
+                      shadow-md
+                      rounded-md
+                      hover:bg-amber-700
+                      transition
+                      ease-in-out
+                      duration-300
+                      focus:outline-none
+                    "
+                    @click="deleteArticle"
+                  >
+                    Oui, supprimer
+                  </button>
+                  <button
+                    type="button"
+                    class="
+                      bg-blue-600
+                      text-white
+                      py-2
+                      px-4
+                      text-sm
+                      shadow-md shadow-blue-500/50
+                      rounded-md
+                      hover:bg-blue-700
+                      transition
+                      ease-in-out
+                      duration-300
+                      focus:outline-none
+                    "
+                    @click="isOpen = false"
+                  >
+                    Annuler
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      </form>
+    </div>
+  </div>
+</template>
+
+
+<script>
+import Layout from "@/Pages/Layout.vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { ref } from "vue";
+import axios from "axios";
+
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOptions,
+  ListboxOption,
+  Dialog,
+  DialogOverlay,
+  DialogTitle,
+} from "@headlessui/vue";
+import { CheckIcon, SelectorIcon, SearchIcon } from "@heroicons/vue/solid";
+
+export default {
+  layout: Layout,
+
+  components: {
+    Listbox,
+    ListboxButton,
+    ListboxOptions,
+    ListboxOption,
+    Dialog,
+    DialogOverlay,
+    DialogTitle,
+    CheckIcon,
+    SelectorIcon,
+    SearchIcon,
+  },
+
+  props: {
+    message: String,
+    article: Object,
+    category: Object,
+  },
+
+  setup(props) {
+    const isOpen = ref(false);
+
+    const categories = ref([]);
+
+    const form = useForm({
+      category_id: props.category,
+      name: props.article.name,
+      price: props.article.price,
+      tax: props.article.tax,
+      expires_at: props.article.expires_at,
+      stock: props.article.stock,
+    });
+
+    const submit = () => {
+      form.put(route("articles.update", props.article.id), {
+        onSuccess: () => {},
+      });
+    };
+
+    const deleteForm = useForm({
+      id: props.article.id,
+    });
+
+    const deleteArticle = () => {
+      isOpen.value = false;
+      deleteForm.delete(route("articles.destroy", props.article.id));
+    };
+
+    const search = ref({ search: "" });
+
+    const searchCategory = () => {
+      axios
+        .post(route("categories.search"), search.value)
+        .then((res) => {
+          categories.value = res.data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const escapeSpace = (e) => {
+      if (e.keyCode === 32) {
+        e.stopImmediatePropagation();
+        search.value.client = search.value.client + " ";
+      }
+    };
+
+    return {
+      submit,
+      searchCategory,
+      escapeSpace,
+      form,
+      search,
+      categories,
+      isOpen,
+      closeModal() {
+        isOpen.value = false;
+      },
+      openModal() {
+        isOpen.value = true;
+      },
+      deleteArticle,
+    };
+  },
+};
+</script>

@@ -17,7 +17,6 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name')->max(256)->unique();
             $table->double('articles')->default(0);
-            $table->softDeletes();
             $table->timestamps();
         });
     }

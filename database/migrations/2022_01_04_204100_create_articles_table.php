@@ -17,12 +17,10 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->foreignId('category_id');
             $table->string('name')->max(256);
-            $table->string('description')->nullable()->max(512);
             $table->integer('stock')->min(0);
             $table->double('price')->min(0);
             $table->double('tax')->nullable()->default(0)->min(0);
             $table->timestamp('expires_at')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

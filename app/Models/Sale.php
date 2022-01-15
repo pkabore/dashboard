@@ -14,15 +14,11 @@ class Sale extends Model
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? null, function($query, $search){
             $query->where(function ($query) use ($search) {
-                return $query->where('receipt_id', 'LIKE', '%'.$search.'%')
-                      ->orWhere('date', 'LIKE', '%'.$search.'%');
+                return $query->where('receipt_id', 'LIKE', '%'.$search.'%');
             });
         })
-        ->when($filters['sortByReceiptId'] ?? null, function($query, $sortByReceiptId){
-            return $query->orderBy('receipt_id', $sortByReceiptId);
-        })
         ->when($filters['sortByDate'] ?? null, function($query, $sortByDate){
-            return $query->orderBy('date', $sortByDate);
+            return $query->orderBy('created_at', $sortByDate);
         })
         ->when($filters['sortByTaxes'] ?? null, function($query, $sortByTaxes){
             return $query->orderBy('taxes', $sortByTaxes);

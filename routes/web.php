@@ -8,8 +8,10 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SaleController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\StatsController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\BillController;
+use App\Http\Controllers\QuoteController;
+//use App\Http\Controllers\MetadataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,26 +25,45 @@ use App\Http\Controllers\StatsController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Home');
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return Inertia::render('Stats/Index');
+})->middleware(['auth', 'verified'])->name('home');
 
 
 Route::resource('articles', ArticleController::class)->middleware(['auth', 'verified']);
 Route::resource('clients', ClientController::class)->middleware(['auth', 'verified']);
 Route::resource('sales', SaleController::class)->middleware(['auth', 'verified']);
 Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
+Route::resource('expenses', ExpenseController::class)->middleware(['auth', 'verified']);
+Route::resource('bills', BillController::class)->middleware(['auth', 'verified']);
+Route::resource('quotes', QuoteController::class)->middleware(['auth', 'verified']);
 
-Route::post('/articles/search', [ArticleController::class, 'search'])->middleware(['auth', 'verified'])->name('articles.search');
-Route::post('/clients/search', [ClientController::class, 'search'])->middleware(['auth', 'verified'])->name('clients.search');
-Route::post('/categories/search', [CategoryController::class, 'search'])->middleware(['auth', 'verified'])->name('categories.search');
-Route::post('/sales/search', [SaleController::class, 'search'])->middleware(['auth', 'verified'])->name('sales.search');
 
-Route::get('/stats', function(Request $request) {
-    return Inertia::render('Dashboard/Stats/Index');
-})->middleware(['auth', 'verified'])->name('stats');
+Route::post('/articles/search', [ArticleController::class, 'search'])
+        ->middleware(['auth', 'verified'])
+        ->name('articles.search');
+
+Route::post('/clients/search', [ClientController::class, 'search'])
+        ->middleware(['auth', 'verified'])
+        ->name('clients.search');
+
+Route::post('/categories/search', [CategoryController::class, 'search'])
+        ->middleware(['auth', 'verified'])
+        ->name('categories.search');
+
+Route::post('/sales/search', [SaleController::class, 'search'])
+        ->middleware(['auth', 'verified'])
+        ->name('sales.search');
+
+Route::post('/expenses/search', [ExpenseController::class, 'search'])
+        ->middleware(['auth', 'verified'])
+        ->name('expenses.search');
+
+Route::post('/bills/search', [BillController::class, 'search'])
+        ->middleware(['auth', 'verified'])
+        ->name('bills.search');
+
+Route::post('/invoices/search', [QuoteController::class, 'search'])
+        ->middleware(['auth', 'verified'])
+        ->name('invoices.search');
 
 require __DIR__.'/auth.php';

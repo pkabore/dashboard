@@ -4,20 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use DateTimeInterface;
 
 class Article extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? null, function($query, $search){
             $query->where(function ($query) use ($search) {
-                return $query->where('name', 'LIKE', '%'.$search.'%')
-                      ->orWhere('description', 'LIKE', '%'.$search.'%');
+                return $query->where('name', 'LIKE', '%'.$search.'%');
             });
         })
         ->when($filters['sortByName'] ?? null, function($query, $sortByName){

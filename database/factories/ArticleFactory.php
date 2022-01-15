@@ -18,12 +18,16 @@ class ArticleFactory extends Factory
         $category_id = random_int(1, 100);
         $c = Category::find($category_id);
         
+        while(!$c){
+            $category_id = random_int(1, 100);
+            $c = Category::find($category_id);    
+        }
+        
         $c->articles = $c->articles + 1;
         $c->save();
 
         return [
             'name' => $this->faker->word(),
-            'description' => $this->faker->paragraph(),
             'category_id' => $category_id,
             'price' => random_int(500, 100000),
             'tax' => random_int(1, 10),

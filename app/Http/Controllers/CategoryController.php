@@ -3,89 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return Inertia::render('Dashboard/Category/Index', [
-            'categories' => Category::orderBy('name')->get()
+        return Inertia::render('Category/Index', [
+            'categories' => Category::orderBy('name')->paginate(12)->all()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
+        $message = session('message');
+        $request->session()->put('message', '');
+        if (!$message)
+            $message = session('message');
 
-        return Inertia::render('Dashboard/Category/Create', [
-            'message' => ""
+        return Inertia::render('Category/Create', [
+            'message' => $message
         ]); 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|min:2|unique:categories'
         ]);
+        //create the default category if it doesn't exist.
+        $default_category = Category::find(1);
+        if (!$default_category){
+            $default_category = new Category();
+            $default_category->name = "Non classifié";
+            $default_category->save();
+            if ($default_category->id != 1){
+                $default_category->id = 1;
+                $default_category->save();
+            }
+        }
 
         $c = new Category();
         $c->name = $request->name;
         $c->save();
 
-        return Inertia::render('Dashboard/Category/Create', [
-            'message' => "Rayon crée avec succès"
-        ]); 
+        $request->session()->put('message', 'Rayon crée avec succès');
+        return redirect(route('categories.create'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request, Category $category)
     {
-        return Inertia::render('Dashboard/Category/Edit', [
+        $message = session('message');
+        $request->session()->put('message', '');
+        if (!$message)
+            $message = session('message');
+    
+        return Inertia::render('Category/Edit', [
             'category' => $category,
-            'message' => ''
+            'message' => $message
         ]); 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Category $category)
     {
         $request->validate([
@@ -95,38 +75,30 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->save();
 
-        return Inertia::render('Dashboard/Category/Edit', [
-            'category' => $category,
-            'message' => "Rayon mis à jour avec succès"
-        ]); 
+        $request->session()->put('message', 'Rayon édité avec succès');
+        return redirect(route('categories.edit', $category->id));
     }
 
-
-    /**
-     * Search the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function search(Request $request)
     {
         $filters = $request->only(['search', 'sortByName', 'sortByArticles']);
 
         $categories = Category::filter($filters)
-                        ->paginate(15);
+                        ->paginate(12);
 
         return $categories;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Category $category)
     {
-        $category->delete();
+        if ($category->id != 1){
+            Article::where('category_id', $category->id)
+                    ->update(['category_id' => 1]);
+            $default_category = Category::find(1);
+            $default_category->articles++;
+            $default_category->save();
+            $category->delete();
+        }
         return redirect(route('categories.index'));
     }
 }

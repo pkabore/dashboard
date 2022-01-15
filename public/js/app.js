@@ -10,18 +10,13 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
-/* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nprogress */ "./node_modules/nprogress/nprogress.js");
-/* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(nprogress__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
-/* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
+/* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
 var _window$document$getE;
 
 
 
 
-
-
-var appName = ((_window$document$getE = window.document.getElementsByTagName('title')[0]) === null || _window$document$getE === void 0 ? void 0 : _window$document$getE.innerText) || 'Laravel';
+var appName = ((_window$document$getE = window.document.getElementsByTagName('title')[0]) === null || _window$document$getE === void 0 ? void 0 : _window$document$getE.innerText) || 'Market';
 (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.createInertiaApp)({
   title: function title(_title) {
     return "".concat(_title, " - ").concat(appName);
@@ -45,25 +40,9 @@ var appName = ((_window$document$getE = window.document.getElementsByTagName('ti
     }).mount(el);
   }
 });
-var timeout = null;
-_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__.Inertia.on('progress', function (event) {
-  if (nprogress__WEBPACK_IMPORTED_MODULE_2___default().isStarted() && event.detail.progress.percentage) {
-    nprogress__WEBPACK_IMPORTED_MODULE_2___default().set(event.detail.progress.percentage / 100 * 0.9);
-  }
-});
-_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__.Inertia.on('finish', function (event) {
-  clearTimeout(timeout);
-
-  if (!nprogress__WEBPACK_IMPORTED_MODULE_2___default().isStarted()) {
-    return;
-  } else if (event.detail.visit.completed) {
-    nprogress__WEBPACK_IMPORTED_MODULE_2___default().done();
-  } else if (event.detail.visit.interrupted) {
-    nprogress__WEBPACK_IMPORTED_MODULE_2___default().set(0);
-  } else if (event.detail.visit.cancelled) {
-    nprogress__WEBPACK_IMPORTED_MODULE_2___default().done();
-    nprogress__WEBPACK_IMPORTED_MODULE_2___default().remove();
-  }
+_inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init({
+  color: 'rgb(37, 99, 235)',
+  showSpinner: true
 });
 
 /***/ }),
@@ -88,90 +67,130 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
-	"./ConfirmPassword.vue": [
-		"./resources/js/Pages/ConfirmPassword.vue",
+	"./Article/Create.vue": [
+		"./resources/js/Pages/Article/Create.vue",
 		"/js/vendor",
-		"resources_js_Pages_ConfirmPassword_vue"
+		"resources_js_Pages_Article_Create_vue"
 	],
-	"./Dashboard.vue": [
-		"./resources/js/Pages/Dashboard.vue",
+	"./Article/Edit.vue": [
+		"./resources/js/Pages/Article/Edit.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_vue"
+		"resources_js_Pages_Article_Edit_vue"
 	],
-	"./Dashboard/Article/Create.vue": [
-		"./resources/js/Pages/Dashboard/Article/Create.vue",
+	"./Article/Index.vue": [
+		"./resources/js/Pages/Article/Index.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Article_Create_vue"
+		"resources_js_Pages_Article_Index_vue"
 	],
-	"./Dashboard/Article/Edit.vue": [
-		"./resources/js/Pages/Dashboard/Article/Edit.vue",
+	"./Auth/ConfirmPassword.vue": [
+		"./resources/js/Pages/Auth/ConfirmPassword.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Article_Edit_vue"
+		"resources_js_Pages_Auth_ConfirmPassword_vue"
 	],
-	"./Dashboard/Article/Index.vue": [
-		"./resources/js/Pages/Dashboard/Article/Index.vue",
+	"./Auth/Login.vue": [
+		"./resources/js/Pages/Auth/Login.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Article_Index_vue"
+		"resources_js_Pages_Auth_Login_vue"
 	],
-	"./Dashboard/Category/Create.vue": [
-		"./resources/js/Pages/Dashboard/Category/Create.vue",
+	"./Bill/Create.vue": [
+		"./resources/js/Pages/Bill/Create.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Category_Create_vue"
+		"resources_js_Pages_Bill_Create_vue"
 	],
-	"./Dashboard/Category/Edit.vue": [
-		"./resources/js/Pages/Dashboard/Category/Edit.vue",
+	"./Bill/Index.vue": [
+		"./resources/js/Pages/Bill/Index.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Category_Edit_vue"
+		"resources_js_Pages_Bill_Index_vue"
 	],
-	"./Dashboard/Category/Index.vue": [
-		"./resources/js/Pages/Dashboard/Category/Index.vue",
+	"./Bill/Show.vue": [
+		"./resources/js/Pages/Bill/Show.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Category_Index_vue"
+		"resources_js_Pages_Bill_Show_vue"
 	],
-	"./Dashboard/Client/Create.vue": [
-		"./resources/js/Pages/Dashboard/Client/Create.vue",
+	"./Category/Create.vue": [
+		"./resources/js/Pages/Category/Create.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Client_Create_vue"
+		"resources_js_Pages_Category_Create_vue"
 	],
-	"./Dashboard/Client/Edit.vue": [
-		"./resources/js/Pages/Dashboard/Client/Edit.vue",
+	"./Category/Edit.vue": [
+		"./resources/js/Pages/Category/Edit.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Client_Edit_vue"
+		"resources_js_Pages_Category_Edit_vue"
 	],
-	"./Dashboard/Client/Index.vue": [
-		"./resources/js/Pages/Dashboard/Client/Index.vue",
+	"./Category/Index.vue": [
+		"./resources/js/Pages/Category/Index.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Client_Index_vue"
+		"resources_js_Pages_Category_Index_vue"
 	],
-	"./Dashboard/Sale/Create.vue": [
-		"./resources/js/Pages/Dashboard/Sale/Create.vue",
+	"./Client/Create.vue": [
+		"./resources/js/Pages/Client/Create.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Sale_Create_vue"
+		"resources_js_Pages_Client_Create_vue"
 	],
-	"./Dashboard/Sale/Index.vue": [
-		"./resources/js/Pages/Dashboard/Sale/Index.vue",
+	"./Client/Edit.vue": [
+		"./resources/js/Pages/Client/Edit.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Sale_Index_vue"
+		"resources_js_Pages_Client_Edit_vue"
 	],
-	"./Dashboard/Sale/Show.vue": [
-		"./resources/js/Pages/Dashboard/Sale/Show.vue",
+	"./Client/Index.vue": [
+		"./resources/js/Pages/Client/Index.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Sale_Show_vue"
+		"resources_js_Pages_Client_Index_vue"
 	],
-	"./Dashboard/Stats/Index.vue": [
-		"./resources/js/Pages/Dashboard/Stats/Index.vue",
+	"./Expense/Create.vue": [
+		"./resources/js/Pages/Expense/Create.vue",
 		"/js/vendor",
-		"resources_js_Pages_Dashboard_Stats_Index_vue"
+		"resources_js_Pages_Expense_Create_vue"
 	],
-	"./Error.vue": [
-		"./resources/js/Pages/Error.vue",
+	"./Expense/Index.vue": [
+		"./resources/js/Pages/Expense/Index.vue",
 		"/js/vendor",
-		"resources_js_Pages_Error_vue"
+		"resources_js_Pages_Expense_Index_vue"
 	],
-	"./Home.vue": [
-		"./resources/js/Pages/Home.vue",
+	"./Expense/Show.vue": [
+		"./resources/js/Pages/Expense/Show.vue",
 		"/js/vendor",
-		"resources_js_Pages_Home_vue"
+		"resources_js_Pages_Expense_Show_vue"
+	],
+	"./Layout.vue": [
+		"./resources/js/Pages/Layout.vue",
+		"/js/vendor",
+		"resources_js_Pages_Layout_vue"
+	],
+	"./Quote/Create.vue": [
+		"./resources/js/Pages/Quote/Create.vue",
+		"/js/vendor",
+		"resources_js_Pages_Quote_Create_vue"
+	],
+	"./Quote/Index.vue": [
+		"./resources/js/Pages/Quote/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Quote_Index_vue"
+	],
+	"./Quote/Show.vue": [
+		"./resources/js/Pages/Quote/Show.vue",
+		"/js/vendor",
+		"resources_js_Pages_Quote_Show_vue"
+	],
+	"./Sale/Create.vue": [
+		"./resources/js/Pages/Sale/Create.vue",
+		"/js/vendor",
+		"resources_js_Pages_Sale_Create_vue"
+	],
+	"./Sale/Index.vue": [
+		"./resources/js/Pages/Sale/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Sale_Index_vue"
+	],
+	"./Sale/Show.vue": [
+		"./resources/js/Pages/Sale/Show.vue",
+		"/js/vendor",
+		"resources_js_Pages_Sale_Show_vue"
+	],
+	"./Stats/Index.vue": [
+		"./resources/js/Pages/Stats/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Stats_Index_vue"
 	]
 };
 function webpackAsyncContext(req) {

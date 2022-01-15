@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 
 .input {
-    @apply mt-1 block w-full rounded-md transition duration-200 ease-in-out text-gray-900 border-none focus:outline-none focus:ring-0;
+    @apply mt-1 block w-full rounded-md transition duration-200 ease-in-out text-gray-900 border border-slate-300 focus:border-slate-400 focus:outline-none focus:ring-0;
 }
 
 .checkbox{
