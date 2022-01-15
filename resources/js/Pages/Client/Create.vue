@@ -131,7 +131,7 @@
 <script>
 import { useForm } from "@inertiajs/inertia-vue3";
 import Layout from "@/Pages/Layout.vue";
-import { CheckIcon } from "@heroicons/vue/solid";
+import CheckIcon from "@/Components/CheckIcon.vue";
 
 export default {
   layout: Layout,

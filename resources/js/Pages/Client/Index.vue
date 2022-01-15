@@ -59,14 +59,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByLname', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByLname == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByLname == 'asc' }"
                   />
                   <span>Nom</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByLname', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByLname == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByLname == 'desc' }"
                   />
                 </div>
               </th>
@@ -74,14 +74,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByFname', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByFname == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByFname == 'asc' }"
                   />
                   <span>Prénom</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByFname', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByFname == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByFname == 'desc' }"
                   />
                 </div>
               </th>
@@ -89,14 +89,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByPhone', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByPhone == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByPhone == 'asc' }"
                   />
                   <span>Tel</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByPhone', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByPhone == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByPhone == 'desc' }"
                   />
                 </div>
               </th>
@@ -104,14 +104,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByEmail', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByEmail == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByEmail == 'asc' }"
                   />
                   <span>Email</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByEmail', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByEmail == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByEmail == 'desc' }"
                   />
                 </div>
               </th>

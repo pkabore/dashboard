@@ -130,7 +130,7 @@
                 >
                   <li
                     :class="[
-                      active ? 'text-amber-700 bg-amber-200' : 'text-gray-900',
+                      active ? 'text-blue-700 bg-blue-200' : 'text-gray-900',
                       'list-none cursor-default text-sm select-none relative py-2 pl-10 pr-4',
                     ]"
                   >
@@ -150,7 +150,8 @@
                         flex
                         items-center
                         pl-3
-                        text-amber-700
+                        text-
+                        emerald-700
                       "
                     >
                       <CheckIcon class="w-5 h-5" aria-hidden="true" />
@@ -215,25 +216,25 @@
 
 <script>
 import Layout from "@/Pages/Layout.vue";
+import SearchIcon from "@/Components/SearchIcon.vue";
+import SelectorIcon from "@/Components/SelectorIcon.vue";
+import CheckIcon from "@/Components/CheckIcon.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 import axios from "axios";
 
 import {
   Listbox,
-  ListboxLabel,
   ListboxButton,
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
-import { CheckIcon, SelectorIcon, SearchIcon } from "@heroicons/vue/solid";
 
 export default {
   layout: Layout,
 
   components: {
     Listbox,
-    ListboxLabel,
     ListboxButton,
     ListboxOptions,
     ListboxOption,

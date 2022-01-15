@@ -66,8 +66,8 @@
 
 <script>
 import Layout from "@/Pages/Layout.vue";
+import CheckIcon from "@/Components/CheckIcon.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { CheckIcon } from "@heroicons/vue/solid";
 
 export default {
   layout: Layout,

@@ -683,7 +683,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: "name",
     type: "text",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["input rounded p-2 text-base", {
-      'border-amber-700': $setup.form.errors.name
+      'border-blue-700': $setup.form.errors.name
     }]),
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.form.name = $event;

@@ -59,14 +59,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByName', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByName == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByName == 'asc' }"
                   />
                   <span>Nom</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByName', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByName == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByName == 'desc' }"
                   />
                 </div>
               </th>
@@ -74,14 +74,18 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByArticles', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByArticles == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{
+                      'text-blue-700': form.sortByArticles == 'asc',
+                    }"
                   />
                   <span>Articles</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByArticles', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByArticles == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{
+                      'text-blue-700': form.sortByArticles == 'desc',
+                    }"
                   />
                 </div>
               </th>

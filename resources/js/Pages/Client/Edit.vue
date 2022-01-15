@@ -250,10 +250,10 @@
 
 <script>
 import Layout from "@/Pages/Layout.vue";
+import CheckIcon from "@/Components/CheckIcon.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 import { Dialog, DialogOverlay, DialogTitle } from "@headlessui/vue";
-import { CheckIcon } from "@heroicons/vue/solid";
 
 export default {
   layout: Layout,

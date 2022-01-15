@@ -782,7 +782,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "mx-auto max-w-lg family-mono"
+  "class": "mx-auto max-w-lg mb-4 family-mono"
 };
 var _hoisted_2 = {
   "class": "text-2xl font-bold my-4 text-gray-600 text-center"

@@ -59,14 +59,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByDate', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByDate == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByDate == 'asc' }"
                   />
                   <span>Date</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByDate', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByDate == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByDate == 'desc' }"
                   />
                 </div>
               </th>
@@ -76,14 +76,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByFee', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByFee == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByFee == 'asc' }"
                   />
                   <span>Frais</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByFee', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByFee == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByFee == 'desc' }"
                   />
                 </div>
               </th>
@@ -98,7 +98,7 @@
               <td class="p-2">
                 {{ expense.id }}
               </td>
-              <td class="p-2 text-green-800">
+              <td class="p-2 text-green-600">
                 {{ expense.date }}
               </td>
               <td class="p-2">
@@ -107,13 +107,13 @@
               <td class="p-2 text-blue-700">
                 {{ expense.category }}
               </td>
-              <td class="p-2 text-amber-800">
+              <td class="p-2 text-blue-800">
                 {{ parseFloat(expense.fee).toLocaleString("fr-FR") }}
               </td>
               <td class="p-2 inline-flex justify-center">
                 <DeleteIcon
                   @click="deleteExpense(expense.id)"
-                  class="h-5 w-5 text-red-600"
+                  class="h-5 w-5 text-gray-600"
                 />
               </td>
             </tr>

@@ -58,15 +58,17 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByReceiptId', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByReceiptId == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{
+                      'text-blue-700': form.sortByReceiptId == 'asc',
+                    }"
                   />
                   <span>Devis</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByReceiptId', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
                     :class="{
-                      'text-amber-700': form.sortByReceiptId == 'desc',
+                      'text-blue-700': form.sortByReceiptId == 'desc',
                     }"
                   />
                 </div>
@@ -75,17 +77,17 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByClientName', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
                     :class="{
-                      'text-amber-700': form.sortByClientName == 'asc',
+                      'text-blue-700': form.sortByClientName == 'asc',
                     }"
                   />
                   <span>Client</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByClientName', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
                     :class="{
-                      'text-amber-700': form.sortByClientName == 'desc',
+                      'text-blue-700': form.sortByClientName == 'desc',
                     }"
                   />
                 </div>
@@ -94,14 +96,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByDate', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByDate == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByDate == 'asc' }"
                   />
                   <span>Isssue</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByDate', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByDate == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByDate == 'desc' }"
                   />
                 </div>
               </th>
@@ -109,14 +111,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByTotal', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByTotal == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByTotal == 'asc' }"
                   />
                   <span>Total</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByTotal', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByTotal == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByTotal == 'desc' }"
                   />
                 </div>
               </th>

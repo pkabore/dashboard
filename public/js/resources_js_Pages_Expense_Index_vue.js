@@ -841,7 +841,7 @@ var _hoisted_20 = {
   "class": "p-2"
 };
 var _hoisted_21 = {
-  "class": "p-2 text-green-800"
+  "class": "p-2 text-green-600"
 };
 var _hoisted_22 = {
   "class": "p-2"
@@ -850,7 +850,7 @@ var _hoisted_23 = {
   "class": "p-2 text-blue-700"
 };
 var _hoisted_24 = {
-  "class": "p-2 text-amber-800"
+  "class": "p-2 text-blue-800"
 };
 var _hoisted_25 = {
   "class": "p-2 inline-flex justify-center"
@@ -900,8 +900,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $setup.setFilter('sortByDate', 'asc');
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-4 w-4 mr-1 text-gray-500 hover:text-amber-700", {
-      'text-amber-700': $setup.form.sortByDate == 'asc'
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-4 w-4 mr-1 text-gray-500 hover:text-blue-700", {
+      'text-blue-700': $setup.form.sortByDate == 'asc'
     }])
   }, null, 8
   /* PROPS */
@@ -909,8 +909,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $setup.setFilter('sortByDate', 'desc');
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-4 w-4 ml-1 text-gray-500 hover:text-amber-700", {
-      'text-amber-700': $setup.form.sortByDate == 'desc'
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-4 w-4 ml-1 text-gray-500 hover:text-blue-700", {
+      'text-blue-700': $setup.form.sortByDate == 'desc'
     }])
   }, null, 8
   /* PROPS */
@@ -918,8 +918,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $setup.setFilter('sortByFee', 'asc');
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-4 w-4 mr-1 text-gray-500 hover:text-amber-700", {
-      'text-amber-700': $setup.form.sortByFee == 'asc'
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-4 w-4 mr-1 text-gray-500 hover:text-blue-700", {
+      'text-blue-700': $setup.form.sortByFee == 'asc'
     }])
   }, null, 8
   /* PROPS */
@@ -927,8 +927,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return $setup.setFilter('sortByFee', 'desc');
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-4 w-4 ml-1 text-gray-500 hover:text-amber-700", {
-      'text-amber-700': $setup.form.sortByFee == 'desc'
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["h-4 w-4 ml-1 text-gray-500 hover:text-blue-700", {
+      'text-blue-700': $setup.form.sortByFee == 'desc'
     }])
   }, null, 8
   /* PROPS */
@@ -950,7 +950,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onClick: function onClick($event) {
         return $setup.deleteExpense(expense.id);
       },
-      "class": "h-5 w-5 text-red-600"
+      "class": "h-5 w-5 text-gray-600"
     }, null, 8
     /* PROPS */
     , ["onClick"])])]);

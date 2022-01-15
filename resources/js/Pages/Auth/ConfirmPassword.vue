@@ -31,9 +31,7 @@
                 class="input py-2 max-w-xs pl-8"
                 :class="{ 'border-red-500': form.errors.password }"
                 v-model="form.password"
-                required
                 placeholder="Mot de passe"
-                autocomplete="current-password"
               />
             </div>
             <div class="text-red-700 text-xs mt-1" v-if="form.errors.password">

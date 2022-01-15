@@ -36,7 +36,6 @@
                 :class="{ 'border-red-500': form.errors.email }"
                 v-model="form.email"
                 placeholder="Email"
-                autocomplete="username"
               />
             </div>
             <div class="text-red-700 text-xs mt-1" v-if="form.errors.email">
@@ -65,7 +64,6 @@
                 :class="{ 'border-red-500': form.errors.password }"
                 v-model="form.password"
                 placeholder="Mot de passe"
-                autocomplete="current-password"
               />
             </div>
             <div class="text-red-700 text-xs mt-1" v-if="form.errors.password">

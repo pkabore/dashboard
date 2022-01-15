@@ -58,14 +58,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByName', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByName == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByName == 'asc' }"
                   />
                   <span>Dés.</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByName', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByName == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByName == 'desc' }"
                   />
                 </div>
               </th>
@@ -73,15 +73,15 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByStock', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByStock == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByStock == 'asc' }"
                   />
                   <span>Stock</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByStock', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
                     :class="{
-                      'text-amber-700': form.sortByStock == 'desc',
+                      'text-blue-700': form.sortByStock == 'desc',
                     }"
                   />
                 </div>
@@ -90,15 +90,15 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByPrice', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByPrice == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByPrice == 'asc' }"
                   />
                   <span>Prix</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByPrice', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
                     :class="{
-                      'text-amber-700': form.sortByPrice == 'desc',
+                      'text-blue-700': form.sortByPrice == 'desc',
                     }"
                   />
                 </div>
@@ -107,14 +107,14 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByTax', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByTax == 'asc' }"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByTax == 'asc' }"
                   />
                   <span>Taxe</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByTax', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
-                    :class="{ 'text-amber-700': form.sortByTax == 'desc' }"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
+                    :class="{ 'text-blue-700': form.sortByTax == 'desc' }"
                   />
                 </div>
               </th>
@@ -122,17 +122,17 @@
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
                     @click="setFilter('sortByExpiresAt', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-amber-700"
+                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
                     :class="{
-                      'text-amber-700': form.sortByExpiresAt == 'asc',
+                      'text-blue-700': form.sortByExpiresAt == 'asc',
                     }"
                   />
                   <span>Exp. Date</span>
                   <ChevronDownIcon
                     @click="setFilter('sortByExpiresAt', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-amber-700"
+                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
                     :class="{
-                      'text-amber-700': form.sortByExpiresAt == 'desc',
+                      'text-blue-700': form.sortByExpiresAt == 'desc',
                     }"
                   />
                 </div>

@@ -33,7 +33,7 @@
             id="name"
             type="text"
             class="input rounded p-2 text-base"
-            :class="{ 'border-amber-500': form.errors.name }"
+            :class="{ 'border-blue-500': form.errors.name }"
             v-model="form.name"
             placeholder="Nom de l'article"
           />
@@ -135,7 +135,7 @@
                 >
                   <li
                     :class="[
-                      active ? 'text-amber-700 bg-amber-200' : 'text-gray-900',
+                      active ? 'text-blue-700 bg-blue-200' : 'text-gray-900',
                       'list-none cursor-default text-sm select-none relative py-2 pl-10 pr-4',
                     ]"
                   >
@@ -155,7 +155,8 @@
                         flex
                         items-center
                         pl-3
-                        text-amber-700
+                        text-
+                        emerald-700
                       "
                     >
                       <CheckIcon class="w-5 h-5" aria-hidden="true" />
@@ -180,7 +181,7 @@
             id="price"
             type="text"
             class="input rounded p-2 text-base"
-            :class="{ 'border-amber-500': form.errors.price }"
+            :class="{ 'border-blue-500': form.errors.price }"
             v-model="form.price"
             placeholder="Prix unitaire"
           />
@@ -194,7 +195,7 @@
             id="tax"
             type="text"
             class="input rounded p-2 text-base"
-            :class="{ 'border-amber-500': form.errors.tax }"
+            :class="{ 'border-blue-500': form.errors.tax }"
             v-model="form.tax"
             placeholder="Taxe"
           />
@@ -210,7 +211,7 @@
             id="stock"
             type="text"
             class="input rounded p-2 text-base"
-            :class="{ 'border-amber-500': form.errors.stock }"
+            :class="{ 'border-blue-500': form.errors.stock }"
             v-model="form.stock"
             placeholder="Stock initial"
           />
@@ -226,7 +227,7 @@
             id="expires_at"
             type="date"
             class="input rounded p-2 text-base"
-            :class="{ 'border-amber-500': form.errors.expires_at }"
+            :class="{ 'border-blue-500': form.errors.expires_at }"
             v-model="form.expires_at"
             placeholder="Date d'expiration"
           />
@@ -240,7 +241,8 @@
               type="button"
               @click="openModal"
               class="
-                bg-amber-600
+                bg-
+                emerald-600
                 text-white
                 py-2
                 px-4
@@ -248,7 +250,8 @@
                 text-sm
                 shadow-md
                 rounded-md
-                hover:bg-amber-700
+                hover:bg-
+                emerald-700
                 transition
                 ease-in-out
                 duration-300
@@ -325,7 +328,8 @@
                   <button
                     type="button"
                     class="
-                      bg-amber-600
+                      bg-
+                      emerald-600
                       mr-2
                       text-white
                       py-2
@@ -334,7 +338,8 @@
                       text-sm
                       shadow-md
                       rounded-md
-                      hover:bg-amber-700
+                      hover:bg-
+                      emerald-700
                       transition
                       ease-in-out
                       duration-300
@@ -377,6 +382,9 @@
 
 <script>
 import Layout from "@/Pages/Layout.vue";
+import SearchIcon from "@/Components/SearchIcon.vue";
+import SelectorIcon from "@/Components/SelectorIcon.vue";
+import CheckIcon from "@/Components/CheckIcon.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 import axios from "axios";
@@ -390,7 +398,6 @@ import {
   DialogOverlay,
   DialogTitle,
 } from "@headlessui/vue";
-import { CheckIcon, SelectorIcon, SearchIcon } from "@heroicons/vue/solid";
 
 export default {
   layout: Layout,

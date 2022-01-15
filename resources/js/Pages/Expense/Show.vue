@@ -27,7 +27,7 @@
             id="name"
             type="text"
             class="input rounded p-2 text-base"
-            :class="{ 'border-amber-700': form.errors.name }"
+            :class="{ 'border-blue-700': form.errors.name }"
             v-model="form.name"
             placeholder="Nom du rayon"
           />

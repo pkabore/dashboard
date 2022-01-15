@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto max-w-lg family-mono">
+  <div class="mx-auto max-w-lg mb-4 family-mono">
     <h2 class="text-2xl font-bold my-4 text-gray-600 text-center">
       Facture N°{{ bill.receipt_id }}
     </h2>

@@ -16,6 +16,7 @@
               <Grid strokeDasharray="2,2" />
               <Line
                 :dataKeys="['name', 'pl']"
+                :options="{ bezierCurve: true }"
                 class="transition ease-in-out duration-7000"
               />
             </template>
