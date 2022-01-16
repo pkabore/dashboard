@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,16 +27,6 @@ Route::get('/', function () {
     return Inertia::render('Stats/Index');
 })->middleware(['auth', 'verified'])->name('home');
 
-
-Route::resource('articles', ArticleController::class)->middleware(['auth', 'verified']);
-Route::resource('clients', ClientController::class)->middleware(['auth', 'verified']);
-Route::resource('sales', SaleController::class)->middleware(['auth', 'verified']);
-Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
-Route::resource('expenses', ExpenseController::class)->middleware(['auth', 'verified']);
-Route::resource('bills', BillController::class)->middleware(['auth', 'verified']);
-Route::resource('quotes', QuoteController::class)->middleware(['auth', 'verified']);
-
-
 Route::post('/articles/search', [ArticleController::class, 'search'])
         ->middleware(['auth', 'verified'])
         ->name('articles.search');
@@ -62,8 +51,18 @@ Route::post('/bills/search', [BillController::class, 'search'])
         ->middleware(['auth', 'verified'])
         ->name('bills.search');
 
-Route::post('/invoices/search', [QuoteController::class, 'search'])
+Route::post('/quotes/search', [QuoteController::class, 'search'])
         ->middleware(['auth', 'verified'])
-        ->name('invoices.search');
+        ->name('quotes.search');
+
+
+Route::resource('articles', ArticleController::class)->middleware(['auth', 'verified']);
+Route::resource('clients', ClientController::class)->middleware(['auth', 'verified']);
+Route::resource('sales', SaleController::class)->middleware(['auth', 'verified']);
+Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
+Route::resource('expenses', ExpenseController::class)->middleware(['auth', 'verified']);
+Route::resource('bills', BillController::class)->middleware(['auth', 'verified']);
+Route::resource('quotes', QuoteController::class)->middleware(['auth', 'verified']);
+
 
 require __DIR__.'/auth.php';

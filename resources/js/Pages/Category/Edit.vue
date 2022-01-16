@@ -179,20 +179,18 @@
 
 
 <script>
-import CheckIcon from "@/Components/CheckIcon.vue";
 import Layout from "@/Pages/Layout.vue";
+import CheckIcon from "@/Components/CheckIcon.vue";
+import Dialog from "@/Components/Dialog.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
-import { Dialog, DialogOverlay, DialogTitle } from "@headlessui/vue";
 
 export default {
   layout: Layout,
 
   components: {
     CheckIcon,
-    Dialog,
-    DialogOverlay,
-    DialogTitle,
+    Dialog
   },
 
   props: {

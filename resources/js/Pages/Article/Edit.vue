@@ -239,19 +239,17 @@
           <div class="flex items-center justify-center">
             <button
               type="button"
-              @click="openModal"
+              @click="isOpen=true"
               class="
-                bg-
-                emerald-600
-                text-white
+                bg-white
+                text-red-700
                 py-2
                 px-4
                 mr-4
                 text-sm
                 shadow-md
                 rounded-md
-                hover:bg-
-                emerald-700
+                hover:bg-red-200
                 transition
                 ease-in-out
                 duration-300
@@ -284,96 +282,13 @@
           </button>
         </div>
         <Dialog
-          as="div"
-          @close="closeModal"
+          @cancel="isOpen=false"
+          @confirm="confirmation=true; isOpen=false"
           class="max-w-sm mx-auto relative z-30"
           :open="isOpen"
-        >
-          <div class="mx-auto overflow-y-auto">
-            <div class="px-4 text-center">
-              <span
-                class="inline-block h-screen align-middle"
-                aria-hidden="true"
-              >
-                &#8203;
-              </span>
-              <div
-                class="
-                  inline-block
-                  w-full
-                  mx-auto
-                  max-w-md
-                  p-6
-                  my-8
-                  overflow-hidden
-                  text-left
-                  align-middle
-                  transition-all
-                  transform
-                  bg-white
-                  shadow-md
-                  rounded-2xl
-                "
-              >
-                <DialogTitle as="h3" class="text-lg leading-6 text-gray-900">
-                  Confirmer la suppression ?
-                </DialogTitle>
-                <div class="mt-2">
-                  <p class="text-sm text-red-700">
-                    Attention , cette opération est irréversible!
-                  </p>
-                </div>
-
-                <div class="mt-4 flex items-center">
-                  <button
-                    type="button"
-                    class="
-                      bg-
-                      emerald-600
-                      mr-2
-                      text-white
-                      py-2
-                      px-4
-                      mr-4
-                      text-sm
-                      shadow-md
-                      rounded-md
-                      hover:bg-
-                      emerald-700
-                      transition
-                      ease-in-out
-                      duration-300
-                      focus:outline-none
-                    "
-                    @click="deleteArticle"
-                  >
-                    Oui, supprimer
-                  </button>
-                  <button
-                    type="button"
-                    class="
-                      bg-blue-600
-                      text-white
-                      py-2
-                      px-4
-                      text-sm
-                      shadow-md shadow-blue-500/50
-                      rounded-md
-                      hover:bg-blue-700
-                      transition
-                      ease-in-out
-                      duration-300
-                      focus:outline-none
-                    "
-                    @click="isOpen = false"
-                  >
-                    Annuler
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Dialog>
+          type="Supprimer"
+          message="Confirmez-vous cette suppression?"
+        />
       </form>
     </div>
   </div>
@@ -385,6 +300,7 @@ import Layout from "@/Pages/Layout.vue";
 import SearchIcon from "@/Components/SearchIcon.vue";
 import SelectorIcon from "@/Components/SelectorIcon.vue";
 import CheckIcon from "@/Components/CheckIcon.vue";
+import Dialog from "@/Components/Dialog.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 import axios from "axios";
@@ -394,9 +310,6 @@ import {
   ListboxButton,
   ListboxOptions,
   ListboxOption,
-  Dialog,
-  DialogOverlay,
-  DialogTitle,
 } from "@headlessui/vue";
 
 export default {
@@ -408,8 +321,6 @@ export default {
     ListboxOptions,
     ListboxOption,
     Dialog,
-    DialogOverlay,
-    DialogTitle,
     CheckIcon,
     SelectorIcon,
     SearchIcon,
@@ -423,6 +334,7 @@ export default {
 
   setup(props) {
     const isOpen = ref(false);
+    const confirmation = ref(false);
 
     const categories = ref([]);
 
@@ -446,8 +358,8 @@ export default {
     });
 
     const deleteArticle = () => {
-      isOpen.value = false;
-      deleteForm.delete(route("articles.destroy", props.article.id));
+      if (confirmation.value)
+        deleteForm.delete(route("articles.destroy", props.article.id));
     };
 
     const search = ref({ search: "" });
@@ -478,12 +390,7 @@ export default {
       search,
       categories,
       isOpen,
-      closeModal() {
-        isOpen.value = false;
-      },
-      openModal() {
-        isOpen.value = true;
-      },
+      confirmation,
       deleteArticle,
     };
   },

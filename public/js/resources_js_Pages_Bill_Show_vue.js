@@ -45,11 +45,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var payBill = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var form;
+        var confirmation, form;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                confirmation = confirm("Confirmez-vous le paiement de la facture " + props.bill.receipt_id + " ?");
+
+                if (confirmation) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 3:
                 form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__.useForm)({
                   id: props.bill.id
                 });
@@ -57,7 +67,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   only: [""]
                 });
 
-              case 2:
+              case 5:
               case "end":
                 return _context.stop();
             }

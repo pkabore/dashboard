@@ -96,7 +96,7 @@ class BillController extends Controller
                         ->through(function ($bill) {
                             $bill->date = $bill->created_at->format('d/m/Y');
                             return $bill;
-                        })->all();
+                        });
 
         return $bills;
     }

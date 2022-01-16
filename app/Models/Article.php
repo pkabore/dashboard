@@ -11,6 +11,11 @@ class Article extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? null, function($query, $search){
             $query->where(function ($query) use ($search) {

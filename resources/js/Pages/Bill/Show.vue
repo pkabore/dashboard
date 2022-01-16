@@ -214,6 +214,9 @@ export default {
     };
 
     const payBill = async () => {
+      const confirmation = confirm("Confirmez-vous le paiement de la facture " + props.bill.receipt_id + " ?");
+      if (!confirmation)
+        return;
       const form = useForm({
         id: props.bill.id,
       });
