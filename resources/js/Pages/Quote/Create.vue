@@ -9,17 +9,7 @@
           <h2 v-if="message" class="text-center text-green-700 my-2">
             {{ message }}
           </h2>
-          <p class="text-center text-gray-900 uppercase">
-            SuperMarket Boutique - Bogodogo
-            <br />
-            17 Avenue Kwamé N'Krumah 2
-            <br />
-            01 BP 0321
-            <br />
-            +226 70 00 00 00
-            <br />
-            +226 74 00 00 00
-          </p>
+          <shop-info />
           <div class="mt-4 flex justify-between text-gray-900 capitalize">
             <p>
               {{ getDateTime() }}
@@ -510,6 +500,7 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
+import ShopInfo from '@/Components/ShopInfo.vue';
 
 export default {
   layout: Layout,
@@ -523,6 +514,7 @@ export default {
     ListboxButton,
     ListboxOptions,
     ListboxOption,
+    ShopInfo,
   },
 
   props: { articles: Array, msg: String },
@@ -648,34 +640,31 @@ export default {
     };
 
     const printQuote = async () => {
-      const confirmation = confirm("Confirmer la facture ?");
-      if (confirmation) {
-        try {
-          await savequote();
-          message.value = "Devis créé avec succès";
-          /*const targettedDiv = document.getElementById("quote");
-          const doc = new jsPDF({
-            unit: "px",
-            format: [targettedDiv.clientWidth, targettedDiv.clientHeight],
-            orientation: "p",
-            hotfixes: ["px_scaling"],
-          });
+      try {
+        await savequote();
+        message.value = "Devis créé avec succès";
+        /*const targettedDiv = document.getElementById("quote");
+        const doc = new jsPDF({
+          unit: "px",
+          format: [targettedDiv.clientWidth, targettedDiv.clientHeight],
+          orientation: "p",
+          hotfixes: ["px_scaling"],
+        });
 
-          doc.setFontSize("16px");
-          doc.setFont("courier");
+        doc.setFontSize("16px");
+        doc.setFont("courier");
 
-          html2canvas(targettedDiv, {
-            width: doc.internal.pageSize.getWidth(),
-            height: doc.internal.pageSize.getHeight(),
-          }).then((canvas) => {
-            const img = canvas.toDataURL("image/png");
-            doc.addImage(img, "PNG", 0, 0, canvas.width, canvas.height);
-            doc.save(`quote-${quote.receipt_id}.pdf`);
-            reactiveArticles.value = props.articles;
-          });*/
-        } catch (error) {
-          return;
-        }
+        html2canvas(targettedDiv, {
+          width: doc.internal.pageSize.getWidth(),
+          height: doc.internal.pageSize.getHeight(),
+        }).then((canvas) => {
+          const img = canvas.toDataURL("image/png");
+          doc.addImage(img, "PNG", 0, 0, canvas.width, canvas.height);
+          doc.save(`quote-${quote.receipt_id}.pdf`);
+          reactiveArticles.value = props.articles;
+        });*/
+      } catch (error) {
+        return;
       }
     };
 

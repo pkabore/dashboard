@@ -1,71 +1,85 @@
 <template>
-	<div class="bg-black opacity-50 fixed inset-0 transition-all transition duration-300 ease-in-out" :class="{'hidden': !open}">
-		<div class="table-cell align-middle">
-		<div class="absolute bg-white opacity-100 p-4 rounded-md shadow z-50 max-w-md mx-auto">
-			<h2 class="my-3 text-lg text-center">
-				{{message}}
-			</h2>
-			<div class="border-t py-3 flex items-center justify-end space-x-2">
-				<button
-	              class="
-	                bg-white
-	                py-2
-	                px-4
-	                border border-slate-300
-	                hover:border-gray-600
-	                transition
-	                ease-in-out
-	                duration-300
-	                text-gray-700
-	                focus:outline-none
-	                rounded-md
-	                focus:ring-0
-	                text-sm
-	              "
-	              @click="$emit('cancel')"
-	            >
-	              Annuler
-	            </button>
-				<button
-	              class="
-	                bg-white
-	                py-2
-	                px-4
-	                flex
-	                border border-slate-300
-	                hover:border-blue-600
-	                transition
-	                ease-in-out
-	                duration-300
-	                items-center
-	                text-blue-700
-	                focus:outline-none
-	                rounded-md
-	                focus:ring-0
-	                text-sm
-	              "
-	              @click="$emit('confirm')"
-	            >
-              		<CheckIcon class="h-5 w-5 mr-1" />
-              		<span>{{ type }}</span>
-            	</button>
-			</div>
-		</div>
-	</div></div>
+  <div
+    class="
+      fixed
+      inset-0
+      w-screen
+      h-screen
+      flex
+      items-center
+      justify-center
+      z-20
+      transition
+      duration-300
+      ease-in-out
+    "
+    style="background-color: rgba(0, 0, 0, .9);"
+  >
+    <div class="bg-white rounded-md w-full max-w-sm p-4 z-30 drop-shadow-lg">
+      <h2 class="my-3 text-lg text-center">
+        {{ message }}
+      </h2>
+      <div class="border-t py-3 flex items-center justify-end space-x-2">
+        <button
+          class="
+            bg-white
+            py-2
+            px-4
+            border border-slate-300
+            hover:border-gray-600
+            transition
+            ease-in-out
+            duration-300
+            text-gray-700
+            focus:outline-none
+            rounded-md
+            focus:ring-0
+            text-sm
+          "
+          @click="$emit('cancel')"
+        >
+          Annuler
+        </button>
+        <button
+          class="
+            py-2
+            px-4
+            flex
+            transition
+            ease-in-out
+            duration-300
+            items-center
+            focus:outline-none
+            rounded-md
+            focus:ring-0
+            text-sm
+          "
+          :class="{'text-red-600 bg-white hover:bg-white border border-slate-300 hover:border-red-600' : type == 'Supprimer', 'bg-green-600 hover:bg-green-700 text-white': type=='Payer'}"
+          @click="$emit('confirm')"
+        >
+          <DeleteIcon v-if="type == 'Supprimer'" class="h-5 w-5 text-red-600 mr-1" />
+          <CheckIcon v-else class="h-5 w-5 mr-1 text-white" />
+          <span>{{ type }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 
 <script>
-	import CheckIcon from "@/Components/CheckIcon.vue";
+import DeleteIcon from "@/Components/DeleteIcon.vue";
+import CheckIcon from "@/Components/CheckIcon.vue";
 
-	export default({
-		components: {
-			CheckIcon
-		},
-		props: {
-			open: Boolean,
-			type: String,
-			message: String
-		}
-	})
+export default {
+  components: {
+    DeleteIcon,
+    CheckIcon,
+  },
+  props: {
+    open: Boolean,
+    type: String,
+    message: String,
+  }
+};
 </script>

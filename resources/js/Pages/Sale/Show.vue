@@ -1,20 +1,10 @@
 <template>
-  <div class="mx-auto max-w-sm family-mono text-sm">
-    <h2 class="text-xl font-bold mt-4 text-gray-600 text-center">
+  <div class="mx-auto max-w-lg family-mono">
+    <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">
       Reçu N°{{ sale.receipt_id }}
     </h2>
     <div class="pt-4 w-full my-7 px-4 ml-3 bg-white rounded-md h-full mx-auto">
-      <p class="text-center text-gray-900 uppercase">
-        SuperMarket Boutique - Bogodogo
-        <br />
-        17 Avenue Kwamé N'Krumah 2
-        <br />
-        01 BP 0321
-        <br />
-        +226 70 00 00 00
-        <br />
-        +226 74 00 00 00
-      </p>
+      <ShopInfo />
       <div class="mt-4 flex justify-between text-gray-900 capitalize">
         <p>
           {{ getDateTime(sale) }}
@@ -81,12 +71,14 @@
 
 <script>
 import Layout from "@/Pages/Layout.vue";
+import ShopInfo from "@/Components/ShopInfo.vue";
 
 export default {
   layout: Layout,
   props: {
     sale: Object,
   },
+  components: { ShopInfo },
   setup(props) {
     const getDateTime = () => {
       const d = new Date(props.sale.created_at);

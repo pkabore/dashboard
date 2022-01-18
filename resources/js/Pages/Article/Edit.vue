@@ -1,10 +1,13 @@
 <template>
   <div class="flex justify-center max-w-3xl mx-auto px-2">
-    <div
-      class="w-screen h-screen fixed inset-0 bg-black opacity-50 z-20"
-      v-show="isOpen"
-    ></div>
     <div class="w-full mb-3">
+      <Dialog
+        @cancel="isOpen = false"
+        @confirm="deleteArticle()"
+        :class="{'hidden': !isOpen}"
+        type="Supprimer"
+        message="Confirmez-vous cette suppression?"
+      />
       <h2 class="my-3 border-b text-center text-gray-600 font-bold text-2xl">
         Éditer article
       </h2>
@@ -239,56 +242,21 @@
           <div class="flex items-center justify-center">
             <button
               type="button"
-              @click="isOpen=true"
-              class="
-                bg-white
-                text-red-700
-                py-2
-                px-4
-                mr-4
-                text-sm
-                shadow-md
-                rounded-md
-                hover:bg-red-200
-                transition
-                ease-in-out
-                duration-300
-                focus:outline-none
-              "
+              @click="isOpen = !isOpen"
+              class="delete-btn"
             >
               Supprimer
             </button>
           </div>
           <button
             type="submit"
-            class="
-              bg-blue-600
-              text-white
-              py-2
-              px-4
-              text-sm
-              shadow-md shadow-blue-500/50
-              rounded-md
-              hover:bg-blue-700
-              transition
-              ease-in-out
-              duration-300
-              focus:outline-none
-            "
+            class="update-btn"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           >
             Modifier
           </button>
         </div>
-        <Dialog
-          @cancel="isOpen=false"
-          @confirm="confirmation=true; isOpen=false"
-          class="max-w-sm mx-auto relative z-30"
-          :open="isOpen"
-          type="Supprimer"
-          message="Confirmez-vous cette suppression?"
-        />
       </form>
     </div>
   </div>
@@ -334,8 +302,6 @@ export default {
 
   setup(props) {
     const isOpen = ref(false);
-    const confirmation = ref(false);
-
     const categories = ref([]);
 
     const form = useForm({
@@ -358,7 +324,7 @@ export default {
     });
 
     const deleteArticle = () => {
-      if (confirmation.value)
+      isOpen.value = false;
         deleteForm.delete(route("articles.destroy", props.article.id));
     };
 
@@ -390,7 +356,6 @@ export default {
       search,
       categories,
       isOpen,
-      confirmation,
       deleteArticle,
     };
   },

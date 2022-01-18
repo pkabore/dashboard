@@ -4,17 +4,7 @@
       Devis N°{{ quote.receipt_id }}
     </h2>
     <div id="quote" class="w-full px-2 mx-auto rounded-md bg-white border">
-      <p class="text-center pt-4 text-gray-900 uppercase">
-        SuperMarket Boutique - Bogodogo
-        <br />
-        17 Avenue Kwamé N'Krumah 2
-        <br />
-        01 BP 0321
-        <br />
-        +226 70 00 00 00
-        <br />
-        +226 74 00 00 00
-      </p>
+      <shop-info />
       <div class="mt-4 flex justify-between text-gray-900">
         <p>
           {{ quote.date }}
@@ -150,12 +140,17 @@
 
 <script>
 import Layout from "@/Pages/Layout.vue";
+import ShopInfo from "@/Components/ShopInfo.vue";
 
 export default {
   layout: Layout,
 
   props: {
     quote: Object,
+  },
+
+  components: {
+    ShopInfo,
   },
 
   setup(props) {

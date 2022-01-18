@@ -95,7 +95,7 @@ class CategoryController extends Controller
             Article::where('category_id', $category->id)
                     ->update(['category_id' => 1]);
             $default_category = Category::find(1);
-            $default_category->articles++;
+            $default_category->articles += $category->articles;
             $default_category->save();
             $category->delete();
         }

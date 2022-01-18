@@ -184,13 +184,13 @@
               <td class="p-2 font-medium">
                 <span
                   v-if="bill.status == 'Payé'"
-                  class="bg-green-300 text-green-700 px-2 py-1 rounded-md"
+                  class="border border-green-600 text-green-700 px-2 py-1 rounded-md"
                 >
                   {{ bill.status }}
                 </span>
                 <span
                   v-else
-                  class="bg-red-300 text-red-700 text-xs px-2 py-1 rounded-md"
+                  class="border border-red-600 text-red-700 text-xs px-2 py-1 rounded-md"
                 >
                   {{ bill.status }}
                 </span>

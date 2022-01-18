@@ -147,11 +147,6 @@ var map = {
 		"/js/vendor",
 		"resources_js_Pages_Expense_Index_vue"
 	],
-	"./Expense/Show.vue": [
-		"./resources/js/Pages/Expense/Show.vue",
-		"/js/vendor",
-		"resources_js_Pages_Expense_Show_vue"
-	],
 	"./Layout.vue": [
 		"./resources/js/Pages/Layout.vue",
 		"/js/vendor",

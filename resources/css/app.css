@@ -10,8 +10,36 @@
 	@apply rounded border-slate-300 text-green-500 shadow-sm focus:border-green-500 focus:ring-0 focus:ring-transparent;
 }
 
-.btn{
-	@apply ml-4 py-2 px-4 focus:outline-none transition duration-200 ease-in-out rounded-lg flex items-center text-green-500 text-sm font-bold;
+.delete-btn{
+	@apply bg-white
+                text-red-700
+                py-2
+                px-4
+                mr-4
+                text-sm
+                shadow-md
+                rounded-md
+                border border-transparent
+                hover:border-red-600
+                transition
+                ease-in-out
+                duration-300
+                focus:outline-none;
+}
+
+.update-btn{
+	@apply bg-blue-600
+              text-white
+              py-2
+              px-4
+              text-sm
+              shadow-md shadow-blue-500/50
+              rounded-md
+              hover:bg-blue-700
+              transition
+              ease-in-out
+              duration-300
+              focus:outline-none;
 }
 
 .logo{

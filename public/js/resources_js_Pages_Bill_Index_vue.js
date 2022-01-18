@@ -862,11 +862,11 @@ var _hoisted_34 = {
 };
 var _hoisted_35 = {
   key: 0,
-  "class": "bg-green-300 text-green-700 px-2 py-1 rounded-md"
+  "class": "border border-green-600 text-green-700 px-2 py-1 rounded-md"
 };
 var _hoisted_36 = {
   key: 1,
-  "class": "bg-red-300 text-red-700 text-xs px-2 py-1 rounded-md"
+  "class": "border border-red-600 text-red-700 text-xs px-2 py-1 rounded-md"
 };
 var _hoisted_37 = {
   "class": "p-2 inline-flex justify-center"

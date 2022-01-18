@@ -118,11 +118,8 @@ class ArticleController extends Controller
 
         $article->save();
         
-        return Inertia::render('Article/Edit', [
-            'categories' => Category::select('id', 'name')->orderBy('name')->get(),
-            'article' => $article,
-            'message' => 'Article édité avec succès'
-        ]);
+        $request->session()->put('Article édité avec succès');
+        return redirect(route('articles.edit', $article->id));
     }
 
     public function search(Request $request)

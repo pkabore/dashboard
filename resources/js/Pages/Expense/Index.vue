@@ -112,7 +112,7 @@
               </td>
               <td class="p-2 inline-flex justify-center">
                 <DeleteIcon
-                  @click="deleteExpense(expense.id)"
+                  @click="prepareDeletion(expense.id)"
                   class="h-5 w-5 text-gray-600"
                 />
               </td>
@@ -122,6 +122,13 @@
       </div>
     </div>
   </div>
+  <Dialog
+    @cancel="isOpen = false"
+    @confirm="deleteExpense()"
+    :class="{'hidden': !isOpen}"
+    type="Supprimer"
+    message="Confirmez-vous cette suppression?"
+  />
 </template>
 
 
@@ -130,6 +137,7 @@ import Layout from "@/Pages/Layout.vue";
 import SearchIcon from "@/Components/SearchIcon.vue";
 import AddIcon from "@/Components/AddIcon.vue";
 import DeleteIcon from "@/Components/DeleteIcon.vue";
+import Dialog from "@/Components/Dialog.vue";
 import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
 import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
@@ -144,6 +152,7 @@ export default {
     SearchIcon,
     AddIcon,
     DeleteIcon,
+    Dialog,
     ChevronUpIcon,
     ChevronDownIcon,
   },
@@ -151,6 +160,8 @@ export default {
   props: { expenses: Object },
 
   setup(props) {
+    const isOpen = ref(false);
+
     const form = ref({
       search: "",
     });
@@ -158,6 +169,11 @@ export default {
     const deleteForm = useForm({
       id: 0,
     });
+
+    const prepareDeletion = (id) => {
+      deleteForm.id = id;
+      isOpen.value = true;
+    };
 
     const reactiveExpenses = ref(props.expenses.data);
 
@@ -171,19 +187,14 @@ export default {
       form.value[key] = value;
     };
 
-    const deleteExpense = (id) => {
-      const confirmation = confirm(
-        "Confirmez-vous la suppression de cette dépense ?"
-      );
-      if (confirmation) {
-        deleteForm.id = id;
-        deleteForm.delete(route("expenses.destroy", id), {
-          only: ["expenses"],
-          onSuccess: () => {
-            reactiveExpenses.value = props.expenses.data;
-          },
-        });
-      }
+    const deleteExpense = () => {
+      isOpen.value = false;
+      deleteForm.delete(route("expenses.destroy", deleteForm.id), {
+        only: ["expenses"],
+        onSuccess: () => {
+          reactiveExpenses.value = props.expenses.data;
+        },
+      });
     };
 
     watch(form.value, () => {
@@ -195,7 +206,7 @@ export default {
         .catch((err) => console.log(err));
     });
 
-    return { form, setFilter, deleteExpense, reactiveExpenses };
+    return { isOpen, prepareDeletion, form, setFilter, deleteExpense, reactiveExpenses };
   },
 };
 </script>

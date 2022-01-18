@@ -112,148 +112,39 @@
             <button
               type="button"
               @click="openModal"
-              class="
-                bg-red-600
-                text-white
-                py-2
-                px-4
-                mr-4
-                text-sm
-                shadow-md shadow-red-500/50
-                rounded-md
-                hover:bg-red-700
-                transition
-                ease-in-out
-                duration-300
-                focus:outline-none
-              "
+              class="delete-btn"
             >
               Supprimer
             </button>
           </div>
           <button
             type="submit"
-            class="
-              bg-blue-600
-              text-white
-              py-2
-              px-4
-              text-sm
-              shadow-md shadow-blue-500/50
-              rounded-md
-              hover:bg-blue-700
-              transition
-              ease-in-out
-              duration-300
-              focus:outline-none
-            "
+            class="update-btn"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           >
             Modifier
           </button>
         </div>
-        <Dialog
-          as="div"
-          @close="closeModal"
-          class="max-w-sm mx-auto relative z-30"
-          :open="isOpen"
-        >
-          <div class="mx-auto overflow-y-auto">
-            <div class="px-4 text-center">
-              <span
-                class="inline-block h-screen align-middle"
-                aria-hidden="true"
-              >
-                &#8203;
-              </span>
-              <div
-                class="
-                  inline-block
-                  w-full
-                  mx-auto
-                  max-w-md
-                  p-6
-                  my-8
-                  overflow-hidden
-                  text-left
-                  align-middle
-                  transition-all
-                  transform
-                  bg-white
-                  shadow-md
-                  rounded-2xl
-                "
-              >
-                <DialogTitle as="h3" class="text-lg leading-6 text-gray-900">
-                  Confirmer la suppression ?
-                </DialogTitle>
-                <div class="mt-2">
-                  <p class="text-sm text-red-700 font-bold">
-                    Attention , cette opération est irréversible!
-                  </p>
-                </div>
-
-                <div class="mt-4 flex items-center">
-                  <button
-                    type="button"
-                    class="
-                      bg-red-600
-                      mr-2
-                      text-white
-                      py-2
-                      px-4
-                      mr-4
-                      text-sm
-                      shadow-md shadow-red-500/50
-                      rounded-md
-                      hover:bg-red-700
-                      transition
-                      ease-in-out
-                      duration-300
-                      focus:outline-none
-                    "
-                    @click="deleteClient"
-                  >
-                    Oui, supprimer
-                  </button>
-                  <button
-                    type="button"
-                    class="
-                      bg-blue-600
-                      text-white
-                      py-2
-                      px-4
-                      text-sm
-                      shadow-md shadow-blue-500/50
-                      rounded-md
-                      hover:bg-blue-700
-                      transition
-                      ease-in-out
-                      duration-300
-                      focus:outline-none
-                    "
-                    @click="isOpen = false"
-                  >
-                    Annuler
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Dialog>
       </form>
     </div>
   </div>
+  <Dialog
+    @cancel="isOpen = false"
+    @confirm="deleteClient()"
+    :class="{'hidden': !isOpen}"
+    type="Supprimer"
+    message="Confirmez-vous cette suppression?"
+  />
 </template>
 
 
 <script>
 import Layout from "@/Pages/Layout.vue";
 import CheckIcon from "@/Components/CheckIcon.vue";
+import Dialog from "@/Components/Dialog.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
-import { Dialog, DialogOverlay, DialogTitle } from "@headlessui/vue";
 
 export default {
   layout: Layout,
@@ -261,8 +152,6 @@ export default {
   components: {
     CheckIcon,
     Dialog,
-    DialogOverlay,
-    DialogTitle,
   },
 
   props: {

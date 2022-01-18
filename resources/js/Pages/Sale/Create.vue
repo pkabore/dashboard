@@ -9,17 +9,7 @@
           <h2 v-if="message" class="text-center text-green-700 my-2">
             {{ message }}
           </h2>
-          <p class="text-center text-gray-900 uppercase">
-            SuperMarket Boutique - Bogodogo
-            <br />
-            17 Avenue Kwamé N'Krumah 2
-            <br />
-            01 BP 0321
-            <br />
-            +226 70 00 00 00
-            <br />
-            +226 74 00 00 00
-          </p>
+          <shop-info />
           <div class="mt-4 flex justify-between text-gray-900 capitalize">
             <p>
               {{ sale.date }}
@@ -313,6 +303,8 @@ import { watch, ref } from "vue";
 import axios from "axios";
 import SearchIcon from "@/Components/SearchIcon.vue";
 import SelectorIcon from "@/Components/SelectorIcon.vue";
+import ShopInfo from "@/Components/ShopInfo.vue";
+
 /*import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";*/
 
@@ -335,6 +327,7 @@ export default {
     ListboxButton,
     ListboxOptions,
     ListboxOption,
+    ShopInfo,
   },
 
   props: { msg: String },
@@ -449,7 +442,7 @@ export default {
       sale.taxes = 0;
       sale.partial = 0;
       sale.total = 0;
-      sale.date = "";
+      sale.date = getDateTime();
       sale.receipt_id = getReceiptId();
 
       message.value = "";

@@ -4,17 +4,7 @@
       Facture N°{{ bill.receipt_id }}
     </h2>
     <div id="bill" class="w-full px-2 mx-auto rounded-md bg-white border">
-      <p class="text-center pt-4 text-gray-900 uppercase">
-        SuperMarket Boutique - Bogodogo
-        <br />
-        17 Avenue Kwamé N'Krumah 2
-        <br />
-        01 BP 0321
-        <br />
-        +226 70 00 00 00
-        <br />
-        +226 74 00 00 00
-      </p>
+      <ShopInfo />
       <div class="mt-4 flex justify-between text-gray-900">
         <p>
           {{ bill.date }}
@@ -175,7 +165,7 @@
               focus:outline-none
               hover:bg-green-700
             "
-            @click="payBill"
+            @click="isOpen=!isOpen"
           >
             Payer
           </button>
@@ -183,11 +173,21 @@
       </div>
     </div>
   </div>
+  <Dialog
+    @cancel="isOpen = false"
+    @confirm="payBill()"
+    :class="{'hidden': !isOpen}"
+    type="Payer"
+    message="Confirmez-vous ce paiement ?"
+  />
 </template>
 
 <script>
 import Layout from "@/Pages/Layout.vue";
+import ShopInfo from "@/Components/ShopInfo.vue";
+import Dialog from "@/Components/Dialog.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import { ref } from 'vue';
 
 export default {
   layout: Layout,
@@ -195,7 +195,7 @@ export default {
   props: {
     bill: Object,
   },
-
+  components: { ShopInfo, Dialog },
   setup(props) {
     const getDateTime = () => {
       const d = new Date(props.bill.created_at);
@@ -213,10 +213,10 @@ export default {
       return `${days}/${months}/${year} ${hours}H:${mins}`;
     };
 
+    const isOpen = ref(false);
+
     const payBill = async () => {
-      const confirmation = confirm("Confirmez-vous le paiement de la facture " + props.bill.receipt_id + " ?");
-      if (!confirmation)
-        return;
+      isOpen.value = false;
       const form = useForm({
         id: props.bill.id,
       });
@@ -229,6 +229,7 @@ export default {
     return {
       getDateTime,
       payBill,
+      isOpen
     };
   },
 };
