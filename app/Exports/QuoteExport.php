@@ -12,6 +12,6 @@ class QuoteExport implements FromCollection
     */
     public function collection()
     {
-        return QuoteBill::where('is_quote', true)->all();
+        return QuoteBill::where('is_quote', true)->get();
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Redirect;
 use Inertia\Inertia;
 use App\Exports\ArticleExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class ArticleController extends Controller
 {
@@ -18,7 +19,7 @@ class ArticleController extends Controller
         $articles = Article::paginate(12)
                     ->through(function($article){
                         if ($article->expires_at)
-                            $article->expires_at = $article->expires_at->diffForHumans();
+                            $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
                         else
                             $article->expires_at = '-';
                         return $article;
@@ -79,7 +80,7 @@ class ArticleController extends Controller
     public function edit(Request $request, Article $article)
     {
 
-        $article->expires_at = $article->expires_at->format('Y-m-d');
+        $article->expires_at = Carbon::parse($article->expires_at)->format('Y-m-d');
         $message = session('message');
         $request->session()->put('message', '');
         if (!$message)

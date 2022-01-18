@@ -26,6 +26,9 @@
             placeholder="Rechercher un article"
           />
         </div>
+        <a :href="route('articles.export')" class="border text-teal-700 py-1 px-2 hover:border-teal-600 transition duration-300 ease-in-out rounded-md focus:outline-none">
+          Export xlsx
+        </a>
         <Link
           :href="route('articles.create')"
           class="
@@ -33,8 +36,6 @@
             text-white
             py-1
             px-2
-            text-sm
-            shadow-md shadow-blue-500/50
             flex
             items-center
             rounded-md
