@@ -7,6 +7,8 @@ use App\Models\Order;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Exports\QuoteExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QuoteController extends Controller
 {
@@ -116,5 +118,10 @@ class QuoteController extends Controller
     {
         $quote->delete();
         return redirect(route('quotes.index'));
+    }
+
+
+    public function export(){
+        return Excel::download(new QuoteExport, 'devis.xlsx');
     }
 }

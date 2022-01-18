@@ -5,7 +5,7 @@
       v-show="isOpen"
     ></div>
     <div class="w-full">
-      <h2 class="my-4 border-b text-center text-gray-600 font-bold text-2xl">
+      <h2 class="my-4 text-center text-gray-600 font-bold text-2xl">
         Éditer client
       </h2>
       <form

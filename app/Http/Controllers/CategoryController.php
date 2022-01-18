@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Exports\CategoryExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
@@ -100,5 +102,9 @@ class CategoryController extends Controller
             $category->delete();
         }
         return redirect(route('categories.index'));
+    }
+
+    public function export(){
+        return Excel::download(new CategoryExport, 'rayons.xlsx');
     }
 }

@@ -8,7 +8,7 @@
         type="Supprimer"
         message="Confirmez-vous cette suppression?"
       />
-      <h2 class="my-3 border-b text-center text-gray-600 font-bold text-2xl">
+      <h2 class="my-3 text-center text-gray-600 font-bold text-2xl">
         Éditer article
       </h2>
       <form

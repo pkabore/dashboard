@@ -6,8 +6,9 @@ use App\Models\Sale;
 use App\Models\Order;
 use App\Models\Article;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Inertia\Inertia;
+use App\Exports\SaleExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SaleController extends Controller
 {
@@ -17,7 +18,7 @@ class SaleController extends Controller
                     ->paginate(12)
                     ->through(function ($sale) {
                         try {
-                            $sale->created_at = Carbon::parse($sale->created_at)->diffForHumans();
+                            $sale->date = $sale->created_at->diffForHumans();
                         } catch (\Throwable $th) {
                             throw $th;
                         }
@@ -31,9 +32,7 @@ class SaleController extends Controller
 
     public function create()
     {
-        return Inertia::render('Sale/Create', [
-            'articles' => Article::select(['id', 'name', 'price', 'tax', 'stock'])->limit(50)->get()
-        ]);
+        return Inertia::render('Sale/Create');
     }
 
     public function store(Request $request)
@@ -82,7 +81,7 @@ class SaleController extends Controller
                 ->paginate(12)
                 ->through(function ($sale) {
                     try {
-                        $sale->created_at = Carbon::parse($sale->created_at)->diffForHumans();
+                        $sale->date = $sale->created_at->diffForHumans();
                     } catch (\Throwable $th) {
                         throw $th;
                     }
@@ -97,10 +96,15 @@ class SaleController extends Controller
         $items = Order::where('sale_quote_bill_id', $sale->id)->get();
         $sale->items = $items;
         try {
-            $sale->created_at = Carbon::parse($sale->created_at)->diffForHumans();
+            $sale->date = $sale->created_at->diffForHumans();
         } catch (\Throwable $th) {
             throw $th;
         }
         return Inertia::render('Sale/Show', [ 'sale' => $sale]);
+    }
+
+
+    public function export(){
+        return Excel::download(new SaleExport, 'ventes.xlsx');
     }
 }

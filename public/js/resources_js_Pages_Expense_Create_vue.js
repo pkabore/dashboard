@@ -694,7 +694,7 @@ var _hoisted_2 = {
 };
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
-  "class": "my-4 border-b text-center text-gray-600 font-bold text-2xl"
+  "class": "my-4 text-center text-gray-600 font-bold text-2xl"
 }, " Enregistrer dépense ", -1
 /* HOISTED */
 );

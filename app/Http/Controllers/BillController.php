@@ -7,6 +7,8 @@ use App\Models\Order;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Exports\BillExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BillController extends Controller
 {
@@ -124,4 +126,8 @@ class BillController extends Controller
     //     $bill->delete();
     //     return redirect(route('bills.index'));
     // }
+
+    public function export(){
+        return Excel::download(new BillExport, 'factures.xlsx');
+    }
 }

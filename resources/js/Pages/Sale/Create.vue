@@ -131,7 +131,7 @@
                 text-sm
                 mb-2
               "
-              @click="printSale"
+              @click="isOpen=!isOpen"
             >
               <CheckIcon class="h-5 w-5 mr-1" />
               <span>Save</span>
@@ -291,6 +291,13 @@
       </div>
     </div>
   </div>
+  <Dialog
+    @cancel="isOpen = false"
+    @confirm="printSale()"
+    :class="{'hidden': !isOpen}"
+    type="Sauver"
+    message="Confirmez-vous ce paiement?"
+  />
 </template>
 
 
@@ -298,6 +305,7 @@
 import Layout from "@/Pages/Layout.vue";
 import ResetIcon from "@/Components/ResetIcon.vue";
 import CheckIcon from "@/Components/CheckIcon.vue";
+import Dialog from "@/Components/Dialog.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
@@ -322,6 +330,7 @@ export default {
     SearchIcon,
     ResetIcon,
     CheckIcon,
+    Dialog,
     SelectorIcon,
     Listbox,
     ListboxButton,
@@ -336,6 +345,8 @@ export default {
     const form = useForm({
       search: "",
     });
+
+    const isOpen = ref(false);
 
     const getReceiptId = () => {
       const d = new Date();
@@ -450,9 +461,8 @@ export default {
     };
 
     const printSale = async () => {
-      const confirmation = confirm("Confirmer le paiement ?");
-      if (confirmation) {
         try {
+          isOpen.value = false;
           await saveSale();
           message.value = "Vente enregistrée avec succès";
           /*const targettedDiv = document.getElementById("sale");
@@ -478,7 +488,6 @@ export default {
         } catch (error) {
           return;
         }
-      }
     };
 
     const escapeSpace = (e) => {
@@ -490,6 +499,7 @@ export default {
 
     return {
       form,
+      isOpen,
       escapeSpace,
       reactiveArticles,
       sale,

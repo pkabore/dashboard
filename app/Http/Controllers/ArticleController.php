@@ -6,9 +6,9 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Redirect;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use Carbon\Carbon;
+use App\Exports\ArticleExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ArticleController extends Controller
 {
@@ -18,7 +18,7 @@ class ArticleController extends Controller
         $articles = Article::paginate(12)
                     ->through(function($article){
                         if ($article->expires_at)
-                            $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
+                            $article->expires_at = $article->expires_at->diffForHumans();
                         else
                             $article->expires_at = '-';
                         return $article;
@@ -31,9 +31,13 @@ class ArticleController extends Controller
 
     public function create(Request $request)
     {
+        $message = session('message');
+        $request->session()->put('message', '');
+        if (!$message)
+            $message = session('message');
         return Inertia::render('Article/Create', [
             'categories' => Category::select('id', 'name')->get(),
-            'message' => ''
+            'message' => $message
         ]);
     }
 
@@ -68,18 +72,22 @@ class ArticleController extends Controller
 
         $a->save();
         $c->save();
-        return Inertia::render('Article/Create', ['message' => 'Article ajouté avec succès']);
+        $request->session()->put('message', 'Article ajouté avec succès');
+        return Inertia::render('Article/Create');
     }
 
     public function edit(Request $request, Article $article)
     {
 
-        $article->expires_at = Carbon::parse($article->expires_at)->format('Y-m-d');
-
+        $article->expires_at = $article->expires_at->format('Y-m-d');
+        $message = session('message');
+        $request->session()->put('message', '');
+        if (!$message)
+            $message = session('message');
         return Inertia::render('Article/Edit', [
             'category' => Category::where('id', $article->category_id)->select('id', 'name')->first(),
             'article' => $article,
-            'message' => ''
+            'message' => $message
         ]);
     }
 
@@ -130,7 +138,7 @@ class ArticleController extends Controller
                         ->paginate(12)
                         ->through(function($article){
                             if ($article->expires_at)
-                                $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
+                                $article->expires_at = $article->expires_at->diffForHumans();
                             else
                                 $article->expires_at = '-';
                             return $article;
@@ -146,5 +154,9 @@ class ArticleController extends Controller
         $c->articles = $c->articles - 1;
         $c->save();
         return redirect(route('articles.index'));
+    }
+
+    public function export(){
+        return Excel::download(new ArticleExport, 'articles.xlsx');
     }
 }

@@ -10,7 +10,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\QuoteController;
-//use App\Http\Controllers\MetadataController;
+use App\Http\Controllers\MetadataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +23,9 @@ use App\Http\Controllers\QuoteController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Stats/Index');
-})->middleware(['auth', 'verified'])->name('home');
+Route::get('/', [MetadataController::class, 'index'])
+        ->middleware(['auth', 'verified'])
+        ->name('home');
 
 Route::post('/articles/search', [ArticleController::class, 'search'])
         ->middleware(['auth', 'verified'])
@@ -54,6 +54,29 @@ Route::post('/bills/search', [BillController::class, 'search'])
 Route::post('/quotes/search', [QuoteController::class, 'search'])
         ->middleware(['auth', 'verified'])
         ->name('quotes.search');
+
+
+Route::get('articles/export/', [ArticleController::class, 'export'])
+        ->middleware(['auth', 'verified'])
+        ->name('articles.export');
+Route::get('sales/export/', [SaleController::class, 'export'])
+        ->middleware(['auth', 'verified'])
+        ->name('sales.export');
+Route::get('bills/export/', [BillController::class, 'export'])
+        ->middleware(['auth', 'verified'])
+        ->name('bills.export');
+Route::get('quotes/export/', [QuoteController::class, 'export'])
+        ->middleware(['auth', 'verified'])
+        ->name('quotes.export');
+Route::get('categories/export/', [CategoryController::class, 'export'])
+        ->middleware(['auth', 'verified'])
+        ->name('categories.export');
+Route::get('expenses/export/', [ExpenseController::class, 'export'])
+        ->middleware(['auth', 'verified'])
+        ->name('expenses.export');
+Route::get('clients/export/', [ClientController::class, 'export'])
+        ->middleware(['auth', 'verified'])
+        ->name('clients.export');
 
 
 Route::resource('articles', ArticleController::class)->middleware(['auth', 'verified']);

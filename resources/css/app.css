@@ -6,10 +6,6 @@
     @apply mt-1 block w-full rounded-md transition duration-200 ease-in-out text-gray-900 border border-slate-300 focus:border-slate-400 focus:outline-none focus:ring-0;
 }
 
-.checkbox{
-	@apply rounded border-slate-300 text-green-500 shadow-sm focus:border-green-500 focus:ring-0 focus:ring-transparent;
-}
-
 .delete-btn{
 	@apply bg-white
                 text-red-700
@@ -40,8 +36,4 @@
               ease-in-out
               duration-300
               focus:outline-none;
-}
-
-.logo{
-	@apply text-gray-700 hover:text-gray-900 font-bold focus:border-0 focus:ring-0 focus:outline-0;
 }

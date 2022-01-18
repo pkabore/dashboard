@@ -439,7 +439,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, " Annuler "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["py-2 px-4 flex transition ease-in-out duration-300 items-center focus:outline-none rounded-md focus:ring-0 text-sm", {
       'text-red-600 bg-white hover:bg-white border border-slate-300 hover:border-red-600': $props.type == 'Supprimer',
-      'bg-green-600 hover:bg-green-700 text-white': $props.type == 'Payer'
+      'bg-green-600 hover:bg-green-700 text-white': $props.type != 'Supprimer'
     }]),
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.$emit('confirm');
@@ -838,7 +838,7 @@ var _hoisted_2 = {
 };
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
-  "class": "my-3 border-b text-center text-gray-600 font-bold text-2xl"
+  "class": "my-3 text-center text-gray-600 font-bold text-2xl"
 }, " Éditer article ", -1
 /* HOISTED */
 );

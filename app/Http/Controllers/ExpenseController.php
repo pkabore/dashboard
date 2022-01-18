@@ -6,7 +6,8 @@ use App\Models\Expense;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Carbon\Carbon;
+use App\Exports\ExpenseExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpenseController extends Controller
 {
@@ -15,7 +16,7 @@ class ExpenseController extends Controller
         $expenses = Expense::paginate(12)
                     ->through(function($expense) {
                         try {
-                                $expense->date = Carbon::parse($expense->created_at)->diffForHumans();
+                                $expense->date = $expense->created_at->diffForHumans();
                             } catch (\Throwable $th) {
                                 throw $th;
                             }
@@ -61,7 +62,7 @@ class ExpenseController extends Controller
                         ->paginate(12)
                         ->through(function($expense) {
                             try {
-                                $expense->date = Carbon::parse($expense->created_at)->diffForHumans();
+                                $expense->date = $expense->created_at->diffForHumans();
                             } catch (\Throwable $th) {
                                 throw $th;
                             }
@@ -75,5 +76,10 @@ class ExpenseController extends Controller
     {
         $expense->delete();
         return redirect(route('expenses.index'));
+    }
+
+
+    public function export(){
+        return Excel::download(new ExpenseExport, 'depenses.xlsx');
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Exports\ClientExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClientController extends Controller
 {
@@ -104,5 +106,9 @@ class ClientController extends Controller
     {
         $client->delete();
         return redirect(route('clients.index'));
+    }
+
+    public function export(){
+        return Excel::download(new ClientExport, 'clients.xlsx');
     }
 }

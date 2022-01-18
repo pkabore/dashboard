@@ -54,7 +54,7 @@
             focus:ring-0
             text-sm
           "
-          :class="{'text-red-600 bg-white hover:bg-white border border-slate-300 hover:border-red-600' : type == 'Supprimer', 'bg-green-600 hover:bg-green-700 text-white': type=='Payer'}"
+          :class="{'text-red-600 bg-white hover:bg-white border border-slate-300 hover:border-red-600' : type == 'Supprimer', 'bg-green-600 hover:bg-green-700 text-white': type != 'Supprimer'}"
           @click="$emit('confirm')"
         >
           <DeleteIcon v-if="type == 'Supprimer'" class="h-5 w-5 text-red-600 mr-1" />

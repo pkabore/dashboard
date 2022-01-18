@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center max-w-3xl mx-auto px-2">
     <div class="w-full mb-3">
-      <h2 class="my-4 border-b text-center text-gray-600 font-bold text-2xl">
+      <h2 class="my-4 text-center text-gray-600 font-bold text-2xl">
         Ajouter article
       </h2>
       <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
