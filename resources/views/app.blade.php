@@ -41,11 +41,11 @@
     background: rgb(68, 68, 68);
     border-radius: 7px;
   }
-    @media(min-width: 768px) {
-      body {
-        max-width: calc(100vw - 7px);
-      }
+  @media(min-width: 768px){
+    body {
+      max-width: calc(100vw - 0) !important;
     }
+  }
   </style>
 </head>
 

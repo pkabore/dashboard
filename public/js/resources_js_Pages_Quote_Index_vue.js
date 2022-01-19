@@ -679,7 +679,7 @@ var _hoisted_1 = {
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
   "stroke-linecap": "round",
   "stroke-linejoin": "round",
-  "stroke-width": "2",
+  "stroke-width": "3",
   d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
 }, null, -1
 /* HOISTED */
@@ -1122,7 +1122,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: _ctx.route('quotes.export'),
     "class": "border text-teal-700 py-1 px-2 hover:border-teal-600 transition duration-300 ease-in-out rounded-md focus:outline-none"
-  }, " Export xlsx ", 8
+  }, " Export ", 8
   /* PROPS */
   , _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
     href: _ctx.route('quotes.create'),

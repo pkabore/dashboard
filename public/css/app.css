@@ -447,6 +447,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .left-0 {
   left: 0px;
 }
+.left-3 {
+  left: 0.75rem;
+}
 .z-20 {
   z-index: 20;
 }
@@ -631,6 +634,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-24 {
   width: 6rem;
+}
+.w-1\/2 {
+  width: 50%;
 }
 .max-w-xl {
   max-width: 36rem;
@@ -864,6 +870,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .p-0 {
   padding: 0px;
 }
+.p-1 {
+  padding: 0.25rem;
+}
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -912,6 +921,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 5px;
   padding-bottom: 5px;
 }
+.py-\[6px\] {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
 .pt-8 {
   padding-top: 2rem;
 }
@@ -941,6 +954,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pb-1 {
   padding-bottom: 0.25rem;
+}
+.pr-3 {
+  padding-right: 0.75rem;
+}
+.pr-7 {
+  padding-right: 1.75rem;
 }
 .text-left {
   text-align: left;
@@ -1370,8 +1389,28 @@ Ensure the default browser behavior of the `hidden` attribute.
     left: 11rem;
   }
 
+  .md\:mr-2 {
+    margin-right: 0.5rem;
+  }
+
+  .md\:mt-2 {
+    margin-top: 0.5rem;
+  }
+
+  .md\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+
   .md\:hidden {
     display: none;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
   }
 
   .md\:transform-none {

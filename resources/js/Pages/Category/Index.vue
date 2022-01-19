@@ -15,19 +15,19 @@
               pointer-events-none
             "
           >
-            <SearchIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
+            <SearchIcon class="w-4 h-4 text-gray-400" aria-hidden="true" />
           </span>
           <input
             id="search"
             type="text"
             maxlength="32"
-            class="input text-sm py-[7px] pl-3 text-sm pr-10"
+            class="input text-sm py-[7px] pl-3 text-sm pr-7"
             v-model="form.search"
             placeholder="Rechercher un rayon"
           />
         </div>
         <a :href="route('categories.export')" class="border text-teal-700 py-1 px-2 hover:border-teal-600 transition duration-300 ease-in-out rounded-md focus:outline-none">
-          Export xlsx
+          Export
         </a>
         <!-- <Filters /> -->
         <Link

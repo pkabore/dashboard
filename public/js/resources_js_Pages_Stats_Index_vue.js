@@ -78,82 +78,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Pages_Layout_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Pages/Layout.vue */ "./resources/js/Pages/Layout.vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vue3_charts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue3-charts */ "./node_modules/vue3-charts/dist/vue3-charts.esm.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
 
 
 
+chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_2__.ArcElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.BarElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.BarController, chart_js__WEBPACK_IMPORTED_MODULE_2__.LineController, chart_js__WEBPACK_IMPORTED_MODULE_2__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.Decimation, chart_js__WEBPACK_IMPORTED_MODULE_2__.Filler, chart_js__WEBPACK_IMPORTED_MODULE_2__.Legend, chart_js__WEBPACK_IMPORTED_MODULE_2__.Title, chart_js__WEBPACK_IMPORTED_MODULE_2__.Tooltip);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_1__.defineComponent)({
   layout: _Pages_Layout_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-  name: "LineChart",
-  components: {
-    Responsive: vue3_charts__WEBPACK_IMPORTED_MODULE_2__.Responsive,
-    Chart: vue3_charts__WEBPACK_IMPORTED_MODULE_2__.Chart,
-    Grid: vue3_charts__WEBPACK_IMPORTED_MODULE_2__.Grid,
-    Line: vue3_charts__WEBPACK_IMPORTED_MODULE_2__.Line
+  components: {},
+  props: {
+    metadata: Object
   },
-  setup: function setup() {
-    var plByMonth = [{
-      name: "Jan",
-      pl: 1000,
-      avg: 500,
-      inc: 300
-    }, {
-      name: "Fev",
-      pl: 2000,
-      avg: 900,
-      inc: 400
-    }, {
-      name: "Mar",
-      pl: 400,
-      avg: -750,
-      inc: 500
-    }, {
-      name: "Avr",
-      pl: 3100,
-      avg: 1300,
-      inc: 700
-    }, {
-      name: "Mai",
-      pl: 200,
-      avg: 100,
-      inc: 200
-    }, {
-      name: "Jun",
-      pl: 600,
-      avg: 400,
-      inc: 300
-    }, {
-      name: "Jul",
-      pl: 500,
-      avg: -182,
-      inc: 100
-    }, {
-      name: "Aou",
-      pl: 700,
-      avg: 90,
-      inc: 100
-    }, {
-      name: "Sep",
-      pl: 457,
-      avg: 73,
-      inc: 200
-    }, {
-      name: "Oct",
-      pl: 457,
-      avg: 73,
-      inc: 200
-    }, {
-      name: "Nov",
-      pl: 875,
-      avg: 552,
-      inc: 270
-    }, {
-      name: "Dec",
-      pl: 257,
-      avg: 703,
-      inc: 174
-    }];
-    var data = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(plByMonth);
+  setup: function setup(props) {
+    var data = {};
     var direction = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("horizontal");
     var margin = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
       left: 0,
@@ -161,11 +98,35 @@ __webpack_require__.r(__webpack_exports__);
       right: 20,
       bottom: 0
     });
-    return {
-      data: data,
-      direction: direction,
-      margin: margin
-    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      var dashboard = new chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart('sales', {
+        data: {
+          labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [{
+            type: 'bar',
+            label: 'Ventes',
+            data: [65, 59, 80, 81, 56, 55, 40, 10, 81, 56, 55, 40],
+            backgroundColor: ['#2563eb' //'#7c3aed',
+            //'#16a34a'
+            ],
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1,
+            //barThickness: 30,
+            order: 2
+          }, {
+            type: 'line',
+            label: 'Dépenses',
+            data: [0, 59, 10, 81, 56, 55, 40, 15.3, 81, 57, 55, 12],
+            borderColor: '#7c3aed',
+            fill: false,
+            tension: 0,
+            order: 1
+          }]
+        }
+      });
+    });
+    return {};
   }
 }));
 
@@ -847,63 +808,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "w-full m-3"
+  "class": "w-full p-1"
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
-  "class": "text-2xl font-bold mt-4 text-gray-600 text-center"
-}, " Statistiques ", -1
-/* HOISTED */
-);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<h2 class=\"text-2xl font-bold mt-4 text-gray-600 text-center\"> Analytics </h2><div class=\"rounded mt-4\"><div class=\"block w-full md:flex items-center justify-between\"><canvas id=\"sales\" class=\"bg-white rounded-md w-full md:w-1/2 md:max-w-1/2 md:mr-2\"></canvas><!--  &lt;canvas id=&quot;customers&quot; class=&quot;bg-white rounded-md w-full md:w-1/2 md:max-w-1/2 mt-2 md:mt-0&quot;&gt;&lt;/canvas&gt; --></div><div class=\"mt-2 block w-full md:flex items-center justify-between\"><canvas id=\"bills\" class=\"bg-white rounded-md w-full md:w-1/2 md:max-w-1/2 md:mr-2\"></canvas><canvas id=\"quotes\" class=\"bg-white rounded-md w-full md:w-1/2 md:max-w-1/2 mt-2 md:mt-0\"></canvas></div></div>", 2);
 
-var _hoisted_3 = {
-  "class": "bg-white rounded mt-4"
-};
+var _hoisted_4 = [_hoisted_2];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_Grid = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Grid");
-
-  var _component_Line = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Line");
-
-  var _component_Chart = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Chart");
-
-  var _component_Responsive = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Responsive");
-
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Responsive, {
-    "class": "w-full p-3"
-  }, {
-    main: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref) {
-      var width = _ref.width;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
-        size: {
-          width: width,
-          height: 400
-        },
-        data: _ctx.data,
-        margin: _ctx.margin,
-        direction: _ctx.direction
-      }, {
-        layers: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Grid, {
-            strokeDasharray: "2,2"
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Line, {
-            dataKeys: ['name', 'pl'],
-            options: {
-              bezierCurve: true
-            },
-            "class": "transition ease-in-out duration-7000"
-          })];
-        }),
-        _: 2
-        /* DYNAMIC */
-
-      }, 1032
-      /* PROPS, DYNAMIC_SLOTS */
-      , ["size", "data", "margin", "direction"])];
-    }),
-    _: 1
-    /* STABLE */
-
-  })])]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_4);
 }
 
 /***/ }),
