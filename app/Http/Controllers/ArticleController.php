@@ -37,7 +37,6 @@ class ArticleController extends Controller
         if (!$message)
             $message = session('message');
         return Inertia::render('Article/Create', [
-            'categories' => Category::select('id', 'name')->get(),
             'message' => $message
         ]);
     }
@@ -67,24 +66,24 @@ class ArticleController extends Controller
         
         if (!$request->tax)
             $a->tax = 0;
-        $a->expires_at = $request->expires_at;
+        $a->expires_at = Carbon::parse($request->expires_at);
         if (!$request->expires_at)
-            $a->expires_at = 0;
+            $a->expires_at = null;
 
         $a->save();
         $c->save();
         $request->session()->put('message', 'Article ajouté avec succès');
-        return Inertia::render('Article/Create');
+        return redirect(route('articles.create'));
     }
 
     public function edit(Request $request, Article $article)
     {
-
-        $article->expires_at = Carbon::parse($article->expires_at)->format('Y-m-d');
         $message = session('message');
         $request->session()->put('message', '');
         if (!$message)
             $message = session('message');
+        if ($article->expires_at)
+            $article->expires_at = Carbon::parse($article->expires_at)->format('Y-m-d');
         return Inertia::render('Article/Edit', [
             'category' => Category::where('id', $article->category_id)->select('id', 'name')->first(),
             'article' => $article,
@@ -121,13 +120,13 @@ class ArticleController extends Controller
         $article->tax = $request->tax;
         if (!$request->tax)
             $article->tax = 0;
-        $article->expires_at = $request->expires_at;
+        $article->expires_at = Carbon::parse($request->expires_at);
         if (!$request->expires_at)
-            $article->expires_at = 0;
+            $article->expires_at = null;
 
         $article->save();
         
-        $request->session()->put('Article édité avec succès');
+        $request->session()->put('message', 'Article édité avec succès');
         return redirect(route('articles.edit', $article->id));
     }
 
@@ -139,7 +138,7 @@ class ArticleController extends Controller
                         ->paginate(12)
                         ->through(function($article){
                             if ($article->expires_at)
-                                $article->expires_at = $article->expires_at->diffForHumans();
+                                $article->expires_at = Carbon::parse($article->expires_at)->diffForHumans();
                             else
                                 $article->expires_at = '-';
                             return $article;

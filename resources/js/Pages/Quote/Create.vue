@@ -605,12 +605,6 @@ export default {
           error.value = "Motif de facturation non spécifié (articles)";
           reject(new Error("Empty basket error"));
         }
-        quote.items.forEach((order) => {
-          if (order.qty > order.stock) {
-            error.value = `Qté ${order.name} erronée!`;
-            reject(new Error("Stock balance error"));
-          }
-        });
         if (!error.value.length) {
           quote.post(route("quotes.store"), {
             onSuccess: () => {

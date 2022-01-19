@@ -44,22 +44,18 @@
           class="
             py-2
             px-4
-            flex
             transition
             ease-in-out
             duration-300
-            items-center
             focus:outline-none
             rounded-md
             focus:ring-0
             text-sm
           "
-          :class="{'text-red-600 bg-white hover:bg-white border border-slate-300 hover:border-red-600' : type == 'Supprimer', 'bg-green-600 hover:bg-green-700 text-white': type != 'Supprimer'}"
+          :class="{'text-red-600 bg-white border border-slate-300 hover:border-red-600' : type == 'Supprimer', 'bg-green-600 hover:bg-green-700 text-white': type != 'Supprimer'}"
           @click="$emit('confirm')"
         >
-          <DeleteIcon v-if="type == 'Supprimer'" class="h-5 w-5 text-red-600 mr-1" />
-          <CheckIcon v-else class="h-5 w-5 mr-1 text-white" />
-          <span>{{ type }}</span>
+          {{ type }}
         </button>
       </div>
     </div>

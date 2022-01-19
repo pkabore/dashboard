@@ -527,10 +527,6 @@ var _hoisted_4 = {
   "class": "border-t py-3 flex items-center justify-end space-x-2"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_DeleteIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteIcon");
-
-  var _component_CheckIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CheckIcon");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.message), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -539,23 +535,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return _ctx.$emit('cancel');
     })
   }, " Annuler "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["py-2 px-4 flex transition ease-in-out duration-300 items-center focus:outline-none rounded-md focus:ring-0 text-sm", {
-      'text-red-600 bg-white hover:bg-white border border-slate-300 hover:border-red-600': $props.type == 'Supprimer',
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["py-2 px-4 transition ease-in-out duration-300 focus:outline-none rounded-md focus:ring-0 text-sm", {
+      'text-red-600 bg-white border border-slate-300 hover:border-red-600': $props.type == 'Supprimer',
       'bg-green-600 hover:bg-green-700 text-white': $props.type != 'Supprimer'
     }]),
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.$emit('confirm');
     })
-  }, [$props.type == 'Supprimer' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DeleteIcon, {
-    key: 0,
-    "class": "h-5 w-5 text-red-600 mr-1"
-  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_CheckIcon, {
-    key: 1,
-    "class": "h-5 w-5 mr-1 text-white"
-  })), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.type), 1
-  /* TEXT */
-  )], 2
-  /* CLASS */
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.type), 3
+  /* TEXT, CLASS */
   )])])]);
 }
 

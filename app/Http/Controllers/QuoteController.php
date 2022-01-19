@@ -78,9 +78,6 @@ class QuoteController extends Controller
                     $o = new Order();
                     $o->sale_quote_bill_id = $quote->id;
                     $o->article_id = $order['id'];
-                    $a = Article::find($order['id']);
-                    $a->stock -= $order['qty'];
-                    $a->save();
                     $o->qty = $order['qty'];
                     $o->article = $order['name'];
                     $o->price = $order['price'];

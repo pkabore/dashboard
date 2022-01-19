@@ -18,9 +18,32 @@
   <script src="{{ mix('js/manifest.js') }}" defer></script>
 
   <style>
+    *::-webkit-scrollbar {
+    width: 7px;
+  }
+
+*::-webkit-scrollbar-track {
+    background: rgb(179, 177, 177);
+    border-radius: 7px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: rgb(136, 136, 136);
+    border-radius: 7px;
+  }
+
+*::-webkit-scrollbar-thumb:hover {
+    background: rgb(100, 100, 100);
+    border-radius: 7px;
+  }
+
+*::-webkit-scrollbar-thumb:active {
+    background: rgb(68, 68, 68);
+    border-radius: 7px;
+  }
     @media(min-width: 768px) {
       body {
-        max-width: calc(100vw - 12px);
+        max-width: calc(100vw - 7px);
       }
     }
   </style>

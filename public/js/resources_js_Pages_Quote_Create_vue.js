@@ -209,13 +209,6 @@ import { jsPDF } from "jspdf";*/
                     reject(new Error("Empty basket error"));
                   }
 
-                  quote.items.forEach(function (order) {
-                    if (order.qty > order.stock) {
-                      error.value = "Qt\xE9 ".concat(order.name, " erron\xE9e!");
-                      reject(new Error("Stock balance error"));
-                    }
-                  });
-
                   if (!error.value.length) {
                     quote.post(route("quotes.store"), {
                       onSuccess: function onSuccess() {
@@ -227,7 +220,7 @@ import { jsPDF } from "jspdf";*/
                     });
                   }
 
-                case 4:
+                case 3:
                 case "end":
                   return _context.stop();
               }
