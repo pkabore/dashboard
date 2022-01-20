@@ -6,3 +6,21 @@
 
 /Devis et factures
 Bilan comptable
+
+
+//'rgba(255, 99, 132, 0.7)',
+//'rgba(54, 162, 235)',
+//'rgba(255, 206, 86, 0.7)',
+//'rgb(124, 58, 237)',
+//'rgb(37, 99, 235)',
+//'rgb(217, 119, 6)',
+//'rgba(75, 192, 192, 0.7)',
+//'rgba(153, 102, 255, 0.7)',
+//'rgba(255, 159, 64, 0.7)'
+
+
+//cubicInterpolationMode: 'monotone',
+//pointRadius: 3,
+//pointBackgroundColor: 'white',
+//fill: false,
+indexAxis: 'x',

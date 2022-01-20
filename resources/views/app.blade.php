@@ -18,7 +18,7 @@
   <script src="{{ mix('js/manifest.js') }}" defer></script>
 
   <style>
-    *::-webkit-scrollbar {
+    /**::-webkit-scrollbar {
     width: 7px;
   }
 
@@ -40,7 +40,7 @@
 *::-webkit-scrollbar-thumb:active {
     background: rgb(68, 68, 68);
     border-radius: 7px;
-  }
+  }*/
   @media(min-width: 768px){
     body {
       max-width: calc(100vw - 0) !important;

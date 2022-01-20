@@ -26,29 +26,8 @@
             placeholder="Rechercher une dépense"
           />
         </div>
-        <a :href="route('expenses.export')" class="border text-teal-700 py-1 px-2 hover:border-teal-600 transition duration-300 ease-in-out rounded-md focus:outline-none">
-          Export
-        </a>
-        <Link
-          :href="route('expenses.create')"
-          class="
-            bg-blue-600
-            text-white
-            py-1
-            px-2
-            flex
-            items-center
-            rounded-md
-            hover:bg-blue-700
-            transition
-            ease-in-out
-            duration-300
-            focus:outline-none
-          "
-        >
-          <AddIcon class="h-5 w-5 mr-1 text-blue-200" />
-          <span>Ajouter</span>
-        </Link>
+        <ExportButton :href="route('expenses.export')" />
+        <CreateButton :href="route('expenses.create')" />
       </div>
       <div class="w-full mx-auto overflow-x-auto">
         <table class="w-full table-auto whitespace-nowrap text-sm shadow-md">
@@ -135,11 +114,12 @@
 <script>
 import Layout from "@/Pages/Layout.vue";
 import SearchIcon from "@/Components/SearchIcon.vue";
-import AddIcon from "@/Components/AddIcon.vue";
+import CreateButton from "@/Components/CreateButton.vue";
 import DeleteIcon from "@/Components/DeleteIcon.vue";
 import Dialog from "@/Components/Dialog.vue";
 import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
 import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
+import ExportButton from "@/Components/ExportButton.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
@@ -150,11 +130,12 @@ export default {
   components: {
     Link,
     SearchIcon,
-    AddIcon,
+    CreateButton,
     DeleteIcon,
     Dialog,
     ChevronUpIcon,
     ChevronDownIcon,
+    ExportButton,
   },
 
   props: { expenses: Object },

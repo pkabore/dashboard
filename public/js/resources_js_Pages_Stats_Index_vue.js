@@ -90,39 +90,51 @@ chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_
     metadata: Object
   },
   setup: function setup(props) {
-    var data = {};
-    var direction = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("horizontal");
-    var margin = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
-      left: 0,
-      top: 20,
-      right: 20,
-      bottom: 0
-    });
+    var data = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(props.metadata);
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
-      var dashboard = new chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart('sales', {
+      var datasetA = [];
+      var datasetB = [];
+      var labs = [];
+      var mDays = new Date(new Date().getFullYear(), new Date().getMonth(), 0).getDate();
+
+      for (var i = 0; i < mDays; ++i) {
+        datasetA.push(1 / parseFloat(Math.random()) + 1);
+        datasetB.push(parseFloat(Math.random()) * i + 4);
+        labs.push("".concat(i + 1 > 9 ? i + 1 : '0' + (i + 1)));
+      }
+
+      datasetA = datasetA.sort(function (a, b) {
+        return parseFloat(a) - parseFloat(b);
+      });
+      datasetB = datasetB.sort(function (a, b) {
+        return parseFloat(a) - parseFloat(b);
+      });
+      var sales = new chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart('sales', {
         data: {
-          labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
           datasets: [{
             type: 'bar',
-            label: 'Ventes',
-            data: [65, 59, 80, 81, 56, 55, 40, 10, 81, 56, 55, 40],
-            backgroundColor: ['#2563eb' //'#7c3aed',
-            //'#16a34a'
-            ],
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1,
-            //barThickness: 30,
-            order: 2
-          }, {
-            type: 'line',
             label: 'Dépenses',
-            data: [0, 59, 10, 81, 56, 55, 40, 15.3, 81, 57, 55, 12],
-            borderColor: '#7c3aed',
-            fill: false,
-            tension: 0,
-            order: 1
+            data: props.metadata.expenses_data_totals,
+            backgroundColor: 'rgb(37, 99, 235)',
+            tension: 0.1,
+            order: 3
+          }, {
+            type: 'bar',
+            label: 'Ventes',
+            data: props.metadata.paid_bills_totals,
+            backgroundColor: 'rgb(217 119 6)',
+            tension: 0.1,
+            order: 2
           }]
+        },
+        options: {
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          plugins: {},
+          responsive: true
         }
       });
     });
@@ -811,11 +823,146 @@ var _hoisted_1 = {
   "class": "w-full p-1"
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<h2 class=\"text-2xl font-bold mt-4 text-gray-600 text-center\"> Analytics </h2><div class=\"rounded mt-4\"><div class=\"block w-full md:flex items-center justify-between\"><canvas id=\"sales\" class=\"bg-white rounded-md w-full md:w-1/2 md:max-w-1/2 md:mr-2\"></canvas><!--  &lt;canvas id=&quot;customers&quot; class=&quot;bg-white rounded-md w-full md:w-1/2 md:max-w-1/2 mt-2 md:mt-0&quot;&gt;&lt;/canvas&gt; --></div><div class=\"mt-2 block w-full md:flex items-center justify-between\"><canvas id=\"bills\" class=\"bg-white rounded-md w-full md:w-1/2 md:max-w-1/2 md:mr-2\"></canvas><canvas id=\"quotes\" class=\"bg-white rounded-md w-full md:w-1/2 md:max-w-1/2 mt-2 md:mt-0\"></canvas></div></div>", 2);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "text-2xl font-bold mt-4 text-center"
+}, " Analytics ", -1
+/* HOISTED */
+);
 
-var _hoisted_4 = [_hoisted_2];
+var _hoisted_3 = {
+  "class": "mt-4"
+};
+var _hoisted_4 = {
+  "class": "family-mono grid grid-cols-2 md:grid-cols-4 gap-2"
+};
+var _hoisted_5 = {
+  "class": "bg-white text-gray-600 rounded-md p-[7px] w-full overflow-x-auto max-w-sm mx-auto flex flex-col justify-center items-center"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm"
+}, "Articles", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = {
+  "class": "text-base font-bold text-gray-600"
+};
+var _hoisted_8 = {
+  "class": "bg-white text-gray-600 rounded-md p-[7px] w-full overflow-x-auto max-w-sm mx-auto flex flex-col justify-center items-center"
+};
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm"
+}, "Sorties", -1
+/* HOISTED */
+);
+
+var _hoisted_10 = {
+  "class": "text-base font-bold text-sky-600"
+};
+var _hoisted_11 = {
+  "class": "bg-white text-gray-600 rounded-md p-[7px] w-full overflow-x-auto max-w-sm mx-auto flex flex-col justify-center items-center"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm"
+}, "Sorties", -1
+/* HOISTED */
+);
+
+var _hoisted_13 = {
+  "class": "text-base font-bold text-amber-600"
+};
+var _hoisted_14 = {
+  "class": "bg-white text-gray-600 rounded-md p-[7px] w-full overflow-x-auto max-w-sm mx-auto flex flex-col justify-center items-center"
+};
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm"
+}, "Clients", -1
+/* HOISTED */
+);
+
+var _hoisted_16 = {
+  "class": "text-base font-bold text-green-600"
+};
+var _hoisted_17 = {
+  "class": "grid grid-cols-2 md:grid-cols-4 gap-2 mt-2"
+};
+var _hoisted_18 = {
+  "class": "bg-white text-gray-600 rounded-md p-[7px] w-full overflow-x-auto max-w-sm mx-auto flex flex-col justify-center items-center"
+};
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm"
+}, "Rayons", -1
+/* HOISTED */
+);
+
+var _hoisted_20 = {
+  "class": "text-base font-bold text-gray-600"
+};
+var _hoisted_21 = {
+  "class": "bg-white text-gray-600 rounded-md p-[7px] w-full overflow-x-auto max-w-sm mx-auto flex flex-col justify-center items-center"
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm"
+}, "Entrées", -1
+/* HOISTED */
+);
+
+var _hoisted_23 = {
+  "class": "text-base font-bold text-amber-600 text-center"
+};
+var _hoisted_24 = {
+  "class": "bg-white text-gray-600 rounded-md p-[7px] w-full overflow-x-auto max-w-sm mx-auto flex flex-col justify-center items-center"
+};
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm"
+}, "Entrées", -1
+/* HOISTED */
+);
+
+var _hoisted_26 = {
+  "class": "text-base font-bold text-amber-600"
+};
+var _hoisted_27 = {
+  "class": "bg-white text-gray-600 rounded-md p-[7px] w-full overflow-x-auto max-w-sm mx-auto flex flex-col justify-center items-center"
+};
+
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm"
+}, "Devis", -1
+/* HOISTED */
+);
+
+var _hoisted_29 = {
+  "class": "text-base font-bold text-green-600"
+};
+
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"mt-2 w-full md:flex justify-between md:space-x-2 max-w-full\"><div class=\"chart-container bg-white relative px-2 rounded-md md:w-1/2\"><canvas id=\"sales\"></canvas></div><div class=\"chart-container bg-white relative px-2 rounded-md mt-2 md:mt-0 md:w-1/2\"><canvas id=\"expenses\"></canvas></div></div><div class=\"mt-2 w-full md:flex justify-between md:space-x-2\"><div class=\"chart-container bg-white relative px-2 rounded-md mt-2 md:mt-0 w-full md:w-1/2 md:max-w-1/2\"><canvas id=\"bills_quotes\"></canvas></div><div class=\"chart-container bg-white relative px-2 rounded-md mt-2 md:mt-0 w-full md:w-1/2 md:max-w-1/2\"><canvas id=\"clients\"></canvas></div></div>", 2);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_4);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseFloat(_ctx.metadata.articles).toLocaleString('fr-FR')), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseFloat(_ctx.metadata.spendings.toFixed(2)).toLocaleString('fr-FR')) + " Frs", 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseFloat(_ctx.metadata.expenses).toLocaleString('fr-FR')), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseFloat(_ctx.metadata.clients).toLocaleString('fr-FR')), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseFloat(_ctx.metadata.categories).toLocaleString('fr-FR')), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseFloat(_ctx.metadata.income.toFixed(2)).toLocaleString('fr-FR')) + " Frs", 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseFloat(_ctx.metadata.sales).toLocaleString('fr-FR')), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseFloat(_ctx.metadata.quotes).toLocaleString('fr-FR')), 1
+  /* TEXT */
+  )])]), _hoisted_30])]);
 }
 
 /***/ }),

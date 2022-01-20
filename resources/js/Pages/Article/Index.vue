@@ -26,29 +26,8 @@
             placeholder="Rechercher un article"
           />
         </div>
-        <a :href="route('articles.export')" class="border text-teal-700 py-1 px-2 hover:border-teal-600 transition duration-300 ease-in-out rounded-md focus:outline-none">
-          Export
-        </a>
-        <Link
-          :href="route('articles.create')"
-          class="
-            bg-blue-600
-            text-white
-            py-1
-            px-2
-            flex
-            items-center
-            rounded-md
-            hover:bg-blue-700
-            transition
-            ease-in-out
-            duration-300
-            focus:outline-none
-          "
-        >
-          <AddIcon class="h-5 w-5 mr-1 text-blue-200" />
-          <span>Ajouter</span>
-        </Link>
+        <ExportButton :href="route('articles.export')" />
+        <CreateButton :href="route('articles.create')" />
       </div>
       <div class="w-full mx-auto overflow-x-auto">
         <table class="w-full table-auto whitespace-nowrap text-sm shadow-md">
@@ -191,8 +170,9 @@ import AddIcon from "@/Components/AddIcon.vue";
 import EditIcon from "@/Components/EditIcon.vue";
 import ChevronDownIcon from "@/Components/ChevronDownIcon.vue";
 import ChevronUpIcon from "@/Components/ChevronUpIcon.vue";
+import CreateButton from "@/Components/CreateButton.vue";
+import ExportButton from "@/Components/ExportButton.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
 import { watch, ref } from "vue";
 import axios from "axios";
 
@@ -206,6 +186,8 @@ export default {
     EditIcon,
     ChevronUpIcon,
     ChevronDownIcon,
+    ExportButton,
+    CreateButton
   },
 
   props: { articles: Object },
@@ -229,10 +211,6 @@ export default {
       form.value[key] = value;
     };
 
-    const visit = (id) => {
-      Inertia.get(route("articles.edit", id));
-    };
-
     watch(form.value, () => {
       axios
         .post(route("articles.search"), form.value)
@@ -242,7 +220,7 @@ export default {
         .catch((err) => console.log(err));
     });
 
-    return { form, setFilter, visit, reactiveArticles };
+    return { form, setFilter, reactiveArticles };
   },
 };
 </script>
