@@ -4,7 +4,7 @@
       Enregistrer vente
     </h2>
     <div class="flex justify-center max-w-3xl mx-auto space-x-2">
-      <div class="w-7/12 mx-auto rounded-md  border pt-4 my-7">
+      <div class="w-7/12 bg-white mx-auto rounded-md  border pt-4 my-7">
         <div id="sale" class="w-full px-2 mx-auto">
           <h2 v-if="failureMessage.length > 0" class="text-center text-red-700 my-2">
             {{ failureMessage }}
@@ -104,14 +104,14 @@
             <p class="text-center text-base">Au revoir et à bientôt...</p>
           </div>
           <div v-if="error.length">
-            <p class="text-center mb-3 text-sm text-red-700">
+            <p class="text-center mb-3 text-red-700">
               {{ error }}
             </p>
           </div>
         </div>
       </div>
       <div
-        class="w-5/12 py-4 px-4 my-7 mx-auto  rounded-md border h-full"
+        class="w-5/12 bg-white py-4 px-4 my-7 mx-auto  rounded-md border h-full"
       >
         <div class="flex justify-end">
           <div class="w-24">

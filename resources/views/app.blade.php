@@ -9,13 +9,21 @@
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
   <!-- Scripts -->
+  <style>
+    @media(min-width:768px){
+      body{
+        width: calc(100vw - 16px);
+      }
+    }
+  </style>
+
   @routes
   <script src="{{ mix('js/app.js') }}" defer></script>
   <script src="{{ mix('js/vendor.js') }}" defer></script>
   <script src="{{ mix('js/manifest.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased bg-neutral-200 overflow-y-scroll">
+<body class="font-sans antialiased">
   @inertia
 </body>
 

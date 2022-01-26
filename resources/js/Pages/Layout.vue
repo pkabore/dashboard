@@ -230,7 +230,7 @@
       </Link>
     </div>
     <div
-      class="min-h-full absolute top-0 right-0 md:left-[180px]"
+      class="min-h-full absolute top-0 inset-x-0 md:left-[180px]"
     >
       <div
         class="md:hidden p-2 text-gray-800 flex items-center justify-between"
