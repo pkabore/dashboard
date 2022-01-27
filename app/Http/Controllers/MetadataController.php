@@ -17,7 +17,7 @@ use Inertia\Inertia;
 class MetadataController extends Controller
 {
     
-    private $labelsFormat = 'M Y';
+    private $labelsFormat = 'm-Y';
 
     private function get_bills_metadata($status, $format){
         return QuoteBill::where('is_bill', true)

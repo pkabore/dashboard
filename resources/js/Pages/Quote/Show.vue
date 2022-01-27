@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto max-w-lg mb-4 family-mono">
+  <div class="mx-auto bg-white max-w-lg mb-4 family-mono">
     <h2 class="text-2xl font-bold my-4 text-gray-600 text-center">
       Devis N°{{ quote.receipt_id }}
     </h2>

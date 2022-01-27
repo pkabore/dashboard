@@ -10,8 +10,8 @@
         left-0
         transition
         ease-in-out
-        duration-3000
-        shadow-md shadow-blue-500/50
+        duration-300
+        shadow-xl shadow-sky-700
         z-10
         md:visible
         bg-slate-800

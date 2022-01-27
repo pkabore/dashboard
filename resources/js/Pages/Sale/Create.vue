@@ -170,124 +170,7 @@
             class="text-sm family-mono uppercase font-bold text-gray-800"
             >Articles:</label
           >
-          <Listbox id="article">
-            <div class="mt-1">
-              <ListboxButton
-                class="
-                  relative
-                  w-full
-                  py-[11px]
-                  pl-3
-                  pr-10
-                  text-sm text-left
-                  
-                  border border-slate-300
-                  focus:outline-none focus:border-slate-400
-                  rounded-md
-                  cursor-default
-                "
-              >
-                <span class="block truncate"> Sélectionner </span>
-                <span
-                  class="
-                    absolute
-                    inset-y-0
-                    right-0
-                    flex
-                    items-center
-                    pr-2
-                    pointer-events-none
-                  "
-                >
-                  <SelectorIcon
-                    class="w-5 h-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </span>
-              </ListboxButton>
-              <ListboxOptions
-                class="
-                  w-full
-                  py-1
-                  mt-1
-                  overflow-y-scroll
-                  bg-slate-50
-                  rounded-md
-                  shadow-md shadow-slate-500/50
-                  max-h-60 max-w-full
-                  focus:outline-none
-                "
-              >
-                <ListboxOption disabled>
-                  <div class="relative w-10/12 mb-1 mx-auto">
-                    <input
-                      type="text"
-                      maxlength="32"
-                      @keydown="escapeSpace"
-                      class="input text-sm py-[7px] pl-3 text-sm pr-10"
-                      v-model="form.search"
-                      placeholder="Rechercher article"
-                    />
-                    <span
-                      class="
-                        absolute
-                        inset-y-0
-                        right-0
-                        flex
-                        items-center
-                        pr-2
-                        pointer-events-none
-                      "
-                    >
-                      <SearchIcon
-                        class="w-5 h-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </div>
-                </ListboxOption>
-                <ListboxOption
-                  v-slot="{ active, selected }"
-                  v-for="(article, i) in reactiveArticles"
-                  :key="i"
-                  :value="article"
-                  as="template"
-                  @select="addTosale(article)"
-                >
-                  <li
-                    :class="[
-                      active ? 'text-blue-700 bg-blue-200' : 'text-gray-900',
-                      'list-none cursor-default text-sm select-none relative py-2 pl-10 pr-4',
-                    ]"
-                    @click="addTosale(article)"
-                  >
-                    <span
-                      :class="[
-                        selected ? 'font-medium' : 'font-normal',
-                        'block truncate',
-                      ]"
-                      >{{ article.name }}</span
-                    >
-                    <span
-                      v-if="selected"
-                      class="
-                        absolute
-                        inset-y-0
-                        left-0
-                        flex
-                        items-center
-                        pl-3
-                        text-
-                        emerald-700
-                      "
-                    >
-                      <CheckIcon class="w-5 h-5" aria-hidden="true" />
-                    </span>
-                  </li>
-                </ListboxOption>
-              </ListboxOptions>
-            </div>
-          </Listbox>
+          <Autocomplete @choice="(article) => addToSale(article)" id="article" :items="reactiveArticles" @search="(keyword) => {form.search=keyword;}" :default="{name: '', id:0}" />
           <div class="text-red-700 text-xs mt-1" v-if="sale.errors.items">
             {{ sale.errors.items }}
           </div>
@@ -314,18 +197,12 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
 import SearchIcon from "@/Components/SearchIcon.vue";
-import SelectorIcon from "@/Components/SelectorIcon.vue";
+import Autocomplete from "@/Components/Autocomplete.vue";
 import ShopInfo from "@/Components/ShopInfo.vue";
 
 /*import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";*/
 
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-} from "@headlessui/vue";
 
 export default {
   layout: Layout,
@@ -335,11 +212,7 @@ export default {
     ResetIcon,
     CheckIcon,
     Dialog,
-    SelectorIcon,
-    Listbox,
-    ListboxButton,
-    ListboxOptions,
-    ListboxOption,
+    Autocomplete,
     ShopInfo,
   },
 
@@ -385,9 +258,9 @@ export default {
       date: getDateTime(),
     });
 
-    const reactiveArticles = ref(props.articles);
+    const reactiveArticles = ref([]);
 
-    const addTosale = (article) => {
+    const addToSale = (article) => {
       error.value = "";
       article.qty = 1;
       sale.items.push(article);
@@ -494,22 +367,14 @@ export default {
         }
     };
 
-    const escapeSpace = (e) => {
-      if (e.keyCode === 32) {
-        e.stopImmediatePropagation();
-        search.value.client = search.value.client + " ";
-      }
-    };
-
     return {
       form,
       isOpen,
-      escapeSpace,
       reactiveArticles,
       sale,
       getDateTime,
       error,
-      addTosale,
+      addToSale,
       removeFromsale,
       printSale,
       resetSale,
