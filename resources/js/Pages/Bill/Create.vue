@@ -267,9 +267,8 @@
             class="input rounded p-2 text-base"
             :class="{ 'border-red-700': bill.errors.description }"
             v-model="bill.description"
-            placeholder="Date d'expiration"
-          >
-          </textarea>
+            placeholder="Description de la facture"
+          ></textarea>
           <div class="text-red-700 text-xs mt-1" v-if="bill.errors.description">
             {{ bill.errors.description }}
           </div>
@@ -370,8 +369,9 @@ export default {
 
     const addToBill = (article) => {
       error.value = "";
-      article.qty = 1;
-      bill.items.push(article);
+      let item = article;
+      item.qty = 1;
+      bill.items.push(item);
     };
 
     const removeFromBill = (removal) => {
@@ -385,7 +385,7 @@ export default {
           reactiveArticles.value = res.data.data;
         })
         .catch((err) => {
-          //console.log('');
+          //('');
         });
     });
 
@@ -422,7 +422,6 @@ export default {
         });
         if (!error.value.length) {
           bill.post(route("bills.store"), {
-            only: ['failureMessage'],
             onSuccess: () => {
               resolve(0);
             },
@@ -500,7 +499,7 @@ export default {
           clients.value = res.data.data;
         })
         .catch((err) => {
-          console.log(err);
+          (err);
         });
     };
 

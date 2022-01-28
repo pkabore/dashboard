@@ -191,7 +191,7 @@ export default {
           reactiveExpenses.value = res.data.data;
           links.value = res.data.links;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => (err));
     });
 
     return { isOpen, prepareDeletion, form, setFilter, deleteExpense, reactiveExpenses, links };

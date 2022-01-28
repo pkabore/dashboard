@@ -257,7 +257,7 @@ import CheckListIcon from "@/Components/CheckListIcon.vue";
 import ShoppingIcon from "@/Components/ShoppingIcon.vue";
 import FolderIcon from "@/Components/FolderIcon.vue";
 import FormatedListIcon from "@/Components/FormatedListIcon.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 export default {
   components: {
@@ -279,21 +279,6 @@ export default {
 
   setup() {
     const sidebar = ref(true);
-    /*onMounted(() => {
-      window.addEventListener('keyup', (e) => {
-        e.preventDefault()
-        if (e.keyCode == 27)
-          sidebar.value = !sidebar;
-      });
-
-      window.addEventListener('click', (e) => {
-        e.preventDefault()
-        if (e.x > 176){
-        console.log(e)
-          sidebar.value = !sidebar;
-        }
-      });
-    });*/
     return { sidebar };
   },
 };

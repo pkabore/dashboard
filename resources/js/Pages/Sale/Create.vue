@@ -277,7 +277,7 @@ export default {
           reactiveArticles.value = res.data.data;
         })
         .catch((err) => {
-          //console.log('');
+          //('');
         });
     });
 

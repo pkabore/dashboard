@@ -206,7 +206,7 @@ export default {
           categories.value = res.data.data;
         })
         .catch((err) => {
-          //console.log(err);
+          //(err);
         });
     };
 

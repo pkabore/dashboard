@@ -154,7 +154,7 @@ export default {
           reactiveCategories.value = res.data.data;
           links.value = res.data.links;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => (err));
     });
 
     return { form, setFilter, reactiveCategories, links };

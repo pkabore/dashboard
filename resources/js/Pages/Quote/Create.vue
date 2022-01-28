@@ -234,9 +234,8 @@
             class="input rounded p-2 text-base"
             :class="{ 'border-red-700': quote.errors.description }"
             v-model="quote.description"
-            placeholder="Date d'expiration"
-          >
-          </textarea>
+            placeholder="Description du devis"
+          ></textarea>
           <div
             class="text-red-700 text-xs mt-1"
             v-if="quote.errors.description"
@@ -320,8 +319,9 @@ export default {
 
     const addToQuote = (article) => {
       error.value = "";
-      article.qty = 1;
-      quote.items.push(article);
+      let item = article;
+      item.qty = 1;
+      quote.items.push(item);
     };
 
     const removeFromQuote = (removal) => {
@@ -335,7 +335,7 @@ export default {
           reactiveArticles.value = res.data.data;
         })
         .catch((err) => {
-          //console.log('');
+          //('');
         });
     });
 
@@ -366,13 +366,10 @@ export default {
         }
         if (!error.value.length) {
           quote.post(route("quotes.store"), {
-            only: ['failureMessage'],
             onSuccess: () => {
-              console.log("test");
               resolve(0);
             },
             onFailure: () => {
-              console.log("err");
               reject(error);
             },
           });
@@ -445,7 +442,6 @@ export default {
           clients.value = res.data.data;
         })
         .catch((err) => {
-          console.log(err);
         });
     };
 

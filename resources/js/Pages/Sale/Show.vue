@@ -3,7 +3,7 @@
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">
       Reçu N°{{ sale.receipt_id }}
     </h2>
-    <div class="pt-4 bg-white w-full my-7 px-4 ml-3 rounded-md h-full mx-auto">
+    <div class="pt-4 bg-white w-full border my-7 px-4 ml-3 rounded-md h-full mx-auto">
       <ShopInfo />
       <div class="mt-4 flex justify-between text-gray-900 capitalize">
         <p>
