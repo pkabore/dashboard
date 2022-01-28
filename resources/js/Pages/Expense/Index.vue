@@ -92,7 +92,7 @@
               <td class="p-2 inline-flex justify-center">
                 <DeleteIcon
                   @click="prepareDeletion(expense.id)"
-                  class="h-5 w-5 text-red-600"
+                  class="h-5 w-5 text-gray-600"
                 />
               </td>
             </tr>

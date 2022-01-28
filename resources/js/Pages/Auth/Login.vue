@@ -3,7 +3,7 @@
   <div
     class="min-h-screen max-w-sm mx-auto flex items-center justify-center px-2"
   >
-    <div class="w-full rounded-md border-2 hover:border-dashed border-gray-300 py-4 px-2 sm:px-6">
+    <div class="w-full rounded-md border-2 py-4 px-2 sm:px-6">
       <div style="max-width: 300px; margin: 0 auto">
         <h2 class="font-bold text-center text-gray-600 text-xl mt-2 mb-4">
           Admin &nbsp;&nbsp;-&nbsp;&nbsp; Connexion

@@ -15,11 +15,11 @@
     "
     style="background-color: rgba(0, 0, 0, .9);"
   >
-    <div class="bg-white rounded-md w-full max-w-sm p-4 z-30 drop-shadow-lg">
+    <div class="bg-white rounded-md w-full max-w-sm px-4 pt-4 z-30 drop-shadow-lg">
       <h2 class="my-3 text-lg text-center">
         {{ message }}
       </h2>
-      <div class="border-t py-3 flex items-center justify-end space-x-2">
+      <div class="border-t pt-3 pb-2 flex items-center justify-end space-x-2">
         <button
           class="
             bg-white

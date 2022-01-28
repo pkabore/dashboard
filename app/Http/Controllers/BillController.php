@@ -82,7 +82,7 @@ class BillController extends Controller
 
         foreach ($request->items as $order) {
             $o = new Order();
-            $o->sale_quote_bill_id = $bill->id;
+            $o->sale_quote_bill_id = $bill->receipt_id;
             $o->article_id = $order['id'];
             $a = Article::find($order['id']);
             $a->stock -= $order['qty'];
@@ -115,7 +115,7 @@ class BillController extends Controller
 
     public function show(QuoteBill $bill)
     {
-        $items = Order::where('sale_quote_bill_id', $bill->id)->get();
+        $items = Order::where('sale_quote_bill_id', $bill->receipt_id)->get();
         $bill->items = $items;
         $bill->date = $bill->created_at->format('d M, Y');
         return Inertia::render('Bill/Show', [ 'bill' => $bill]);
@@ -133,7 +133,7 @@ class BillController extends Controller
 
     public function destroy(QuoteBill $bill)
     {
-        Order::where('sale_quote_bill_id', $bill->sale_quote_bill_id)->delete();
+        Order::where('sale_quote_bill_id', $bill->receipt_id)->delete();
         $bill->delete();
         return redirect(route('bills.index'));
     }

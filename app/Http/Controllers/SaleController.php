@@ -66,7 +66,7 @@ class SaleController extends Controller
 
         foreach ($request->items as $order) {
             $o = new Order();
-            $o->sale_quote_bill_id = $s->id;
+            $o->sale_quote_bill_id = $s->receipt_id;
             $o->article_id = $order['id'];
             $a = Article::find($order['id']);
             $a->stock -= $order['qty'];
@@ -98,7 +98,7 @@ class SaleController extends Controller
 
     public function show(Sale $sale)
     {
-        $items = Order::where('sale_quote_bill_id', $sale->id)->get();
+        $items = Order::where('sale_quote_bill_id', $sale->receipt_id)->get();
         $sale->items = $items;
         try {
             $sale->date = $sale->created_at->format('d M, Y');
@@ -116,7 +116,7 @@ class SaleController extends Controller
 
     public function destroy(Sale $sale)
     {
-        Order::where('sale_quote_bill_id', $sale->sale_quote_bill_id)->delete();
+        Order::where('sale_quote_bill_id', $sale->receipt_id)->delete();
         $sale->delete();
         return redirect(route('sales.index'));
     }

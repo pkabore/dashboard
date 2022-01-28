@@ -81,7 +81,7 @@ class QuoteController extends Controller
 
                 foreach ($request->items as $order) {
                     $o = new Order();
-                    $o->sale_quote_bill_id = $quote->id;
+                    $o->sale_quote_bill_id = $quote->receipt_id;
                     $o->article_id = $order['id'];
                     $o->qty = $order['qty'];
                     $o->article = $order['name'];
@@ -111,7 +111,7 @@ class QuoteController extends Controller
 
     public function show(QuoteBill $quote)
     {
-        $items = Order::where('sale_quote_bill_id', $quote->id)->get();
+        $items = Order::where('sale_quote_bill_id', $quote->receipt_id)->get();
         $quote->items = $items;
         $quote->date = $quote->created_at->format('d M, Y');
         return Inertia::render('Quote/Show', [ 'quote' => $quote]);
@@ -119,7 +119,7 @@ class QuoteController extends Controller
 
     public function destroy(QuoteBill $quote)
     {
-        Order::where('sale_quote_bill_id', $quote->sale_quote_bill_id)->delete();
+        Order::where('sale_quote_bill_id', $quote->receipt_id)->delete();
         $quote->delete();
         return redirect(route('quotes.index'));
     }

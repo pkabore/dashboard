@@ -82,7 +82,7 @@
               <td class="px-[4px] py-1">
                 {{ order.qty }}
               </td>
-              <td class="px-[4px] uppercase py-1">{{ order.name }}</td>
+              <td class="px-[4px] uppercase py-1">{{ order.article }}</td>
               <td class="px-[4px] py-1">
                 {{ order.price.toLocaleString("fr-FR") }}
               </td>
