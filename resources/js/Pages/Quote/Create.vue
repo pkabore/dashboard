@@ -368,9 +368,11 @@ export default {
           quote.post(route("quotes.store"), {
             only: ['failureMessage'],
             onSuccess: () => {
+              console.log("test");
               resolve(0);
             },
             onFailure: () => {
+              console.log("err");
               reject(error);
             },
           });

@@ -3,9 +3,9 @@
 	  <div
 	    class="relative z-0"> 
 	    <input class="pl-3 pr-10 py-2 focus:outline-none sm:text-sm input"
-	    @focus="$emit('search', keyword); open=false; open=true"
-	    @input="$emit('search', keyword)"
-	    @click="open=false; open=true"
+	    @focus="$emit('search', keyword); open=true"
+	    @input="$emit('search', keyword); open=true"
+	    @click="open=true"
 	    v-model="keyword"
 	    placeholder="Rechercher . . ." 
 	  />
@@ -17,7 +17,7 @@
 	  </div>
 	    <div
 	      v-show="open && items.length"
-	      class="absolute z-10 w-full py-1 mt-[3px] text-sm bg-white border rounded shadow-lg shadow-slate-500/50 max-h-60 focus:outline-none overflow-auto transition duration-300 ease-in"
+	      class="absolute z-10 w-full py-1 mt-[3px] text-sm bg-white border rounded shadow-lg shadow-slate-500/50 max-h-60 focus:outline-none overflow-auto transform transition duration-300 ease-in"
 	    >
 	      <ul>
 	        <li
@@ -52,7 +52,7 @@
 			
 			onMounted(() => {
 				window.addEventListener('click', (e) => {
-					const isOutside = !(e.target.id == props.id || e.target.parentElement.id == props.id || e.target.parentElement.parentElement.id == props.id);
+					const isOutside = !(e.target.id == props.id || (e.target.parentElement && e.target.parentElement.id == props.id) || (e.target.parentElement.parentElement && e.target.parentElement.parentElement.id == props.id));
 					if (isOutside)
 						open.value = false;
 				});

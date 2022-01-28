@@ -17,7 +17,7 @@ use Inertia\Inertia;
 class MetadataController extends Controller
 {
     
-    private $labelsFormat = 'm-Y';
+    private $labelsFormat = 'M Y';
 
     private function get_bills_metadata($status, $format){
         return QuoteBill::where('is_bill', true)
@@ -85,16 +85,12 @@ class MetadataController extends Controller
 
         $quotesNumberStats = $this->get_quotes_metadata($this->labelsFormat);
         $clientsNumberStats = $this->get_clients_metadata($this->labelsFormat);
-        
-        //$paid_bills_labels = array_keys($paidBillsData->toArray());
-        //$paidBillsTotals = $paidBillsData->pluck('totals');
 
         $expensesAmount = Expense::sum('fee');        
         $income = Sale::sum('total');   
         $income += QuoteBill::where('is_bill', true)
                             //->where('status', 'Payé')
                             ->sum('total');
-
 
         $clientsNumber = Client::count();
         $articlesNumber = Article::count();
@@ -121,7 +117,6 @@ class MetadataController extends Controller
             'categoriesNumber' => $categoriesNumber,
             'income' => $income,
         ];
-        //dd($metadata);
         return Inertia::render('Stats/Index', [ 'metadata' => $metadata ]);
     }
 }

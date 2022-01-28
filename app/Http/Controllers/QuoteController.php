@@ -40,6 +40,7 @@ class QuoteController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         $request->validate([
                     'client.id' => 'nullable|integer',
                     'client.name' => 'nullable|string',
@@ -53,6 +54,7 @@ class QuoteController extends Controller
                     'shipment' => 'nullable|numeric|min:0',
                     'description' => 'required|string|max:256'
                 ]);
+
                 $quote = QuoteBill::where('receipt_id', $request->receipt_id)
                                     ->first();
                 if ($quote){
