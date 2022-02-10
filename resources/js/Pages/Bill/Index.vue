@@ -163,13 +163,13 @@
               <td class="p-2 font-medium">
                 <span
                   v-if="bill.status == 'Payé'"
-                  class="border border-green-600 text-green-700 text-xs px-1 py-[2px] rounded-md"
+                  class="border border-green-600 text-green-600 text-xs px-1 py-[2px] rounded-md"
                 >
                   {{ bill.status }}
                 </span>
                 <span
                   v-else
-                  class="border border-red-600 text-red-700 text-xs px-1 py-[2px] rounded-md"
+                  class="border border-red-600 text-red-600 text-xs px-1 py-[2px] rounded-md"
                 >
                   {{ bill.status }}
                 </span>

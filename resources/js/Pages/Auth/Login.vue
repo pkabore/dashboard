@@ -1,9 +1,9 @@
 <template>
   <Head title="Login" />
   <div
-    class="min-h-screen max-w-sm mx-auto flex items-center justify-center px-2"
+    class="min-h-screen bg-gray-100 mx-auto flex items-center justify-center px-2"
   >
-    <div class="w-full rounded-md border-2 py-4 px-2 sm:px-6">
+    <div class="w-full rounded-xl max-w-sm bg-white border py-4 px-2 sm:px-6">
       <div style="max-width: 300px; margin: 0 auto">
         <h2 class="font-bold text-center text-gray-600 text-xl mt-2 mb-4">
           Admin &nbsp;&nbsp;-&nbsp;&nbsp; Connexion
@@ -43,33 +43,49 @@
             </div>
           </div>
 
-          <div class="mx-auto mt-[8px]">
-            <div class="relative">
-              <span
-                class="
-                  absolute
-                  pl-2
-                  inset-y-0
-                  flex
-                  items-center
-                  pointer-events-none
-                "
-              >
-                <LockIcon class="h-5 w-5 text-gray-600" />
-              </span>
-              <input
-                id="password"
-                type="password"
-                class="input rounded py-2 pl-8"
-                :class="{ 'border-red-500': form.errors.password }"
-                v-model="form.password"
-                placeholder="Mot de passe"
-              />
-            </div>
-            <div class="text-red-700 text-xs mt-1" v-if="form.errors.password">
-              {{ form.errors.password }}
-            </div>
-          </div>
+          <div class="mt-[8px]">
+        <div class="relative">
+          <span
+            class="
+              absolute
+              pl-2
+              inset-y-0
+              flex
+              items-center
+              pointer-events-none
+            "
+          >
+            <LockClosedIcon class="h-5 w-5 text-gray-400" />
+          </span>
+          <input
+            required
+            id="password"
+            :type="revealPassword ? 'text' : 'password'"
+            class="input py-2 pl-8"
+            :class="form.errors.password ? 'border-red-500' : ''"
+            v-model="form.password"
+            placeholder="Mot de passe"
+          />
+          <span
+            class="
+              absolute
+              right-2
+              pl-2
+              inset-y-0
+              flex
+              items-center
+              cursor-pointer
+            "
+            @click="revealPassword = !revealPassword"
+          >
+            <EyeIcon v-if="revealPassword" class="h-5 w-5 text-gray-400" />
+            <EyeOffIcon v-else class="h-5 w-5 text-gray-400" />
+          </span>
+        </div>
+        <div class="text-red-700 text-xs mt-1" v-if="form.errors.password">
+          {{ form.errors.password }}
+        </div>
+      </div>
 
           <div class="flex items-center justify-end mx-auto mt-4">
             <div>
@@ -103,16 +119,21 @@
 </template>
 
 <script>
-import LockIcon from "@/Components/LockIcon.vue";
+import LockClosedIcon from "@/Components/LockIcon.vue";
 import EmailIcon from "@/Components/EmailIcon.vue";
+import EyeIcon from "@/Components/EyeIcon.vue";
+import EyeOffIcon from "@/Components/EyeOffIcon.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
+import { ref } from "vue";
 
 export default {
   components: {
     Head,
-    LockIcon,
+    LockClosedIcon,
     EmailIcon,
+    EyeIcon,
+    EyeOffIcon
   },
 
   props: {
@@ -126,6 +147,8 @@ export default {
       remember: false,
     });
 
+    const revealPassword = ref(false);
+
     const submit = () => {
       form.post(route("login"), {
         onFinish: () => form.reset("password"),
@@ -135,6 +158,7 @@ export default {
     return {
       form,
       submit,
+      revealPassword
     };
   },
 };

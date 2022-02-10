@@ -3,31 +3,33 @@
     <div class="mt-4 px-2">
       <h2 class="m-0 py-2 text-lg text-gray-600 flex items-center justify-end">
         <div class="relative h-6 w-6 mr-1">
-          <PersonIcon class="absolute text-gray-500" />
+          <PersonIcon class="absolute text-gray-400" />
           <div class="absolute border-[2px] border-white bottom-[2px] left-[0px] w-[9px] h-[9px] rounded-full bg-green-500"></div>
         </div>
         <span>{{$page.props.auth.user.name}}</span>
       </h2>
     </div>
-    <div class="mt-4 px-2">
-      <div class="family-mono grid grid-cols-2 md:grid-cols-4 gap-2">
-        <StatCard title="Article" :value="metadata.articlesNumber" />
-        <StatCard title="Sorties" :value="parseFloat(metadata.expensesAmount.toFixed(2))" />
-        <StatCard title="Factures Total" :value="metadata.billsNumber" />
-        <StatCard title="Clients" :value="metadata.clientsNumber" />
+    <div class="mt-4 px-2 bg-white rounded-md">
+      <div class="divide-y">
+        <div class="divide-x grid grid-cols-4 gap-1 md:gap-2">
+          <StatCard title="Articles" :value="metadata.articlesNumber" />
+          <StatCard title="Dépenses" :value="parseFloat(metadata.expensesAmount.toFixed(2))" />
+          <StatCard title="Factures Tot" :value="metadata.billsNumber" />
+          <StatCard title="Clients" :value="metadata.clientsNumber" />
+        </div>
+        <div class="divide-x grid grid-cols-4 gap-1 md:gap-2">
+          <StatCard title="Rayons" :value="metadata.categoriesNumber" />
+          <StatCard title="Ventes" :value="parseFloat(metadata.income.toFixed(2))" />
+          <StatCard title="Factures NP" :value="metadata.unpaidBillsNumber" />
+          <StatCard title="Devis" :value="metadata.quotesNumber" />
+        </div>
       </div>
-      <div class="family-mono grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
-        <StatCard title="Rayons" :value="metadata.categoriesNumber" />
-        <StatCard title="Entrées" :value="parseFloat(metadata.income.toFixed(2))" />
-        <StatCard title="Factures non payées" :value="metadata.unpaidBillsNumber" />
-        <StatCard title="Devis" :value="metadata.quotesNumber" />
-      </div>
-      <div class="mt-4 w-full md:flex justify-between md:space-x-2">
+      <div class="mt-6 w-full md:flex justify-between md:space-x-2">
         <div class="chart-container bg-white relative border p-2 rounded-md mt-2 md:mt-0 w-full md:w-1/2 md:max-w-1/2">
-          <canvas id="balance"></canvas>
+          <canvas id="balance" class="h-20" />
         </div>
         <div class="chart-container bg-white relative border p-2 rounded-md mt-4 md:mt-0 w-full md:w-1/2 md:max-w-1/2">
-          <canvas id="clients"></canvas>
+          <canvas id="clients" class="h-20" />
         </div>
       </div>
     </div>
@@ -85,24 +87,7 @@ export default defineComponent({
   setup(props) {
 
     const data = ref(props.metadata);
-    const summarize = (min) => {
-      min = min || 1e3;
-      // Alter numbers larger than 1k
-      if (this >= min) {
-        let units = ["k", "M", "B", "T"];
 
-      let order = Math.floor(Math.log(this) / Math.log(1000));
-
-      let unitname = units[(order - 1)];
-      let num = Math.floor(this / 1000 ** order);
-
-      // output number remainder + unitname
-      return num + unitname
-    }
-
-  // return formatted original number
-  return this.toLocaleString()
-}
     onMounted(() => {
       const balance = new Chart('balance', {
         data : {
@@ -110,7 +95,7 @@ export default defineComponent({
           datasets: [
             {
               type: 'bar',
-              label: 'Sorties',
+              label: 'Dépenses',
               data: props.metadata.expensesAmountStats,
               backgroundColor: '#0ea5e9',
               tension: 0.1,
@@ -118,7 +103,7 @@ export default defineComponent({
             },
             {
               type: 'bar',
-              label: 'Entrées',
+              label: 'Ventes',
               data: props.metadata.salesAmountStats,
               backgroundColor: '#a855f7',
               tension: 0.1,
@@ -163,8 +148,8 @@ export default defineComponent({
               type: 'line',
               label: 'Devis',
               data: props.metadata.quotesNumberStats,
-              borderColor: '#a855f7',
-              backgroundColor: '#a855f7',
+              borderColor: '#ea580c',
+              backgroundColor: '#ea580c',
               //tension: 0.1,
               cubicInterpolationMode: 'monotone'
             }

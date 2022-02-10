@@ -1,9 +1,9 @@
 <template>
   <Head title="Confirmation" />
   <div
-    class="min-h-screen max-w-sm mx-auto flex items-center justify-center px-2"
+    class="min-h-screen bg-gray-100 mx-auto flex items-center justify-center px-2"
   >
-    <div class="w-full rounded-md border-2 py-4 px-2 sm:px-6">
+    <div class="w-full rounded-xl max-w-sm bg-white border py-4 px-2 sm:px-6">
       <div style="max-width: 300px; margin: 0 auto">
         <h2 class="font-bold text-center text-gray-900 text-2xl mt-2 mb-4">
           Accès sécurisé

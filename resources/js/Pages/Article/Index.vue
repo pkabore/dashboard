@@ -8,10 +8,10 @@
             class="
               absolute
               inset-y-0
-              right-0
+              left-0
               flex
               items-center
-              pr-2
+              pl-2
               pointer-events-none
             "
           >
@@ -19,9 +19,9 @@
           </span>
           <input
             id="search"
-            type="text"
+            type="search"
             maxlength="32"
-            class="input text-sm py-[7px] pl-3 text-sm pr-10"
+            class="input text-sm py-[7px] pr-2 text-sm pl-10"
             v-model="form.search"
             placeholder="Rechercher un article"
           />
@@ -128,7 +128,7 @@
               <td class="p-2">
                 {{ article.id }}
               </td>
-              <td class="p-2 capitalize text-xs">
+              <td class="p-2 capitalize">
                 {{ article.name }}
               </td>
               <td

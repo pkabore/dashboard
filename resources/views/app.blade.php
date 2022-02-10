@@ -8,22 +8,36 @@
   <title inertia>{{ config('app.name', 'Admin') }}</title>
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-  <!-- Scripts -->
   <style>
-    @media(min-width:768px){
-      body{
-        width: calc(100vw - 16px);
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: gray lightgray;
       }
-    }
+
+      /* Works on Chrome, Edge, and Safari */
+      *::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      *::-webkit-scrollbar-track {
+        background: lightgray;
+        /*border-radius: 4px;*/
+      }
+
+      *::-webkit-scrollbar-thumb {
+        background-color: gray;
+        border-radius: 4px;
+      }
   </style>
 
+  <!-- Scripts -->
   @routes
   <script src="{{ mix('js/app.js') }}" defer></script>
   <script src="{{ mix('js/vendor.js') }}" defer></script>
   <script src="{{ mix('js/manifest.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased">
+<body class="antialiased overflow-x-hidden overflow-y-scroll">
   @inertia
 </body>
 

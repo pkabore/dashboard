@@ -14,7 +14,7 @@
         shadow-xl shadow-sky-700
         z-10
         md:visible
-        bg-slate-800
+        bg-slate-700
         text-white text-base
         py-4
         px-2
@@ -35,14 +35,14 @@
           w-full
           pl-3
           py-2
+          hover:bg-slate-800
           rounded-md
-          hover:bg-slate-900
           transition
           ease-out
           duration-200
         "
         :class="{
-          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Stats'),
+          'bg-slate-800': $page.component.startsWith('Stats'),
         }"
       >
         <ChartIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -58,13 +58,13 @@
           pl-3
           py-2
           rounded-md
-          hover:bg-slate-900
+          hover:bg-slate-800
           transition
           ease-out
           duration-200
         "
         :class="{
-          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Sale'),
+          'bg-slate-800': $page.component.startsWith('Sale'),
         }"
       >
         <ShoppingIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -81,13 +81,13 @@
           pl-3
           py-2
           rounded-md
-          hover:bg-slate-900
+          hover:bg-slate-800
           transition
           ease-out
           duration-200
         "
         :class="{
-          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Article'),
+          'bg-slate-800': $page.component.startsWith('Article'),
         }"
       >
         <ArticleIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -104,13 +104,13 @@
           pl-3
           py-2
           rounded-md
-          hover:bg-slate-900
+          hover:bg-slate-800
           transition
           ease-out
           duration-200
         "
         :class="{
-          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Category'),
+          'bg-slate-800': $page.component.startsWith('Category'),
         }"
       >
         <FolderIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -127,13 +127,13 @@
           pl-3
           py-2
           rounded-md
-          hover:bg-slate-900
+          hover:bg-slate-800
           transition
           ease-out
           duration-200
         "
         :class="{
-          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Bill'),
+          'bg-slate-800': $page.component.startsWith('Bill'),
         }"
       >
         <PrintIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -150,13 +150,13 @@
           pl-3
           py-2
           rounded-md
-          hover:bg-slate-900
+          hover:bg-slate-800
           transition
           ease-out
           duration-200
         "
         :class="{
-          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Quote'),
+          'bg-slate-800': $page.component.startsWith('Quote'),
         }"
       >
         <FormatedListIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -173,13 +173,13 @@
           pl-3
           py-2
           rounded-md
-          hover:bg-slate-900
+          hover:bg-slate-800
           transition
           ease-out
           duration-200
         "
         :class="{
-          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Client'),
+          'bg-slate-800': $page.component.startsWith('Client'),
         }"
       >
         <GroupIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -195,13 +195,13 @@
           pl-3
           py-2
           rounded-md
-          hover:bg-slate-900
+          hover:bg-slate-800
           transition
           ease-out
           duration-200
         "
         :class="{
-          'ring ring-sky-500/50 bg-slate-900': $page.component.startsWith('Expense'),
+          'bg-slate-800': $page.component.startsWith('Expense'),
         }"
       >
         <PaymentIcon class="h-5 w-5 mr-4 text-gray-200" />
@@ -219,7 +219,7 @@
           pl-3
           py-2
           rounded-md
-          hover:bg-slate-900
+          hover:bg-slate-800
           transition
           ease-out
           duration-200
@@ -286,6 +286,6 @@ export default {
 
 <style>
 .family-mono {
-  font-family: "Ubuntu Mono", monospace;
+  font-family: "ui-monospace", "Ubuntu Mono", monospace;
 }
 </style>
