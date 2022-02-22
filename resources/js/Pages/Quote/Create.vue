@@ -3,10 +3,15 @@
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">
       Faire un devis
     </h2>
-    <div class="flex justify-center max-w-3xl mx-auto space-x-2">
-      <div class="w-7/12 bg-white mx-auto rounded-md  border pt-4 my-7">
+    <div class="md:flex justify-center md:max-w-3xl mx-auto md:space-x-2">
+      <div
+        class="w-full md:w-7/12 bg-white mx-auto rounded-3xl border pt-4 my-7"
+      >
         <div id="quote" class="w-full px-2 mx-auto">
-          <h2 v-if="failureMessage.length > 0" class="text-center text-red-700 my-2">
+          <h2
+            v-if="failureMessage.length > 0"
+            class="text-center text-red-700 my-2"
+          >
             {{ failureMessage }}
           </h2>
           <h2 v-else class="text-center text-green-700 my-2">
@@ -144,7 +149,18 @@
         </div>
       </div>
       <div
-        class="w-5/12 py-4 px-4 my-7 mx-auto bg-white rounded-md border h-full"
+        class="
+          w-full
+          md:w-5/12
+          py-4
+          px-4
+          my-7
+          mx-auto
+          bg-white
+          rounded-3xl
+          border
+          h-full
+        "
       >
         <div class="flex justify-end">
           <div class="w-24">
@@ -173,7 +189,6 @@
             </button>
             <button
               class="
-                
                 w-full
                 py-2
                 px-4
@@ -202,7 +217,17 @@
             class="text-sm family-mono uppercase font-bold text-gray-800"
             >Articles:</label
           >
-          <Autocomplete @choice="(article) => addToQuote(article)" id="article" :items="reactiveArticles" @search="(keyword) => {form.search=keyword;}" :default="{name: '', id:0}"/>
+          <Autocomplete
+            @choice="(article) => addToQuote(article)"
+            id="article"
+            :items="reactiveArticles"
+            @search="
+              (keyword) => {
+                form.search = keyword;
+              }
+            "
+            :default="{ name: '', id: 0 }"
+          />
           <div class="text-red-700 text-xs mt-1" v-if="quote.errors.items">
             {{ quote.errors.items }}
           </div>
@@ -213,7 +238,13 @@
             class="text-sm family-mono uppercase font-bold text-gray-800"
             >Client:</label
           >
-          <Autocomplete @choice="(client) => quote.client = client" id="client" :items="clients" @search="(keyword) => searchClient({search:keyword})" :default="{name: '', id:0}"/>
+          <Autocomplete
+            @choice="(client) => (quote.client = client)"
+            id="client"
+            :items="clients"
+            @search="(keyword) => searchClient({ search: keyword })"
+            :default="{ name: '', id: 0 }"
+          />
           <div class="text-red-700 text-xs mt-1" v-if="clientDetailsError">
             {{
               quote.errors["client.id"] ||
@@ -231,7 +262,6 @@
           <textarea
             id="description"
             maxlength="256"
-            class="input rounded p-2 text-base"
             :class="{ 'border-red-700': quote.errors.description }"
             v-model="quote.description"
             placeholder="Description du devis"
@@ -261,8 +291,7 @@ import Autocomplete from "@/Components/Autocomplete.vue";
 /*import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";*/
 
-
-import ShopInfo from '@/Components/ShopInfo.vue';
+import ShopInfo from "@/Components/ShopInfo.vue";
 
 export default {
   layout: Layout,
@@ -441,8 +470,7 @@ export default {
         .then((res) => {
           clients.value = res.data.data;
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     };
 
     const escapeSpace = (e) => {

@@ -3,7 +3,7 @@
   <div
     class="min-h-screen bg-gray-100 mx-auto flex items-center justify-center px-2"
   >
-    <div class="w-full rounded-xl max-w-sm bg-white border py-4 px-2 sm:px-6">
+    <div class="w-full rounded-3xl max-w-sm bg-white border py-4 px-2 sm:px-6">
       <div style="max-width: 300px; margin: 0 auto">
         <h2 class="font-bold text-center text-gray-600 text-xl mt-2 mb-4">
           Admin &nbsp;&nbsp;-&nbsp;&nbsp; Connexion
@@ -27,7 +27,7 @@
                   pointer-events-none
                 "
               >
-                <EmailIcon class="h-5 w-5 text-gray-600" />
+                <EmailIcon class="h-5 w-5" />
               </span>
               <input
                 id="email"
@@ -55,7 +55,7 @@
               pointer-events-none
             "
           >
-            <LockClosedIcon class="h-5 w-5 text-gray-400" />
+            <LockClosedIcon class="h-5 w-5" />
           </span>
           <input
             required
@@ -78,8 +78,8 @@
             "
             @click="revealPassword = !revealPassword"
           >
-            <EyeIcon v-if="revealPassword" class="h-5 w-5 text-gray-400" />
-            <EyeOffIcon v-else class="h-5 w-5 text-gray-400" />
+            <EyeIcon v-if="revealPassword" class="h-5 w-5" />
+            <EyeOffIcon v-else class="h-5 w-5" />
           </span>
         </div>
         <div class="text-red-700 text-xs mt-1" v-if="form.errors.password">
@@ -93,17 +93,12 @@
                 type="submit"
                 class="
                   bg-blue-600
-                  text-white
-                  py-2
-                  px-4
-                  text-sm
-                  shadow shadow-blue-500/50
-                  rounded-md
-                  hover:bg-blue-700
-                  transition
-                  ease-in-out
-                  duration-300
-                  focus:outline-none
+                text-white
+                py-2
+                px-4
+                text-sm
+                rounded-full
+                focus:outline-none
                 "
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"

@@ -1,9 +1,9 @@
 <template>
   <div class="mx-auto max-w-lg mb-4 family-mono">
-    <h2 class="text-2xl font-bold my-4 text-gray-600 text-center">
+    <h2 class="print:hidden text-2xl font-bold my-4 text-gray-600 text-center">
       Facture N°{{ bill.receipt_id }}
     </h2>
-    <div id="bill" class="w-full px-2 mx-auto rounded-md border">
+    <div id="bill" class="w-full p-4 mx-auto bg-white rounded-3xl border">
       <ShopInfo />
       <div class="mt-4 flex justify-between text-gray-900">
         <p>
@@ -11,7 +11,7 @@
         </p>
         <p>Facture N°{{ bill.receipt_id }}</p>
       </div>
-      <div class="mt-4 flex justify-between text-gray-900 text-base">
+      <div class="mt-4 flex justify-between text-gray-900 text-base print:hidden">
         <p class="font-bold">STATUT:</p>
         <p
           class="
@@ -35,9 +35,9 @@
           mt-4
           py-2
           w-full
-          border-t-2 border-dashed
+          border-t
           text-base
-          border-gray-300
+          border-dashed
         "
       >
         <p class="flex items-center justify-between">
@@ -54,7 +54,7 @@
         </p>
       </div>
 
-      <div class="border-t-2 border-dashed border-gray-300 mt-4 py-2 w-full">
+      <div class="border-t border-dashed mt-4 py-2 w-full">
         <div class="flex justify-between items-center">
           <p class="w-1/4 font-bold mr-2">Description:</p>
           <p class="w-3/4 break-words">
@@ -101,9 +101,9 @@
           mt-4
           py-2
           w-full
-          border-t-2 border-dashed
+          border-t
           text-lg
-          border-gray-300
+          border-dashed
         "
       >
         <div class="px-2 flex justify-between text-base">
@@ -134,12 +134,12 @@
           <p>{{ bill.total.toLocaleString("fr-FR") }} FCFA</p>
         </div>
         <p
-          class="border-t-2 border-dashed mt-2 px-0 py-4 uppercase text-center"
+          class="border-t border-dashed mt-2 px-0 py-4 uppercase text-center"
         >
           <span class="font-bold text-sm mr-1">Date limite de paiment:</span>
           <span class="text-base">{{ getDateTime(bill.deadline) || "-" }}</span>
         </p>
-        <div class="flex items-center justify-end space-x-2">
+        <div class="flex items-center justify-end space-x-2 print:hidden">
           <!-- <button
             class="
               bg-red-600
@@ -158,11 +158,9 @@
             v-if="bill.status != 'Payé'"
             class="
               bg-green-600
-              text-green-100 text-base
-              rounded
-              px-4
-              py-[5px]
-              focus:outline-none
+              btn
+              text-white
+              font-medium
               hover:bg-green-700
             "
             @click="isOpen=!isOpen"

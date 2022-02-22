@@ -4,7 +4,7 @@
       <h2 class="my-4 text-center text-gray-600 font-bold text-2xl">
         Ajouter client
       </h2>
-      <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
+      <form @submit.prevent="submit" method="post" class="mx-auto p-4 bg-white rounded-3xl max-w-sm">
         <div
           v-if="message"
           class="
@@ -105,16 +105,8 @@
             class="
               bg-blue-600
               text-white
-              py-2
-              px-4
-              text-sm
-              shadow-md shadow-blue-500/50
-              rounded-md
+              btn
               hover:bg-blue-700
-              transition
-              ease-in-out
-              duration-300
-              focus:outline-none
             "
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"

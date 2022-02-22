@@ -4,7 +4,7 @@
       <h2 class="my-4 text-center text-gray-600 font-bold text-2xl">
         Éditer rayon
       </h2>
-      <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
+      <form @submit.prevent="submit" method="post" class="mx-auto p-4 bg-white rounded-3xl max-w-sm">
         <div
           v-if="message"
           class="

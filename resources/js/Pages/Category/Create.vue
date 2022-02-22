@@ -4,7 +4,7 @@
       <h2 class="my-4 text-center text-gray-600 font-bold text-2xl">
         Ajouter rayon
       </h2>
-      <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
+      <form @submit.prevent="submit" method="post" class="mx-auto p-4 bg-white rounded-3xl max-w-sm">
         <div
           v-if="message"
           class="
@@ -39,23 +39,15 @@
           <button
             type="submit"
             class="
-              bg-blue-600
+              btn
               text-white
-              py-2
-              px-4
-              text-sm
-              shadow-md shadow-blue-500/50
-              rounded-md
-              hover:bg-blue-700
-              transition
-              ease-in-out
-              duration-300
-              focus:outline-none
+              bg-blue-500
+              hover:bg-blue-600
             "
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           >
-            Créer
+            Créér
           </button>
         </div>
       </form>

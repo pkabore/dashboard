@@ -23,6 +23,15 @@ use App\Http\Controllers\MetadataController;
 |
 */
 
+Route::resource('articles', ArticleController::class)->middleware(['auth', 'verified']);
+Route::resource('clients', ClientController::class)->middleware(['auth', 'verified']);
+Route::resource('sales', SaleController::class)->middleware(['auth', 'verified']);
+Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
+Route::resource('expenses', ExpenseController::class)->middleware(['auth', 'verified']);
+Route::resource('bills', BillController::class)->middleware(['auth', 'verified']);
+Route::resource('quotes', QuoteController::class)->middleware(['auth', 'verified']);
+
+
 Route::get('/', [MetadataController::class, 'index'])
         ->middleware(['auth', 'verified'])
         ->name('home');
@@ -79,13 +88,6 @@ Route::get('clients/export/', [ClientController::class, 'export'])
         ->name('clients.export');
 
 
-Route::resource('articles', ArticleController::class)->middleware(['auth', 'verified']);
-Route::resource('clients', ClientController::class)->middleware(['auth', 'verified']);
-Route::resource('sales', SaleController::class)->middleware(['auth', 'verified']);
-Route::resource('categories', CategoryController::class)->middleware(['auth', 'verified']);
-Route::resource('expenses', ExpenseController::class)->middleware(['auth', 'verified']);
-Route::resource('bills', BillController::class)->middleware(['auth', 'verified']);
-Route::resource('quotes', QuoteController::class)->middleware(['auth', 'verified']);
 
 
 require __DIR__.'/auth.php';

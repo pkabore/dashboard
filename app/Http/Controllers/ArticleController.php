@@ -49,7 +49,7 @@ class ArticleController extends Controller
             'category_id.id' => 'required|integer|min:1',
             'name' => 'required|string|max:256',
             'price' => 'required|numeric|min:0',
-            'tax' => 'nullable|numeric|min:0',
+            'tax' => 'nullable|numeric|min:0|max:10',
             'stock' => 'required|numeric|min:0',
             'expires_at' => 'nullable|date',
         ]);
@@ -99,7 +99,7 @@ class ArticleController extends Controller
             'category_id.id' => 'required|integer|min:1',
             'name' => 'required|string|max:256',
             'price' => 'required|numeric|min:0',
-            'tax' => 'nullable|numeric|min:0',
+            'tax' => 'nullable|numeric|min:0|max:10',
             'stock' => 'required|numeric|min:0',
             'expires_at' => 'nullable|date',
         ]);

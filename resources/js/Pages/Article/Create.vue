@@ -4,7 +4,7 @@
       <h2 class="my-4 text-center text-gray-600 font-bold text-2xl">
         Ajouter article
       </h2>
-      <form @submit.prevent="submit" method="post" class="mx-auto max-w-sm">
+      <form @submit.prevent="submit" method="post" class="mx-auto rounded-3xl bg-white p-4 max-w-sm">
         <div
           v-if="message"
           class="
@@ -56,7 +56,7 @@
             class="text-sm family-mono uppercase font-bold text-gray-800"
             >Rayon:</label
           >
-          <Autocomplete @choice="(category) => form.category_id = category" id="category" :items="categories" @search="(keyword) => {search.search=keyword; searchCategory()}" :default="{name: 'Aucun', id:1}" />
+          <Autocomplete @choice="(category) => form.category_id = category" id="category" :items="categories" @search="(keyword) => {search.search=keyword; searchCategory()}" :default="{name: '', id:1}" />
           <div
             class="text-red-700 text-xs mt-1"
             v-if="form.errors['category_id.id']"
@@ -114,18 +114,7 @@
           <button
             type="submit"
             class="
-              bg-blue-600
-              text-white
-              py-2
-              px-4
-              text-sm
-              shadow-md shadow-blue-500/50
-              rounded-md
-              hover:bg-blue-700
-              transition
-              ease-in-out
-              duration-300
-              focus:outline-none
+              btn bg-blue-500 hover:bg-blue-600 text-white
             "
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"

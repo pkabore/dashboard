@@ -2,33 +2,59 @@
   <div class="w-full p-1 mx-auto">
     <div class="mt-4 px-2">
       <h2 class="m-0 py-2 text-lg text-gray-600 flex items-center justify-end">
-        <div class="relative h-6 w-6 mr-1">
-          <PersonIcon class="absolute text-gray-400" />
-          <div class="absolute border-[2px] border-white bottom-[2px] left-[0px] w-[9px] h-[9px] rounded-full bg-green-500"></div>
-        </div>
-        <span>{{$page.props.auth.user.name}}</span>
+        @{{$page.props.auth.user.name}}
       </h2>
     </div>
-    <div class="mt-4 px-2 bg-white rounded-md">
-      <div class="divide-y">
+    <form method="post" @submit.prevent="update" class="mt-4 px-2 sm:flex items-center justify-end sm:space-x-2">
+      <div class="relative">
+        <button type="button" @focus="showMonths=true" @blur="showMonths=false" class="btn border bg-white border border-slate-300 text-slate-600 text-center text-sm">{{form.month || new Date().getMonth() + 1}}
+        </button>
+        <ul v-show="showMonths" class="mt-2 w-44 py-4 absolute z-10 bg-white rounded-2xl shadow-2xl">
+          <li v-for="(month, key) in months" class="hover:text-blue-900 hover:bg-blue-100
+            text-gray-900
+            cursor-default
+            select-none
+            relative
+            py-2
+            pl-2 text-sm" @mousedown="form.month=key+1; showMonths=false" :key="key">{{month}}</li>
+        </ul>
+      </div>
+      <div class="relative">
+        <button type="button" @focus="showYears=true" @blur="showYears=false" class="btn border bg-white border border-slate-300 text-slate-600 text-center text-sm">{{form.year || new Date().getFullYear()}}
+        </button>
+        <ul v-show="showYears" class="mt-2 w-44 py-4 absolute z-10 bg-white rounded-2xl shadow-2xl">
+          <li v-for="(year, key) in years" class="hover:text-blue-900 hover:bg-blue-100
+            text-gray-900
+            cursor-default
+            select-none
+            relative
+            py-2
+            pl-2 text-sm" @mousedown="form.year=key+1; showYears=false" :key="key">{{year}}</li>
+        </ul>
+      </div>
+      <button type="button" @click="form.month = ''; form.year=''" class="btn bg-slate-500 text-white hover:bg-slate-600">Reset</button>
+      <button type="submit" class="btn bg-blue-500 text-white hover:bg-blue-600">Filtrer</button>
+    </form>
+    <div class="mt-4 px-2">
+      <div class="divide-y bg-white rounded-3xl p-4">
         <div class="divide-x grid grid-cols-4 gap-1 md:gap-2">
-          <StatCard title="Articles" :value="metadata.articlesNumber" />
-          <StatCard title="Dépenses" :value="parseFloat(metadata.expensesAmount.toFixed(2))" />
-          <StatCard title="Factures Tot" :value="metadata.billsNumber" />
-          <StatCard title="Clients" :value="metadata.clientsNumber" />
+          <StatCard title="Articles" :value="data.articlesNumber" />
+          <StatCard title="Dépenses" :value="parseFloat(data.expensesAmount.toFixed(2))" />
+          <StatCard title="Factures Tot" :value="data.billsNumber" />
+          <StatCard title="Clients" :value="data.clientsNumber" />
         </div>
         <div class="divide-x grid grid-cols-4 gap-1 md:gap-2">
-          <StatCard title="Rayons" :value="metadata.categoriesNumber" />
-          <StatCard title="Ventes" :value="parseFloat(metadata.income.toFixed(2))" />
-          <StatCard title="Factures NP" :value="metadata.unpaidBillsNumber" />
-          <StatCard title="Devis" :value="metadata.quotesNumber" />
+          <StatCard title="Rayons" :value="data.categoriesNumber" />
+          <StatCard title="Ventes" :value="parseFloat(data.income.toFixed(2))" />
+          <StatCard title="Factures NP" :value="data.unpaidBillsNumber" />
+          <StatCard title="Devis" :value="data.quotesNumber" />
         </div>
       </div>
       <div class="mt-6 w-full md:flex justify-between md:space-x-2">
-        <div class="chart-container bg-white relative border p-2 rounded-md mt-2 md:mt-0 w-full md:w-1/2 md:max-w-1/2">
+        <div style="min-height: 300px;" class="chart-container bg-white relative border p-2 md:p-4 rounded-2xl mt-2 md:mt-0 w-full md:w-1/2 md:max-w-1/2">
           <canvas id="balance" class="h-20" />
         </div>
-        <div class="chart-container bg-white relative border p-2 rounded-md mt-4 md:mt-0 w-full md:w-1/2 md:max-w-1/2">
+        <div style="min-height: 300px;" class="chart-container bg-white relative border p-2 md:p-4 rounded-2xl mt-4 md:mt-0 w-full md:w-1/2 md:max-w-1/2">
           <canvas id="clients" class="h-20" />
         </div>
       </div>
@@ -40,7 +66,9 @@
 import Layout from "@/Pages/Layout.vue";
 import StatCard from "@/Components/StatCard.vue";
 import PersonIcon from "@/Components/PersonIcon.vue";
-import { defineComponent, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
+import {useForm} from '@inertiajs/inertia-vue3';
+
 import {
   Chart,
   ArcElement,
@@ -50,6 +78,7 @@ import {
   BarController,
   LineController,
   LinearScale,
+  LogarithmicScale,
   CategoryScale,
   Decimation,
   Filler,
@@ -66,6 +95,7 @@ Chart.register(
   BarController,
   LineController,
   LinearScale,
+  LogarithmicScale,
   CategoryScale,
   Decimation,
   Filler,
@@ -77,26 +107,31 @@ Chart.register(
 Chart.defaults.font.family = `ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`;
 
 
-export default defineComponent({
+export default {
   layout: Layout,
 
   components: { PersonIcon, StatCard },
 
-  props: { metadata: Object },
+  props: { metadata: Object, month: Number, year: Number },
 
   setup(props) {
 
     const data = ref(props.metadata);
+    const showMonths = ref(false);
+    const showYears = ref(false);
+    const form = useForm({
+      month: parseInt(props.month) || new Date().getMonth() + 1,
+      year: parseInt(props.year) || new Date().getFullYear()
+    });
 
     onMounted(() => {
       const balance = new Chart('balance', {
         data : {
-          //labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
           datasets: [
             {
               type: 'bar',
               label: 'Dépenses',
-              data: props.metadata.expensesAmountStats,
+              data: data.value.expensesAmountStats,
               backgroundColor: '#0ea5e9',
               tension: 0.1,
               order:1
@@ -104,7 +139,7 @@ export default defineComponent({
             {
               type: 'bar',
               label: 'Ventes',
-              data: props.metadata.salesAmountStats,
+              data: data.value.salesAmountStats,
               backgroundColor: '#a855f7',
               tension: 0.1,
               order:2
@@ -116,41 +151,27 @@ export default defineComponent({
               intersect: false,
               mode: 'index',
             },
-            plugins: {},
-            scales:{
-              /*x:{
-                grid:{
-                  display: true
-                }
-              },*/
-              y:{
-                
-              }
-            },
-            responsive: true
+            maintainAspectRatio: false,
           },
       });
 
       const clients = new Chart('clients', {
         data : {
-          //labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
           datasets: [
             {
               type: 'line',
               label: 'Clients',
-              data: props.metadata.clientsNumberStats,
+              data: data.value.clientsNumberStats,
               borderColor: '#10b981',
               backgroundColor: '#10b981',
-              //tension: 0.1,
               cubicInterpolationMode: 'monotone'
             },
             {
               type: 'line',
               label: 'Devis',
-              data: props.metadata.quotesNumberStats,
+              data: data.value.quotesNumberStats,
               borderColor: '#ea580c',
               backgroundColor: '#ea580c',
-              //tension: 0.1,
               cubicInterpolationMode: 'monotone'
             }
           ],
@@ -160,24 +181,39 @@ export default defineComponent({
               intersect: false,
               mode: 'index',
             },
-            plugins: {},
-            //responsive: true,
-            scales:{
-              y: {
-                type:'linear'
-              }
-            }
-
+            maintainAspectRatio: false,
           },
       });
     });
-    return {};
+
+    const update = () => {
+      form
+      .get(route('home'), {
+        only: ['metadata', 'year', 'month'],
+        preserveState: false,
+        onFinish: () => {
+          data.value = props.metadata;
+        }
+    });
+  };
+
+  const years = [];
+  const year = new Date().getFullYear();
+
+  for (let i = year; i >= 2022; i--)
+    years.push(i);
+
+  const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+
+    return {
+      data,
+      form,
+      update,
+      years,
+      months,
+      showMonths,
+      showYears
+    };
   },
-});
+};
 </script>
-<!-- 
-<style>
-  body, html{
-    background-color: gainsboro;
-  }
-</style> -->

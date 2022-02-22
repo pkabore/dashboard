@@ -1,9 +1,9 @@
 <template>
-  <div class="mx-auto bg-white max-w-lg mb-4 family-mono">
-    <h2 class="text-2xl font-bold my-4 text-gray-600 text-center">
+  <div class="mx-auto max-w-lg mb-4 family-mono">
+    <h2 class="print:hidden text-2xl font-bold my-4 text-gray-600 text-center">
       Devis N°{{ quote.receipt_id }}
     </h2>
-    <div id="quote" class="w-full px-2 mx-auto rounded-md border">
+    <div id="quote" class="w-full p-4 mx-auto bg-white  rounded-3xl border">
       <shop-info />
       <div class="mt-4 flex justify-between text-gray-900">
         <p>
@@ -11,31 +11,12 @@
         </p>
         <p>Devis N°{{ quote.receipt_id }}</p>
       </div>
-      <div class="mt-4 flex justify-between text-gray-900 text-base">
-        <p class="font-bold">STATUT:</p>
-        <p
-          class="
-            uppercase
-            px-4
-            font-bold
-            py-1
-            text-red-600
-            border border-red-500
-          "
-          :class="{
-            'px-4 py-1 text-green-600 border border-green-500':
-              quote.status == 'Payé',
-          }"
-        >
-          {{ quote.status }}
-        </p>
-      </div>
       <div
         class="
           mt-4
           py-2
           w-full
-          border-t-2 border-dashed
+          border-t border-dashed
           text-base
           border-gray-300
         "
@@ -54,7 +35,7 @@
         </p>
       </div>
 
-      <div class="border-t-2 border-dashed border-gray-300 mt-4 py-2 w-full">
+      <div class="border-t border-dashed border-gray-300 mt-4 py-2 w-full">
         <div class="flex justify-between items-center">
           <p class="w-1/4 font-bold mr-2">Description:</p>
           <p class="w-3/4 break-words">
@@ -101,7 +82,7 @@
           mt-4
           py-2
           w-full
-          border-t-2 border-dashed
+          border-t border-dashed
           text-lg
           border-gray-300
         "

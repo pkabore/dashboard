@@ -19,6 +19,7 @@
         py-4
         px-2
         space-y-2
+        print:hidden
         md:transform-none
       "
       :class="{
@@ -36,7 +37,7 @@
           pl-3
           py-2
           hover:bg-slate-800
-          rounded-md
+          rounded-full
           transition
           ease-out
           duration-200
@@ -57,7 +58,7 @@
           w-full
           pl-3
           py-2
-          rounded-md
+          rounded-full
           hover:bg-slate-800
           transition
           ease-out
@@ -80,7 +81,7 @@
           w-full
           pl-3
           py-2
-          rounded-md
+          rounded-full
           hover:bg-slate-800
           transition
           ease-out
@@ -103,7 +104,7 @@
           w-full
           pl-3
           py-2
-          rounded-md
+          rounded-full
           hover:bg-slate-800
           transition
           ease-out
@@ -126,7 +127,7 @@
           w-full
           pl-3
           py-2
-          rounded-md
+          rounded-full
           hover:bg-slate-800
           transition
           ease-out
@@ -149,7 +150,7 @@
           w-full
           pl-3
           py-2
-          rounded-md
+          rounded-full
           hover:bg-slate-800
           transition
           ease-out
@@ -172,7 +173,7 @@
           w-full
           pl-3
           py-2
-          rounded-md
+          rounded-full
           hover:bg-slate-800
           transition
           ease-out
@@ -194,7 +195,7 @@
           w-full
           pl-3
           py-2
-          rounded-md
+          rounded-full
           hover:bg-slate-800
           transition
           ease-out
@@ -218,7 +219,7 @@
           items-center
           pl-3
           py-2
-          rounded-md
+          rounded-full
           hover:bg-slate-800
           transition
           ease-out
@@ -233,7 +234,7 @@
       class="min-h-full absolute top-0 inset-x-0 md:left-[180px]"
     >
       <div
-        class="md:hidden p-2 text-gray-800 flex items-center justify-between"
+        class="md:hidden print:hidden p-2 text-gray-800 flex items-center justify-between"
       >
         <span class="text-xl font-medium">Market Admin</span>
         <MenuIcon @click="sidebar = !sidebar" class="w-5 h-5 text-gray-600" />
@@ -286,6 +287,6 @@ export default {
 
 <style>
 .family-mono {
-  font-family: "ui-monospace", "Ubuntu Mono", monospace;
+  font-family: "Ubuntu Mono", "ui-monospace", "Ubuntu Mono", monospace;
 }
 </style>

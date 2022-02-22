@@ -11,7 +11,7 @@
       <form
         @submit.prevent="submit"
         method="post"
-        class="mx-auto relative max-w-sm"
+        class="mx-auto relative max-w-sm rounded-3xl bg-white p-4"
       >
         <div
           v-if="message"

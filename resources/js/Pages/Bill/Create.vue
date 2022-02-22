@@ -3,8 +3,8 @@
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">
       Générer une facture
     </h2>
-    <div class="flex justify-center max-w-3xl mx-auto space-x-2">
-      <div class="w-7/12 mx-auto rounded-md border pt-4 my-7">
+    <div class="md:flex justify-center md:max-w-3xl mx-auto md:space-x-2">
+      <div class="w-full md:w-7/12 mx-auto family-mono rounded-3xl bg-white border pt-4 my-7">
         <div id="bill" class="w-full px-2 mx-auto">
           <h2 v-if="failureMessage.length > 0" class="text-center text-red-700 my-2">
             {{ failureMessage }}
@@ -14,17 +14,17 @@
           </h2>
           <ShopInfo />
           <div class="mt-4 flex justify-between text-gray-900 capitalize">
-            <p>
+            <div>
               {{ getDateTime() }}
-            </p>
-            <p>Facture N°{{ bill.receipt_id }}</p>
+            </div>
+            <div>Facture N°{{ bill.receipt_id }}</div>
           </div>
           <div
             class="
               mt-4
               py-2
               w-full
-              border-t-2 border-dashed
+              border-t border-dashed
               text-base
               border-gray-300
             "
@@ -43,7 +43,7 @@
             </p>
           </div>
 
-          <div class="border-t-2 border-dashed border-gray-300 py-2 w-full">
+          <div class="border-t border-dashed border-gray-300 py-2 w-full">
             <div class="flex justify-between items-center">
               <p class="w-1/4 font-bold mr-2">Description:</p>
               <p class="w-3/4 break-words">
@@ -106,7 +106,7 @@
           </div>
           <div
             v-if="bill.items.length"
-            class="py-2 w-full border-t-2 border-dashed text-lg border-gray-300"
+            class="py-2 w-full border-t border-dashed text-lg border-gray-300"
           >
             <div class="px-2 flex justify-between text-base">
               <p class="font-bold">Total:</p>
@@ -137,10 +137,11 @@
             </div>
             <p
               class="
-                border-t-2 border-dashed
+                border-t border-dashed
                 px-0
                 py-4
                 flex
+                flex-wrap
                 items-center
                 uppercase
                 text-center text-sm
@@ -158,13 +159,12 @@
         </div>
       </div>
       <div
-        class="w-5/12 py-4 px-4 my-7 mx-auto rounded-md border h-full"
+        class="w-full md:w-5/12 py-4 px-4 my-7 mx-auto rounded-3xl bg-white border h-full"
       >
         <div class="flex justify-end">
           <div class="w-24">
             <button
-              class="
-                
+              class="     
                 w-full
                 py-2
                 px-4
@@ -177,7 +177,7 @@
                 items-center
                 text-blue-700
                 focus:outline-none
-                rounded-md
+                rounded-full
                 text-sm
                 mb-2
               "
@@ -201,7 +201,7 @@
                 items-center
                 text-gray-600
                 focus:outline-none
-                rounded-md
+                rounded-full
                 text-sm
               "
               @click="resetBill"
@@ -264,7 +264,6 @@
           <textarea
             id="description"
             maxlength="256"
-            class="input rounded p-2 text-base"
             :class="{ 'border-red-700': bill.errors.description }"
             v-model="bill.description"
             placeholder="Description de la facture"
@@ -310,9 +309,6 @@ import axios from "axios";
 import SearchIcon from "@/Components/SearchIcon.vue";
 import ShopInfo from "@/Components/ShopInfo.vue";
 import Autocomplete from "@/Components/Autocomplete.vue";
-
-/*import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";*/
 
 export default {
   layout: Layout,
@@ -452,26 +448,6 @@ export default {
       try {
         await saveBill();
         message.value = "Facture générée avec succès";
-        /*const targettedDiv = document.getElementById("bill");
-        const doc = new jsPDF({
-          unit: "px",
-          format: [targettedDiv.clientWidth, targettedDiv.clientHeight],
-          orientation: "p",
-          hotfixes: ["px_scaling"],
-        });
-
-        doc.setFontSize("16px");
-        doc.setFont("courier");
-
-        html2canvas(targettedDiv, {
-          width: doc.internal.pageSize.getWidth(),
-          height: doc.internal.pageSize.getHeight(),
-        }).then((canvas) => {
-          const img = canvas.toDataURL("image/png");
-          doc.addImage(img, "PNG", 0, 0, canvas.width, canvas.height);
-          doc.save(`bill-${bill.receipt_id}.pdf`);
-          reactiveArticles.value = props.articles;
-        });*/
       } catch (error) {
         return;
       }
@@ -492,9 +468,9 @@ export default {
     const search = ref({ client: "" });
     const clients = ref([]);
 
-    const searchClient = () => {
+    const searchClient = (keyword) => {
       axios
-        .post(route("clients.search"), { search: search.value.client })
+        .post(route("clients.search"), { search: keyword.search })
         .then((res) => {
           clients.value = res.data.data;
         })
@@ -536,9 +512,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-#bill {
-  font-family: "Ubuntu Mono" !important;
-}
-</style>

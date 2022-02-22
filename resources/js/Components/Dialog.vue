@@ -13,28 +13,16 @@
       duration-300
       ease-in-out
     "
-    style="background-color: rgba(0, 0, 0, .9);"
+    style="background-color: rgba(0, 0, 0, .5);"
   >
-    <div class="bg-white rounded-md w-full max-w-sm px-4 pt-4 z-30 drop-shadow-lg">
+    <div class="bg-white rounded-3xl w-full max-w-sm px-4 pt-4 z-30 drop-shadow-lg">
       <h2 class="my-3 text-lg text-center">
         {{ message }}
       </h2>
-      <div class="border-t pt-3 pb-2 flex items-center justify-end space-x-2">
+      <div class="pt-3 pb-2 flex items-center justify-end space-x-2">
         <button
           class="
-            bg-white
-            py-2
-            px-4
-            border border-slate-300
-            hover:border-gray-600
-            transition
-            ease-in-out
-            duration-300
-            text-gray-700
-            focus:outline-none
-            rounded-md
-            focus:ring-0
-            text-sm
+            btn bg-blue-600 hover:bg-blue-700 text-white
           "
           @click="$emit('cancel')"
         >
@@ -42,15 +30,7 @@
         </button>
         <button
           class="
-            py-2
-            px-4
-            transition
-            ease-in-out
-            duration-300
-            focus:outline-none
-            rounded-md
-            focus:ring-0
-            text-sm
+            btn
           "
           :class="{'text-red-600 bg-white border border-slate-300 hover:border-red-600' : type == 'Supprimer', 'bg-green-600 hover:bg-green-700 text-white': type != 'Supprimer'}"
           @click="$emit('confirm')"

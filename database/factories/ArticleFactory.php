@@ -22,7 +22,7 @@ class ArticleFactory extends Factory
         $c->save();
 
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->realText(10),
             'category_id' => $category_id,
             'price' => random_int(2000, 200000),
             'tax' => random_int(1, 10),

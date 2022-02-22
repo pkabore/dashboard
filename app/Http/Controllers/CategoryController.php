@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Article;
+use App\Models\Expense;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Exports\CategoryExport;
@@ -96,6 +97,8 @@ class CategoryController extends Controller
     {
         if ($category->id != 1){
             Article::where('category_id', $category->id)
+                    ->update(['category_id' => 1]);
+            Expense::where('category_id', $category->id)
                     ->update(['category_id' => 1]);
             $default_category = Category::find(1);
             $default_category->articles += $category->articles;

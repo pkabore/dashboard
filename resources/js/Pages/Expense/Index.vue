@@ -1,17 +1,17 @@
 <template>
   <div class="px-2 mx-auto w-full">
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">Dépenses</h2>
-    <div class="max-w-3xl mx-auto bg-white rounded-md border pt-4 my-7">
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl border pt-4 my-7">
       <div class="flex items-center justify-center space-x-2 px-2 mb-4">
         <div class="relative max-w-sm mx-auto">
           <span
             class="
               absolute
               inset-y-0
-              right-0
+              left-0
               flex
               items-center
-              pr-2
+              pl-2
               pointer-events-none
             "
           >
@@ -19,11 +19,11 @@
           </span>
           <input
             id="search"
-            type="text"
+            type="search"
             maxlength="32"
-            class="input text-sm py-[7px] pl-3 text-sm pr-10"
+            class="input text-sm py-[7px] pr-2 text-sm pl-10"
             v-model="form.search"
-            placeholder="Rechercher une dépense"
+            placeholder="Rechercher ..."
           />
         </div>
         <ExportButton :href="route('expenses.export')" />

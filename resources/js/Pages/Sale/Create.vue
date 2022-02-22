@@ -3,10 +3,15 @@
     <h2 class="text-2xl font-bold mt-4 text-gray-600 text-center">
       Enregistrer vente
     </h2>
-    <div class="flex justify-center max-w-3xl mx-auto space-x-2">
-      <div class="w-7/12 bg-white mx-auto rounded-md  border pt-4 my-7">
+    <div class="md:flex justify-center md:max-w-3xl mx-auto md:space-x-2">
+      <div
+        class="w-full md:w-7/12 bg-white mx-auto rounded-3xl border pt-4 my-7"
+      >
         <div id="sale" class="w-full px-2 mx-auto">
-          <h2 v-if="failureMessage.length > 0" class="text-center text-red-700 my-2">
+          <h2
+            v-if="failureMessage.length > 0"
+            class="text-center text-red-700 my-2"
+          >
             {{ failureMessage }}
           </h2>
           <h2 v-else class="text-center text-green-700 my-2">
@@ -74,7 +79,7 @@
           </div>
           <div
             v-if="sale.items.length"
-            class="py-2 w-full border-t-2 border-dashed text-lg border-gray-300"
+            class="py-2 w-full border-t text-lg border-gray-300"
           >
             <div class="px-2 flex justify-between text-base">
               <p class="font-bold">Total:</p>
@@ -100,7 +105,7 @@
               <p>{{ sale.total.toLocaleString("fr-FR") }} FCFA</p>
             </div>
           </div>
-          <div class="py-4 mt-3 border-t-2 border-dashed">
+          <div class="py-4 mt-3 border-t">
             <p class="text-center text-base">Au revoir et à bientôt...</p>
           </div>
           <div v-if="error.length">
@@ -111,13 +116,23 @@
         </div>
       </div>
       <div
-        class="w-5/12 bg-white py-4 px-4 my-7 mx-auto  rounded-md border h-full"
+        class="
+          w-full
+          md:w-5/12
+          bg-white
+          py-4
+          px-4
+          my-7
+          mx-auto
+          rounded-3xl
+          border
+          h-full
+        "
       >
         <div class="flex justify-end">
           <div class="w-24">
             <button
               class="
-                
                 w-full
                 py-2
                 px-4
@@ -130,18 +145,17 @@
                 items-center
                 text-blue-700
                 focus:outline-none
-                rounded-md
+                rounded-full
                 text-sm
                 mb-2
               "
-              @click="isOpen=!isOpen"
+              @click="isOpen = !isOpen"
             >
               <CheckIcon class="h-5 w-5 mr-1" />
               <span>Save</span>
             </button>
             <button
               class="
-                
                 w-full
                 py-2
                 px-4
@@ -154,7 +168,7 @@
                 items-center
                 text-gray-600
                 focus:outline-none
-                rounded-md
+                rounded-full
                 text-sm
               "
               @click="resetSale"
@@ -170,7 +184,17 @@
             class="text-sm family-mono uppercase font-bold text-gray-800"
             >Articles:</label
           >
-          <Autocomplete @choice="(article) => addToSale(article)" id="article" :items="reactiveArticles" @search="(keyword) => {form.search=keyword;}" :default="{name: '', id:0}" />
+          <Autocomplete
+            @choice="(article) => addToSale(article)"
+            id="article"
+            :items="reactiveArticles"
+            @search="
+              (keyword) => {
+                form.search = keyword;
+              }
+            "
+            :default="{ name: '', id: 0 }"
+          />
           <div class="text-red-700 text-xs mt-1" v-if="sale.errors.items">
             {{ sale.errors.items }}
           </div>
@@ -181,7 +205,7 @@
   <Dialog
     @cancel="isOpen = false"
     @confirm="printSale()"
-    :class="{'hidden': !isOpen}"
+    :class="{ hidden: !isOpen }"
     type="Sauver"
     message="Confirmez-vous ce paiement?"
   />
@@ -202,7 +226,6 @@ import ShopInfo from "@/Components/ShopInfo.vue";
 
 /*import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";*/
-
 
 export default {
   layout: Layout,
@@ -252,9 +275,9 @@ export default {
     const sale = useForm({
       receipt_id: getReceiptId(),
       items: [],
-      taxes: 0.00,
-      partial: 0.00,
-      total: 0.00,
+      taxes: 0.0,
+      partial: 0.0,
+      total: 0.0,
       date: getDateTime(),
     });
 
@@ -327,9 +350,9 @@ export default {
 
     const resetSale = () => {
       sale.items = [];
-      sale.taxes = 0.00;
-      sale.partial = 0.00;
-      sale.total = 0.00;
+      sale.taxes = 0.0;
+      sale.partial = 0.0;
+      sale.total = 0.0;
       sale.date = getDateTime();
       sale.receipt_id = getReceiptId();
 
@@ -338,11 +361,11 @@ export default {
     };
 
     const printSale = async () => {
-        try {
-          isOpen.value = false;
-          await saveSale();
-          message.value = "Vente enregistrée avec succès";
-          /*const targettedDiv = document.getElementById("sale");
+      try {
+        isOpen.value = false;
+        await saveSale();
+        message.value = "Vente enregistrée avec succès";
+        /*const targettedDiv = document.getElementById("sale");
           const doc = new jsPDF({
             unit: "px",
             format: [targettedDiv.clientWidth, targettedDiv.clientHeight],
@@ -362,9 +385,9 @@ export default {
             doc.save(`sale-${sale.receipt_id}.pdf`);
             reactiveArticles.value = props.articles;
           });*/
-        } catch (error) {
-          return;
-        }
+      } catch (error) {
+        return;
+      }
     };
 
     return {

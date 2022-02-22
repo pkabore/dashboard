@@ -1,7 +1,7 @@
 <template>
-	<a class="border text-green-700 text-sm py-1 px-2 hover:border-green-600 transition duration-300 ease-in-out rounded-md focus:outline-none flex items-center">
+	<a class="btn bg-slate-600 hover:bg-slate-700 text-white flex items-center">
 	  <ExportIcon class="h-5 w-5 mr-1" />
-	  <span>Export</span>
+	  <span>Exporter</span>
 	</a>
 </template>
 
