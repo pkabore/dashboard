@@ -56,7 +56,7 @@
             class="text-sm family-mono uppercase font-bold text-gray-800"
             >Rayon:</label
           >
-          <Autocomplete @choice="(category) => form.category_id = category" id="category" :items="categories" @search="(keyword) => {search.search=keyword; searchCategory()}" :default="{name: '', id:1}" />
+          <Autocomplete @choice="(category) => form.category_id = category.id" id="category" :items="categories" @search="(keyword) => {search.search=keyword; searchCategory()}" :default="{name: '', id:1}" />
           <div
             class="text-red-700 text-xs mt-1"
             v-if="form.errors['category_id.id']"

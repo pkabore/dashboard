@@ -19,9 +19,9 @@
           </span>
           <input
             id="search"
-            type="search"
+            type="text"
             maxlength="32"
-            class="input text-sm py-[7px] pr-2 text-sm pl-10"
+            class="input text-sm py-[7px] pr-2 text-sm pl-8"
             v-model="form.search"
             placeholder="Rechercher ..."
           />
@@ -29,7 +29,7 @@
         <ExportButton :href="route('categories.export')" />
         <CreateButton :href="route('categories.create')" />
       </div>
-      <div class="w-full mx-auto overflow-x-auto">
+      <div class="w-full mx-auto overflow-x-auto pb-4">
         <table class="w-full table-auto whitespace-nowrap text-sm">
           <thead>
             <tr>
@@ -70,11 +70,11 @@
               </th>
             </tr>
           </thead>
-          <tbody class="pt-4">
+          <tbody>
             <tr
               v-for="(category, key) in reactiveCategories"
               :key="key"
-              class="border-t space-x-2 hover:bg-neutral-200 text-center"
+              class="space-x-2 text-center"
             >
               <td class="p-2">
                 {{ category.id }}

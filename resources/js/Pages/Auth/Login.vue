@@ -27,7 +27,7 @@
                   pointer-events-none
                 "
               >
-                <EmailIcon class="h-5 w-5" />
+                <EmailIcon class="h-5 w-5 text-gray-400" />
               </span>
               <input
                 id="email"
@@ -55,7 +55,7 @@
               pointer-events-none
             "
           >
-            <LockClosedIcon class="h-5 w-5" />
+            <LockClosedIcon class="h-5 w-5 text-gray-400" />
           </span>
           <input
             required
@@ -78,8 +78,8 @@
             "
             @click="revealPassword = !revealPassword"
           >
-            <EyeIcon v-if="revealPassword" class="h-5 w-5" />
-            <EyeOffIcon v-else class="h-5 w-5" />
+            <EyeIcon v-if="revealPassword" class="h-5 w-5 text-gray-400" />
+            <EyeOffIcon v-else class="h-5 w-5 text-gray-400" />
           </span>
         </div>
         <div class="text-red-700 text-xs mt-1" v-if="form.errors.password">
@@ -93,12 +93,10 @@
                 type="submit"
                 class="
                   bg-blue-600
+                  hover:btn-blue-700
                 text-white
-                py-2
-                px-4
                 text-sm
-                rounded-full
-                focus:outline-none
+                btn
                 "
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"

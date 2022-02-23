@@ -1,5 +1,5 @@
 <template>
-  <p class="text-center text-gray-900">
+  <p class="text-center uppercase font-bold text-gray-900">
     Alimentation - ACME
     <br />
     Avenue Kwamé N'Krumah, Ouagadougou

@@ -17,7 +17,7 @@
             <div>
               {{ getDateTime() }}
             </div>
-            <div>Facture N°{{ bill.receipt_id }}</div>
+            <div>Facture N°<span class="uppercase">{{ bill.receipt_id }}</span></div>
           </div>
           <div
             class="
@@ -152,7 +152,7 @@
             </p>
           </div>
           <div v-if="error.length">
-            <p class="text-center mb-3 text-sm text-red-700">
+            <p class="text-center mb-3 text-red-800">
               {{ error }}
             </p>
           </div>
@@ -306,6 +306,7 @@ import CheckIcon from "@/Components/CheckIcon.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
+import ObjectId from 'bson-objectid';
 import SearchIcon from "@/Components/SearchIcon.vue";
 import ShopInfo from "@/Components/ShopInfo.vue";
 import Autocomplete from "@/Components/Autocomplete.vue";
@@ -328,13 +329,6 @@ export default {
       search: "",
     });
 
-    const getReceiptId = () => {
-      const d = new Date();
-      return `${d.getFullYear()}${
-        d.getMonth() + 1
-      }${d.getDate()}${d.getHours()}${d.getMinutes()}${d.getSeconds()}`;
-    };
-
     const getDateTime = () => {
       let d = new Date(bill.deadline);
       if (!bill.deadline) {
@@ -351,7 +345,7 @@ export default {
 
     const bill = useForm({
       client: {},
-      receipt_id: getReceiptId(),
+      receipt_id: ObjectId(),
       deadline: "",
       description: "",
       items: [],
@@ -437,7 +431,7 @@ export default {
       bill.total = 0;
       bill.shipment = 0;
       bill.description = "";
-      bill.receipt_id = getReceiptId();
+      bill.receipt_id = ObjectId();
       bill.deadline = "";
 
       message.value = "";

@@ -19,9 +19,9 @@
           </span>
           <input
             id="search"
-            type="search"
+            type="text"
             maxlength="32"
-            class="input text-sm py-[7px] pr-2 text-sm pl-10"
+            class="input text-sm py-[7px] pr-2 text-sm pl-8"
             v-model="form.search"
             placeholder="Rechercher ..."
           />
@@ -29,28 +29,12 @@
         <ExportButton :href="route('quotes.export')" />
         <CreateButton :href="route('quotes.create')" />
       </div>
-      <div class="w-full mx-auto overflow-x-auto">
+      <div class="w-full mx-auto overflow-x-auto pb-4">
         <table class="w-full table-auto whitespace-nowrap text-sm">
           <thead>
             <tr>
-              <th class="py-3">
-                <div class="flex items-center justify-center">
-                  <!-- <ChevronUpIcon
-                    @click="setFilter('sortByReceiptId', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
-                    :class="{
-                      'text-blue-700': form.sortByReceiptId == 'asc',
-                    }"
-                  /> -->
-                  <span>Id</span>
-                  <!-- <ChevronDownIcon
-                    @click="setFilter('sortByReceiptId', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
-                    :class="{
-                      'text-blue-700': form.sortByReceiptId == 'desc',
-                    }"
-                  /> -->
-                </div>
+              <th class="py-3 text-center">
+               Id
               </th>
               <th class="py-3">
                 <div class="flex items-center justify-center">
@@ -103,11 +87,11 @@
               </th>
             </tr>
           </thead>
-          <tbody class="pt-4">
+          <tbody>
             <tr
               v-for="quote in reactiveQuotes"
               :key="quote.id"
-              class="border-t space-x-2 hover:bg-neutral-200 text-center"
+              class="space-x-2 text-center"
             >
               <td class="p-2">
                 {{ quote.id }}

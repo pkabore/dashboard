@@ -14,7 +14,7 @@ class SaleFactory extends Factory
     public function definition()
     {
         return [
-            'receipt_id' => "2022111045",
+            'receipt_id' => $this->faker->unique()->ipv4(),
             'date' => '2022/02/14',
             'taxes' => random_int(1245, 12400),
             'partial' => random_int(1200, 144000),

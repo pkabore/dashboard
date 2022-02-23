@@ -226,7 +226,7 @@ class MetadataController extends Controller
             'income' => $income,
         ];
 
-        return Inertia::render('Stats/Index', [ 'metadata' => $metadata ]);
+        return Inertia::render('Stats/Index', [ 'metadata' => $metadata]);
     }
 
 }

@@ -22,7 +22,7 @@
             <p>
               {{ sale.date }}
             </p>
-            <p>Reçu N°{{ sale.receipt_id }}</p>
+            <p>Reçu N°<span class="uppercase">{{ sale.receipt_id }}</span></p>
           </div>
           <div class="w-full mx-auto overflow-x-hidden mt-4 p-0">
             <table class="table-auto w-full p-0">
@@ -79,7 +79,7 @@
           </div>
           <div
             v-if="sale.items.length"
-            class="py-2 w-full border-t text-lg border-gray-300"
+            class="py-2 w-full border-t border-dashed text-lg"
           >
             <div class="px-2 flex justify-between text-base">
               <p class="font-bold">Total:</p>
@@ -105,11 +105,11 @@
               <p>{{ sale.total.toLocaleString("fr-FR") }} FCFA</p>
             </div>
           </div>
-          <div class="py-4 mt-3 border-t">
-            <p class="text-center text-base">Au revoir et à bientôt...</p>
+          <div class="py-4 mt-3 border-t border-dashed">
+            <p class="text-center text-base font-sans">Au revoir et à bientôt . . .</p>
           </div>
           <div v-if="error.length">
-            <p class="text-center mb-3 text-red-700">
+            <p class="text-center mb-3 text-red-800">
               {{ error }}
             </p>
           </div>
@@ -220,12 +220,10 @@ import Dialog from "@/Components/Dialog.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
+import ObjectId from 'bson-objectid';
 import SearchIcon from "@/Components/SearchIcon.vue";
 import Autocomplete from "@/Components/Autocomplete.vue";
 import ShopInfo from "@/Components/ShopInfo.vue";
-
-/*import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";*/
 
 export default {
   layout: Layout,
@@ -248,13 +246,6 @@ export default {
 
     const isOpen = ref(false);
 
-    const getReceiptId = () => {
-      const d = new Date();
-      return `${d.getFullYear()}${
-        d.getMonth() + 1
-      }${d.getDate()}${d.getHours()}${d.getMinutes()}${d.getSeconds()}`;
-    };
-
     const getDateTime = () => {
       let d = new Date();
 
@@ -273,7 +264,7 @@ export default {
     };
 
     const sale = useForm({
-      receipt_id: getReceiptId(),
+      receipt_id: ObjectId(),
       items: [],
       taxes: 0.0,
       partial: 0.0,
@@ -326,7 +317,7 @@ export default {
       return new Promise(async (resolve, reject) => {
         error.value = "";
         if (sale.items.length == 0) {
-          error.value = "Panier vide";
+          error.value = "Aucun article ajouté!";
           reject(new Error("Empty basket error"));
         }
         sale.items.forEach((order) => {
@@ -354,7 +345,7 @@ export default {
       sale.partial = 0.0;
       sale.total = 0.0;
       sale.date = getDateTime();
-      sale.receipt_id = getReceiptId();
+      sale.receipt_id = ObjectId();
 
       message.value = "";
       error.value = "";

@@ -19,9 +19,9 @@
           </span>
           <input
             id="search"
-            type="search"
+            type="text"
             maxlength="32"
-            class="input text-sm py-[7px] pr-2 text-sm pl-10"
+            class="input text-sm py-[7px] pr-2 text-sm pl-8"
             v-model="form.search"
             placeholder="Rechercher ..."
           />
@@ -34,25 +34,6 @@
           <thead>
             <tr>
               <th class="py-3">Id</th>
-              <!-- <th class="py-3">
-                <div class="flex items-center justify-center">
-                  <ChevronUpIcon
-                    @click="setFilter('sortByReceiptId', 'asc')"
-                    class="h-4 w-4 mr-1 text-gray-500 hover:text-blue-700"
-                    :class="{
-                      'text-blue-700': form.sortByReceiptId == 'asc',
-                    }"
-                  />
-                  <span>Reçu</span>
-                  <ChevronDownIcon
-                    @click="setFilter('sortByReceiptId', 'desc')"
-                    class="h-4 w-4 ml-1 text-gray-500 hover:text-blue-700"
-                    :class="{
-                      'text-blue-700': form.sortByReceiptId == 'desc',
-                    }"
-                  />
-                </div>
-              </th> -->
               <th class="py-3">
                 <div class="flex items-center justify-center">
                   <ChevronUpIcon
@@ -100,18 +81,15 @@
               </th>
             </tr>
           </thead>
-          <tbody class="pt-4">
+          <tbody>
             <tr
               v-for="sale in reactiveSales"
               :key="sale.id"
-              class="border-t space-x-2 hover:bg-neutral-200 text-center"
+              class="space-x-2 text-center"
             >
               <td class="p-2">
                 {{ sale.id }}
               </td>
-              <!-- <td class="p-2">
-                {{ sale.receipt_id }}
-              </td> -->
               <td class="text-gray-600">
                 {{ sale.date }}
               </td>

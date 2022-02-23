@@ -37,13 +37,13 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_id.id' => 'required|numeric|min:1',
+            'category_id' => 'required|numeric|min:1',
             'description' => 'required|string|max:512',
             'fee' => 'required|numeric|min:0',
         ]);
 
         $exp = new Expense();
-        $exp->category_id = $request->category_id['id'];
+        $exp->category_id = $request->category_id;
         $exp->description = $request->description;
         $exp->fee = $request->fee;
 

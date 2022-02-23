@@ -15,7 +15,7 @@ class QuoteBillFactory extends Factory
     {
 
         return [
-            'receipt_id' => "2022111149",
+            'receipt_id' => $this->faker->unique()->ipv4(),
             'taxes' => random_int(1245, 12400),
             'partial' => random_int(1200, 144000),
             'total' => random_int(12000, 1440000),

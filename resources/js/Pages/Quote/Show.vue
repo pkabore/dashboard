@@ -9,7 +9,7 @@
         <p>
           {{ quote.date }}
         </p>
-        <p>Devis N°{{ quote.receipt_id }}</p>
+        <p>Devis N°<span class="uppercase">{{ quote.receipt_id }}</span></p>
       </div>
       <div
         class="

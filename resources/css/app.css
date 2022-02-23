@@ -4,7 +4,7 @@
 
 
 .input {
-    @apply w-full bg-white py-2 border-2 rounded-full
+    @apply w-full bg-white py-2 border-2 border-slate-300 rounded-full
       focus:outline-none focus:border-blue-500;
 }
 
@@ -45,3 +45,12 @@ textarea{
     @apply w-full bg-white resize-none py-2 border-b-2
       focus:outline-none p-2 focus:border-blue-500;
 };
+
+
+table tbody tr:nth-child(2n){
+    @apply bg-slate-50;
+}
+
+table tbody tr:hover{
+    @apply bg-slate-50;
+}

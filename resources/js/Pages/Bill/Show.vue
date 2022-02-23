@@ -9,7 +9,7 @@
         <p>
           {{ bill.date }}
         </p>
-        <p>Facture N°{{ bill.receipt_id }}</p>
+        <p>Facture N°<span class="uppercase">{{ bill.receipt_id }}</span></p>
       </div>
       <div class="mt-4 flex justify-between text-gray-900 text-base print:hidden">
         <p class="font-bold">STATUT:</p>
@@ -160,6 +160,7 @@
               bg-green-600
               btn
               text-white
+              uppercase
               font-medium
               hover:bg-green-700
             "

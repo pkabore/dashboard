@@ -7,7 +7,7 @@
       <div
         class="w-full md:w-7/12 bg-white mx-auto rounded-3xl border pt-4 my-7"
       >
-        <div id="quote" class="w-full px-2 mx-auto">
+        <div id="quote" class="w-full px-2 mx-auto family-mono">
           <h2
             v-if="failureMessage.length > 0"
             class="text-center text-red-700 my-2"
@@ -22,7 +22,7 @@
             <p>
               {{ getDateTime() }}
             </p>
-            <p>Devis N°{{ quote.receipt_id }}</p>
+            <p>Devis N°<span class="uppercase">{{ quote.receipt_id }}</span></p>
           </div>
           <div
             class="
@@ -142,7 +142,7 @@
             </div>
           </div>
           <div v-if="error.length">
-            <p class="text-center mb-3 text-sm text-red-700">
+            <p class="text-center mb-3 text-red-800">
               {{ error }}
             </p>
           </div>
@@ -178,7 +178,7 @@
                 items-center
                 text-blue-700
                 focus:outline-none
-                rounded-md
+                rounded-full
                 text-sm
                 mb-2
               "
@@ -201,7 +201,7 @@
                 items-center
                 text-gray-600
                 focus:outline-none
-                rounded-md
+                rounded-full
                 text-sm
               "
               @click="resetQuote"
@@ -286,11 +286,9 @@ import CheckIcon from "@/Components/CheckIcon.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { watch, ref } from "vue";
 import axios from "axios";
+import ObjectId from 'bson-objectid';
 import SearchIcon from "@/Components/SearchIcon.vue";
 import Autocomplete from "@/Components/Autocomplete.vue";
-/*import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";*/
-
 import ShopInfo from "@/Components/ShopInfo.vue";
 
 export default {
@@ -311,13 +309,6 @@ export default {
       search: "",
     });
 
-    const getReceiptId = () => {
-      const d = new Date();
-      return `${d.getFullYear()}${
-        d.getMonth() + 1
-      }${d.getDate()}${d.getHours()}${d.getMinutes()}${d.getSeconds()}`;
-    };
-
     const getDateTime = () => {
       let d = new Date(quote.deadline);
       if (!quote.deadline) {
@@ -334,7 +325,7 @@ export default {
 
     const quote = useForm({
       client: {},
-      receipt_id: getReceiptId(),
+      receipt_id: ObjectId(),
       deadline: "",
       description: "",
       items: [],
@@ -363,9 +354,7 @@ export default {
         .then((res) => {
           reactiveArticles.value = res.data.data;
         })
-        .catch((err) => {
-          //('');
-        });
+        .catch((err) => {});
     });
 
     watch(quote, () => {
@@ -414,7 +403,7 @@ export default {
       quote.total = 0;
       quote.shipment = 0;
       quote.description = "";
-      quote.receipt_id = getReceiptId();
+      quote.receipt_id = ObjectId();
       quote.deadline = "";
 
       message.value = "";
@@ -425,26 +414,6 @@ export default {
       try {
         await savequote();
         message.value = "Devis créé avec succès";
-        /*const targettedDiv = document.getElementById("quote");
-        const doc = new jsPDF({
-          unit: "px",
-          format: [targettedDiv.clientWidth, targettedDiv.clientHeight],
-          orientation: "p",
-          hotfixes: ["px_scaling"],
-        });
-
-        doc.setFontSize("16px");
-        doc.setFont("courier");
-
-        html2canvas(targettedDiv, {
-          width: doc.internal.pageSize.getWidth(),
-          height: doc.internal.pageSize.getHeight(),
-        }).then((canvas) => {
-          const img = canvas.toDataURL("image/png");
-          doc.addImage(img, "PNG", 0, 0, canvas.width, canvas.height);
-          doc.save(`quote-${quote.receipt_id}.pdf`);
-          reactiveArticles.value = props.articles;
-        });*/
       } catch (error) {
         return;
       }
@@ -513,9 +482,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-#quote {
-  font-family: "Ubuntu Mono", monospace;
-}
-</style>

@@ -1,11 +1,11 @@
 <template>
   <div class="w-full p-1 mx-auto">
-    <div class="mt-4 px-2">
+    <div class="mt-4">
       <h2 class="m-0 py-2 text-lg text-gray-600 flex items-center justify-end">
         @{{$page.props.auth.user.name}}
       </h2>
     </div>
-    <form method="post" @submit.prevent="update" class="mt-4 px-2 sm:flex items-center justify-end sm:space-x-2">
+    <form method="post" @submit.prevent="update" class="mt-4 space-x-2 flex items-center justify-end">
       <div class="relative">
         <button type="button" @focus="showMonths=true" @blur="showMonths=false" class="btn border bg-white border border-slate-300 text-slate-600 text-center text-sm">{{form.month || new Date().getMonth() + 1}}
         </button>
@@ -29,25 +29,25 @@
             select-none
             relative
             py-2
-            pl-2 text-sm" @mousedown="form.year=key+1; showYears=false" :key="key">{{year}}</li>
+            pl-2 text-sm" @mousedown="form.year=year; showYears=false" :key="key">{{year}}</li>
         </ul>
       </div>
       <button type="button" @click="form.month = ''; form.year=''" class="btn bg-slate-500 text-white hover:bg-slate-600">Reset</button>
       <button type="submit" class="btn bg-blue-500 text-white hover:bg-blue-600">Filtrer</button>
     </form>
-    <div class="mt-4 px-2">
-      <div class="divide-y bg-white rounded-3xl p-4">
-        <div class="divide-x grid grid-cols-4 gap-1 md:gap-2">
-          <StatCard title="Articles" :value="data.articlesNumber" />
-          <StatCard title="Dépenses" :value="parseFloat(data.expensesAmount.toFixed(2))" />
-          <StatCard title="Factures Tot" :value="data.billsNumber" />
-          <StatCard title="Clients" :value="data.clientsNumber" />
+    <div class="mt-4">
+      <div class="divide-y bg-white rounded-3xl sm:p-4">
+        <div class="divide-x grid grid-flow-col grid-cols-12 gap-1 md:gap-2">
+          <StatCard class="col-span-2" title="Clients" :value="data.clientsNumber" />
+          <StatCard class="col-span-4" title="Dépenses" :value="parseFloat(data.expensesAmount.toFixed(2))" />
+          <StatCard class="col-span-3" title="Factures Tot" :value="data.billsNumber" />
+          <StatCard class="col-span-3" title="Articles" :value="data.articlesNumber" />
         </div>
-        <div class="divide-x grid grid-cols-4 gap-1 md:gap-2">
-          <StatCard title="Rayons" :value="data.categoriesNumber" />
-          <StatCard title="Ventes" :value="parseFloat(data.income.toFixed(2))" />
-          <StatCard title="Factures NP" :value="data.unpaidBillsNumber" />
-          <StatCard title="Devis" :value="data.quotesNumber" />
+        <div class="divide-x grid grid-flow-col grid-cols-12 gap-1 md:gap-2">
+          <StatCard class="col-span-2" title="Devis" :value="data.quotesNumber" />
+          <StatCard class="col-span-4" title="Ventes" :value="parseFloat(data.income.toFixed(2))" />
+          <StatCard class="col-span-3" title="Factures NP" :value="data.unpaidBillsNumber" />
+          <StatCard class="col-span-3" title="Rayons" :value="data.categoriesNumber" />
         </div>
       </div>
       <div class="mt-6 w-full md:flex justify-between md:space-x-2">
@@ -119,6 +119,7 @@ export default {
     const data = ref(props.metadata);
     const showMonths = ref(false);
     const showYears = ref(false);
+    const reloadForm = useForm();
     const form = useForm({
       month: parseInt(props.month) || new Date().getMonth() + 1,
       year: parseInt(props.year) || new Date().getFullYear()
@@ -187,6 +188,11 @@ export default {
     });
 
     const update = () => {
+      if (!form.year || !form.month)
+      {
+        reloadForm.get(route('home'));
+        return;
+      }
       form
       .get(route('home'), {
         only: ['metadata', 'year', 'month'],

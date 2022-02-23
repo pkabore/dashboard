@@ -46,7 +46,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_id.id' => 'required|integer|min:1',
+            'category_id' => 'required|integer|min:1',
             'name' => 'required|string|max:256',
             'price' => 'required|numeric|min:0',
             'tax' => 'nullable|numeric|min:0|max:10',
@@ -56,7 +56,7 @@ class ArticleController extends Controller
 
         $a = new Article();
 
-        $a->category_id = $request->category_id['id'];
+        $a->category_id = $request->category_id;
 
         $c = Category::find($a->category_id);
         $c->articles = $c->articles + 1;
@@ -96,7 +96,7 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         $request->validate([
-            'category_id.id' => 'required|integer|min:1',
+            'category_id' => 'required|integer|min:1',
             'name' => 'required|string|max:256',
             'price' => 'required|numeric|min:0',
             'tax' => 'nullable|numeric|min:0|max:10',
@@ -105,7 +105,7 @@ class ArticleController extends Controller
         ]);
 
         $old_category = Category::find($article->category_id);
-        $article->category_id = $request->category_id['id'];
+        $article->category_id = $request->category_id;
         $new_category = Category::find($article->category_id);
 
         if ($old_category->id != $new_category->id){

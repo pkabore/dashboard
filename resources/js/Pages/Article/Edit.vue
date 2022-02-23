@@ -50,7 +50,7 @@
             class="text-sm family-mono uppercase font-bold text-gray-800"
             >Rayon:</label
           >
-          <Autocomplete @choice="(category) => form.category_id = category" id="category" :items="categories" @search="(keyword) => searchCategory({search:keyword})" :default="category" />
+          <Autocomplete @choice="(category) => form.category_id = category.id" id="category" :items="categories" @search="(keyword) => searchCategory({search:keyword})" :default="category" />
           <div
             class="text-red-700 text-xs mt-1"
             v-if="form.errors['category_id.id']"
@@ -174,7 +174,7 @@ export default {
     const categories = ref([]);
 
     const form = useForm({
-      category_id: props.category,
+      category_id: props.article.category_id,
       name: props.article.name,
       price: props.article.price,
       tax: props.article.tax,

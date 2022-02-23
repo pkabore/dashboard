@@ -9,7 +9,7 @@
         <p>
           {{ getDateTime(sale) }}
         </p>
-        <p>Reçu {{ sale.receipt_id }}</p>
+        <p>Reçu N°<span class="uppercase">{{ sale.receipt_id }}</span></p>
       </div>
       <div class="w-full mx-auto overflow-x-hidden mt-4 p-0">
         <table class="table-auto w-full p-0">
@@ -61,8 +61,8 @@
           <p>Total TTC:</p>
           <p>{{ sale.total.toLocaleString("fr-FR") }} FCFA</p>
         </div>
-        <p class="border-t-2 border-dashed mt-2 px-0 py-4 text-center">
-          Au revoir et à bientôt...
+        <p class="border-t-2 border-dashed mt-2 px-0 py-4 font-sans text-center">
+          Au revoir et à bientôt . . .
         </p>
       </div>
     </div>

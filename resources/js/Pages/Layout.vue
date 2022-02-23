@@ -237,7 +237,9 @@
         class="md:hidden print:hidden p-2 text-gray-800 flex items-center justify-between"
       >
         <span class="text-xl font-medium">Market Admin</span>
-        <MenuIcon @click="sidebar = !sidebar" class="w-5 h-5 text-gray-600" />
+        <button @click="sidebar = !sidebar" class="group rounded-full bg-white hover:bg-slate-50 focus:bg-slate-100 p-3">
+          <MenuIcon class="h-6 w-6 text-gray-700 group-hover:text-black" />
+        </button>
       </div>
       <slot />
     </div>

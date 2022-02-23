@@ -24,7 +24,7 @@
                   pointer-events-none
                 "
               >
-                <LockIcon class="h-5 w-5 text-gray-600" />
+                <LockIcon class="h-5 w-5 text-gray-400" />
               </span>
               <input
                 type="password"
@@ -43,12 +43,10 @@
             <button
               class="
                 bg-blue-600
+                  hover:btn-blue-700
                 text-white
-                py-2
-                px-4
                 text-sm
-                rounded-full
-                focus:outline-none
+                btn
               "
               :class="{ 'opacity-25': form.processing }"
               :disabled="form.processing"
