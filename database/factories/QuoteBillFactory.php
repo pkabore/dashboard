@@ -22,7 +22,7 @@ class QuoteBillFactory extends Factory
             'description' => 'Devis',
             'is_quote' => true,
             'shipment' => 0,
-            'created_at' => now()->addMonths(random_int(0, 11))
+            'created_at' => now()->addMonths(random_int(1,30) % 12)
         ];
     }
 }

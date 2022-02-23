@@ -15,11 +15,11 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => "pkabore",
-            'email' => "pkabore@tutanota.com",
+            'name' => "webmaster",
+            'email' => "webmaster@email.com",
             //'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => bcrypt("pkabore@tutanota.com"), // password
+            'password' => bcrypt("webmaster@email.com"), // password
             'remember_token' => Str::random(10),
         ];
     }

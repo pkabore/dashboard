@@ -44,8 +44,8 @@ class MetadataController extends Controller
 
 
     private function get_quotes_metadata($format){
-        return QuoteBill::where('is_quote', true)
-                        ->orderBy('created_at')
+        return QuoteBill::orderBy('created_at')
+                        ->where('is_quote', true)
                         ->get()
                         ->groupBy(fn($quote) => $quote->created_at->format($format))
                         ->map(fn($group) => count($group));
