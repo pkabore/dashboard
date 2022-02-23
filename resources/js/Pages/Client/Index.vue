@@ -30,7 +30,7 @@
         <CreateButton :href="route('clients.create')" />
       </div>
       <div class="w-full mx-auto overflow-x-auto pb-4">
-        <table class="w-full table- whitespace-nowrap text-sm shadow-md">
+        <table class="w-full table-auto whitespace-nowrap text-sm">
           <thead>
             <tr>
               <th class="py-3">Id</th>
