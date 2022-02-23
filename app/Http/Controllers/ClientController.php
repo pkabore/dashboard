@@ -77,7 +77,7 @@ class ClientController extends Controller
         if ($request->email != $client->email)
             $rules['email'] = 'required|string|email|unique:clients|max:256';
         if ($request->phone != $client->phone)
-            $rules['phone'] = 'required|string|phone|unique:clients|max:256';
+            $rules['phone'] = 'required|string|unique:clients|max:20';
 
         $request->validate($rules);
 

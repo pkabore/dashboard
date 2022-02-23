@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-1 mx-auto">
+  <div class="w-full p-1 sm:p-4 mx-auto">
     <div class="mt-4">
       <h2 class="m-0 py-2 text-lg text-gray-600 flex items-center justify-end">
         @{{$page.props.auth.user.name}}
